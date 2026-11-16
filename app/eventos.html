@@ -1,0 +1,2021 @@
+<!doctype html>
+<html lang="pt-PT">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ForeverSongs® · Dossiê Investigativo de Funil, Criativos & E-mails</title>
+<style>
+  :root {
+    --fundo: #f5f1ea;
+    --cartao: #ffffff;
+    --linha: #e6ddd0;
+    --linha-fina: #efe9df;
+    --linha-forte: #d6c9b6;
+    --texto: #2b2723;
+    --suave: #74695f;
+    --verde: #6f8f76;
+    --verde-escuro: #56735d;
+    --verde-claro: #e7efe8;
+    --verde-texto: #3f5a46;
+    --azul: #0284c7;
+    --azul-claro: #e0f2fe;
+    --azul-texto: #0369a1;
+    --rosa: #b07c7c;
+    --rosa-escuro: #8f5c5c;
+    --rosa-claro: #f4e7e5;
+    --rosa-texto: #7d4f4f;
+    --ambar: #d97706;
+    --ambar-claro: #fef3c7;
+    --ambar-texto: #92400e;
+    --areia: #d8c7ab;
+    --areia-claro: #f1e9dc;
+    --areia-texto: #6b5a3e;
+  }
+  * { box-sizing: border-box; }
+  html { background-color: var(--fundo) !important; -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    background-color: var(--fundo) !important;
+    background: var(--fundo);
+    color: var(--texto);
+    font: 14.5px/1.45 -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", sans-serif;
+    padding: 24px 32px 80px;
+    width: 100%;
+    min-height: 100vh;
+  }
+
+  .topo {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid var(--linha);
+    padding-bottom: 18px;
+  }
+  h1 { font-size: 26px; font-weight: 700; margin: 0 0 6px; letter-spacing: -0.018em; color: var(--texto); }
+  .lead { color: var(--suave); margin: 0; font-size: 14px; max-width: 960px; line-height: 1.45; }
+  .topo-acoes { display: flex; align-items: center; gap: 12px; }
+  .tag-live {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    color: var(--verde-texto);
+    background: var(--verde-claro);
+    border: 1px solid rgba(111, 143, 118, 0.4);
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 12.5px;
+    font-weight: 600;
+  }
+  .ponto-verde {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--verde);
+    box-shadow: 0 0 6px var(--verde);
+  }
+  .btn {
+    background: var(--verde);
+    color: #fff;
+    border: 0;
+    padding: 8px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 13.5px;
+    font-weight: 600;
+    transition: all 0.15s ease;
+  }
+  .btn:hover { background: var(--verde-escuro); }
+  .btn-outline {
+    background: #fff;
+    color: var(--texto);
+    border: 1px solid var(--linha-forte);
+  }
+  .btn-outline:hover { background: #efeae2; }
+
+  /* SUB-NAVEGAÇÃO PRINCIPAL */
+  .sub-nav {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 22px;
+    flex-wrap: wrap;
+  }
+  /* cada aba é um botão próprio, com contorno e fundo */
+  .sub-nav-btn {
+    background: #ffffff;
+    border: 1px solid #ddd3c4;
+    padding: 9px 16px;
+    border-radius: 9px;
+    font-size: 13.5px;
+    font-weight: 600;
+    color: var(--texto);
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    box-shadow: 0 1px 2px rgba(60, 45, 30, 0.06);
+    transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+  }
+  .sub-nav-btn:hover { border-color: #b9ab96; background: #fbf8f3; }
+  .sub-nav-btn.ativo {
+    background: #2b2723;
+    border-color: #2b2723;
+    color: #ffffff;
+  }
+
+  .painel-aba { display: none; }
+  .painel-aba.ativo { display: block; }
+
+  /* GRELHA DE KPIS */
+  .grelha-kpis {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+    gap: 14px;
+    margin-bottom: 24px;
+  }
+  .kpi-card {
+    background: var(--cartao);
+    border: 1px solid var(--linha);
+    border-radius: 12px;
+    padding: 16px;
+    box-shadow: 0 1px 2px rgba(60, 45, 30, 0.03);
+  }
+  .kpi-rotulo { font-size: 11.5px; text-transform: uppercase; letter-spacing: .05em; color: var(--suave); }
+  .kpi-valor { font-size: 26px; font-weight: 700; margin: 6px 0 3px; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
+  .kpi-sub { font-size: 12px; color: var(--suave); }
+
+  .seccao {
+    background: var(--cartao);
+    border: 1px solid var(--linha);
+    border-radius: 12px;
+    padding: 22px;
+    margin-bottom: 24px;
+    box-shadow: 0 1px 2px rgba(60, 45, 30, 0.03);
+  }
+  .seccao h2 {
+    font-size: 16px;
+    font-weight: 700;
+    margin: 0 0 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: var(--texto);
+  }
+
+  .dica {
+    border-left: 4px solid var(--azul);
+    background: var(--azul-claro);
+    padding: 14px 18px;
+    border-radius: 0 10px 10px 0;
+    margin-bottom: 12px;
+    font-size: 13.5px;
+  }
+  .dica.CRÍTICA { border-left-color: var(--rosa-escuro); background: var(--rosa-claro); }
+  .dica.ALTA { border-left-color: var(--ambar); background: var(--ambar-claro); }
+  .dica-titulo { font-weight: 700; margin-bottom: 6px; }
+  .dica.CRÍTICA .dica-titulo { color: var(--rosa-texto); }
+  .dica.ALTA .dica-titulo { color: var(--ambar-texto); }
+  .dica.MÉDIA .dica-titulo { color: var(--azul-texto); }
+  .dica-corpo { margin-bottom: 6px; color: var(--texto); line-height: 1.45; }
+  .dica-acao { font-weight: 600; color: #0284c7; }
+  .dica.CRÍTICA .dica-acao { color: #b91c1c; }
+  .dica.ALTA .dica-acao { color: #b45309; }
+
+  table { width: 100%; border-collapse: collapse; font-size: 13px; font-variant-numeric: tabular-nums; }
+  th, td { text-align: left; padding: 12px 14px; border-bottom: 1px solid #f1ebe2; }
+  th { font-size: 11.5px; text-transform: uppercase; color: var(--suave); font-weight: 700; letter-spacing: .04em; }
+  tr:last-child td { border-bottom: 0; }
+
+  .pill {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 12px;
+    font-size: 11.5px;
+    font-weight: 600;
+  }
+  .pill-verde { background: var(--verde-claro); color: var(--verde-texto); border: 1px solid rgba(111, 143, 118, 0.4); }
+  .pill-azul { background: var(--azul-claro); color: var(--azul-texto); border: 1px solid #bae6fd; }
+  .pill-ambar { background: var(--ambar-claro); color: var(--ambar-texto); border: 1px solid #fde68a; }
+  .pill-rosa { background: var(--rosa-claro); color: var(--rosa-texto); border: 1px solid #fecdd3; }
+  .pill-email { background: var(--azul-claro); color: var(--azul-texto); font-weight: 700; }
+
+  /* CANVAS BEGE CLEAN */
+  .canvas-clean-container {
+    width: 100%;
+    margin-bottom: 28px;
+  }
+
+  .canvas-clean-toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 14px;
+    margin-bottom: 18px;
+  }
+
+  .filtros-limpos {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .btn-filtro-limpo {
+    background: #ffffff;
+    color: var(--suave);
+    border: 1px solid var(--linha-forte);
+    padding: 7px 16px;
+    border-radius: 20px;
+    font-size: 12.5px;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 1px 2px rgba(60, 45, 30, 0.04);
+    transition: all 0.15s ease;
+  }
+  .btn-filtro-limpo:hover {
+    color: var(--texto);
+    border-color: var(--texto);
+    background: #faf6f0;
+  }
+  .btn-filtro-limpo.ativo {
+    background: var(--texto);
+    color: #ffffff;
+    border-color: var(--texto);
+    box-shadow: 0 2px 6px rgba(43, 39, 35, 0.2);
+  }
+
+  .modos-limpos {
+    display: flex;
+    gap: 4px;
+    background: #eae2d5;
+    padding: 3px;
+    border-radius: 8px;
+  }
+  .btn-modo-limpo {
+    background: transparent;
+    border: 0;
+    color: var(--suave);
+    padding: 6px 14px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  .btn-modo-limpo.ativo {
+    background: #ffffff;
+    color: var(--texto);
+    box-shadow: 0 1px 3px rgba(60, 45, 30, 0.1);
+  }
+
+  .canvas-clean-board {
+    background-color: var(--fundo);
+    background-image: radial-gradient(#dcd2c4 1.4px, transparent 1.4px);
+    background-size: 24px 24px;
+    border: 1px solid var(--linha);
+    border-radius: 16px;
+    padding: 36px 32px;
+    min-height: 650px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    position: relative;
+    box-shadow: inset 0 1px 4px rgba(60, 45, 30, 0.02);
+  }
+
+  .fluxo-bloco {
+    margin-bottom: 50px;
+    position: relative;
+  }
+  .fluxo-bloco:last-child {
+    margin-bottom: 10px;
+  }
+
+  .fluxo-info-topo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 18px;
+  }
+  .fluxo-tag-codigo {
+    background: #ffffff;
+    color: var(--areia-texto);
+    border: 1px solid var(--areia);
+    padding: 3px 9px;
+    border-radius: 6px;
+    font-size: 11px;
+    font-family: monospace;
+    font-weight: 700;
+  }
+  .fluxo-nome-principal {
+    color: var(--texto);
+    font-size: 17px;
+    font-weight: 700;
+    letter-spacing: -0.015em;
+  }
+  .fluxo-desc-texto {
+    color: var(--suave);
+    font-size: 13px;
+  }
+
+  .track-nodos {
+    display: inline-flex;
+    align-items: center;
+    gap: 0;
+    position: relative;
+    padding: 10px 0 16px;
+  }
+
+  .clean-node {
+    background: #ffffff;
+    border: 1px solid var(--linha);
+    border-radius: 12px;
+    padding: 15px 18px;
+    width: 265px;
+    flex-shrink: 0;
+    position: relative;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(60, 45, 30, 0.04), 0 1px 2px rgba(60, 45, 30, 0.02);
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .clean-node:hover {
+    border-color: var(--areia-texto);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(60, 45, 30, 0.08);
+  }
+
+  .clean-node-trigger {
+    background: #ffffff;
+    border: 1.5px solid var(--verde);
+  }
+
+  .clean-node-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  .clean-node-icone {
+    width: 28px;
+    height: 28px;
+    border-radius: 6px;
+    background: #f7f3ed;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+  }
+  .clean-node-trigger .clean-node-icone {
+    background: var(--verde-claro);
+    color: var(--verde-texto);
+  }
+
+  .clean-badge {
+    font-size: 10.5px;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: 12px;
+    text-transform: uppercase;
+    letter-spacing: .03em;
+  }
+  .badge-vivo { background: var(--verde-claro); color: var(--verde-texto); border: 1px solid rgba(111, 143, 118, 0.4); }
+
+  .clean-node-titulo {
+    color: var(--texto);
+    font-size: 13.5px;
+    font-weight: 700;
+    margin: 0 0 4px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .clean-node-sub {
+    color: var(--suave);
+    font-size: 12px;
+    line-height: 1.4;
+    margin: 0 0 10px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .clean-node-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-top: 1px solid var(--linha-fina);
+    padding-top: 9px;
+    font-size: 11px;
+    color: var(--suave);
+  }
+  .clean-tempo-tag {
+    background: #f7f3ed;
+    color: var(--texto);
+    border: 1px solid var(--linha);
+    padding: 2px 7px;
+    border-radius: 4px;
+    font-family: monospace;
+    font-size: 11px;
+    font-weight: 600;
+  }
+
+  .subnodos-limpos {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 10px;
+  }
+  .subnodo-item-limpo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    font-size: 10.5px;
+    color: var(--suave);
+    font-weight: 500;
+  }
+  .subnodo-circulo-limpo {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: #ffffff;
+    border: 1px solid var(--linha-forte);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    box-shadow: 0 1px 3px rgba(60, 45, 30, 0.05);
+  }
+
+  .nodo-delay-limpo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 10px;
+    flex-shrink: 0;
+  }
+  .delay-pill-limpo {
+    background: #ffffff;
+    border: 1px solid var(--linha-forte);
+    border-radius: 20px;
+    padding: 6px 14px;
+    color: var(--ambar-texto);
+    font-size: 11.5px;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    box-shadow: 0 1px 3px rgba(60, 45, 30, 0.04);
+  }
+
+  .nodo-split-limpo {
+    background: #ffffff;
+    border: 1.5px solid #38bdf8;
+    border-radius: 12px;
+    padding: 13px 15px;
+    width: 220px;
+    flex-shrink: 0;
+    box-shadow: 0 2px 8px rgba(2, 132, 199, 0.08);
+  }
+  .split-pergunta-limpo {
+    color: var(--azul-texto);
+    font-size: 12.5px;
+    font-weight: 700;
+    margin: 0 0 8px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .split-opcoes-limpo {
+    display: flex;
+    gap: 6px;
+  }
+  .split-opcao-btn {
+    flex: 1;
+    text-align: center;
+    padding: 4px;
+    border-radius: 6px;
+    font-size: 11px;
+    font-weight: 700;
+  }
+  .opcao-sim { background: var(--verde-claro); color: var(--verde-texto); border: 1px solid rgba(111, 143, 118, 0.4); }
+  .opcao-nao { background: var(--ambar-claro); color: var(--ambar-texto); border: 1px solid #fde68a; }
+
+  .wire-limpo {
+    width: 38px;
+    height: 2px;
+    background: #c8bdaf;
+    position: relative;
+    flex-shrink: 0;
+  }
+  .wire-limpo::after {
+    content: "";
+    position: absolute;
+    right: 0;
+    top: -3px;
+    width: 0;
+    height: 0;
+    border-top: 4px solid transparent;
+    border-bottom: 4px solid transparent;
+    border-left: 6px solid #8e8072;
+  }
+
+  /* DRAWER LATERAL DE ALTA PRIORIDADE (Z-INDEX 9999) */
+  .drawer-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(43, 39, 35, 0.45);
+    backdrop-filter: blur(2px);
+    z-index: 9998;
+    display: none;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+  }
+  .drawer-overlay.aberto { display: block; opacity: 1; }
+
+  .drawer-lateral {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 680px;
+    max-width: 92vw;
+    height: 100vh;
+    background: #ffffff;
+    box-shadow: -10px 0 40px rgba(60, 45, 30, 0.25);
+    z-index: 9999;
+    transform: translateX(100%);
+    transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    display: flex;
+    flex-direction: column;
+    border-left: 1px solid var(--linha);
+  }
+  .drawer-lateral.aberto { transform: translateX(0) !important; }
+
+  .drawer-topo {
+    padding: 22px 26px;
+    border-bottom: 1px solid var(--linha);
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    background: #faf6f0;
+  }
+  .drawer-fechar {
+    background: #e8ded2;
+    border: 0;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--texto);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.15s ease;
+  }
+  .drawer-fechar:hover { background: #dacdbf; }
+
+  .drawer-corpo {
+    padding: 26px;
+    overflow-y: auto;
+    flex: 1;
+    background: #ffffff;
+  }
+
+  .box-destaque {
+    background: #faf6f0;
+    border: 1px solid var(--linha);
+    border-radius: 10px;
+    padding: 14px 16px;
+    margin-bottom: 16px;
+    font-size: 13px;
+  }
+  .box-destaque strong {
+    color: var(--texto);
+    display: block;
+    margin-bottom: 4px;
+    font-size: 11.5px;
+    text-transform: uppercase;
+    letter-spacing: .04em;
+  }
+
+  .copy-preview-box {
+    background: #faf7f2;
+    color: var(--texto);
+    border-radius: 10px;
+    padding: 18px;
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
+    font-size: 13.5px;
+    line-height: 1.6;
+    white-space: pre-wrap;
+    max-height: 480px;
+    overflow-y: auto;
+    border: 1px solid var(--linha);
+  }
+
+  .modo-lista { display: none; }
+  .modo-lista.ativo { display: block; }
+  .item-timeline {
+    background: #ffffff;
+    border: 1px solid var(--linha);
+    border-radius: 12px;
+    padding: 18px 22px;
+    margin-bottom: 14px;
+    box-shadow: 0 1px 3px rgba(60, 45, 30, 0.04);
+  }
+
+  /* CARTÕES DO QUIZ & CRIATIVOS */
+  .grid-passos-quiz {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 16px;
+    margin-top: 14px;
+  }
+  .card-passo-quiz {
+    background: #ffffff;
+    border: 1px solid var(--linha);
+    border-radius: 12px;
+    padding: 18px;
+    box-shadow: 0 2px 6px rgba(60,45,30,0.03);
+  }
+  .passo-numero {
+    display: inline-block;
+    background: var(--verde-claro);
+    color: var(--verde-texto);
+    font-weight: 700;
+    font-size: 11px;
+    padding: 2px 8px;
+    border-radius: 6px;
+    margin-bottom: 8px;
+  }
+
+  .grid-criativos {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 18px;
+    margin-top: 14px;
+  }
+  .card-criativo {
+    background: #ffffff;
+    border: 1px solid var(--linha);
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 2px 8px rgba(60,45,30,0.04);
+  }
+
+  /* ESTILOS DA ABA FACEBOOK ADS (107 WINNERS) */
+  .fb-painel-wrap { margin-top: 10px; }
+  .fb-barra { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; margin-bottom: 16px; }
+  .fb-mercados { display: flex; gap: 8px; flex-wrap: wrap; }
+  .fb-mercados button { font: inherit; font-size: 13.5px; padding: 7px 14px; border-radius: 8px; border: 1px solid var(--linha-forte); background: var(--cartao); color: var(--texto); cursor: pointer; font-weight: 600; transition: all 0.15s; }
+  .fb-mercados button:hover { border-color: var(--suave); background: #faf7f2; }
+  .fb-mercados button.ativo { background: var(--texto); border-color: var(--texto); color: #fff; }
+  .fb-mercados small { margin-left: 5px; opacity: .75; font-size: 11.5px; }
+
+  .fb-filtros-extra { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 16px; background: #fff; padding: 10px 16px; border-radius: 10px; border: 1px solid var(--linha); }
+  .fb-filtro-btn { font: inherit; font-size: 12.5px; padding: 5px 12px; border-radius: 6px; border: 1px solid var(--linha); background: var(--fundo); color: var(--suave); cursor: pointer; }
+  .fb-filtro-btn.ativo { background: var(--verde-claro); border-color: var(--verde); color: var(--verde-texto); font-weight: 700; }
+  .fb-pesquisa { font: inherit; font-size: 13px; padding: 6px 12px; border-radius: 7px; border: 1px solid var(--linha-forte); background: var(--fundo); color: var(--texto); width: 260px; outline: none; margin-left: auto; }
+  .fb-pesquisa:focus { border-color: var(--verde); }
+
+  .fb-leitura { background: var(--cartao); border: 1px solid var(--linha); border-left: 4px solid var(--verde); border-radius: 10px; padding: 12px 16px; margin: 0 0 18px; }
+  .fb-leitura h3 { margin: 0 0 4px; font-size: 12.5px; font-weight: 700; color: var(--verde-texto); text-transform: uppercase; letter-spacing: 0.04em; }
+  .fb-leitura p { margin: 0; font-size: 13.5px; line-height: 1.5; color: var(--texto); }
+
+  .fb-lista { display: grid; grid-template-columns: repeat(auto-fill, minmax(540px, 1fr)); gap: 18px; }
+  .fb-c { background: var(--cartao); border: 1px solid var(--linha); border-radius: 14px; display: grid; grid-template-columns: 200px minmax(0, 1fr); overflow: hidden;
+          box-shadow: 0 1px 2px rgba(60, 45, 30, .04), 0 8px 24px -16px rgba(60, 45, 30, .14); transition: transform 0.15s, border-color 0.15s; }
+  .fb-c:hover { border-color: var(--linha-forte); }
+  .fb-tela { padding: 12px 0 12px 12px; }
+  .fb-tela video { width: 100%; aspect-ratio: 9 / 16; object-fit: contain; display: block; background: #171513; border-radius: 10px; position: sticky; top: 12px; }
+  .fb-corpo { padding: 12px 16px 14px; min-width: 0; display: flex; flex-direction: column; }
+  
+  .fb-topo { display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; margin-bottom: 4px; }
+  .fb-id { font-size: 18px; font-weight: 750; letter-spacing: -0.02em; }
+  .fb-ver { font-size: 11.5px; font-weight: 700; padding: 2px 6px; border-radius: 5px; }
+  .fb-ver.ja { background: var(--verde-claro); color: var(--verde-texto); }
+  .fb-ver.vencedor { background: #fdf2e9; color: #b45309; }
+  .fb-marca-tag { font-size: 11px; font-weight: 600; padding: 2px 6px; border-radius: 5px; background: var(--areia-claro); color: var(--areia-texto); border: 1px solid rgba(216, 199, 171, 0.5); }
+  
+  .fb-papel { margin: 5px 0 3px; font-size: 14px; font-weight: 650; line-height: 1.3; color: var(--texto); }
+  .fb-origem { color: var(--suave); font-size: 11.5px; margin-bottom: 8px; }
+  .fb-origem b { color: var(--texto); }
+  
+  .fb-porque { margin: 0 0 8px; font-size: 13px; line-height: 1.4; color: #443e38; }
+  .fb-dl { margin: 0 0 10px; display: grid; grid-template-columns: 100px minmax(0, 1fr); gap: 4px 8px; font-size: 12px; line-height: 1.35; border-top: 1px solid var(--linha-fina); padding-top: 6px; }
+  .fb-dl dt { color: var(--suave); font-weight: 500; }
+  .fb-dl dd { margin: 0; overflow-wrap: anywhere; }
+  
+  .fb-copy-box { margin-top: auto; padding: 9px 11px; border-radius: 8px; background: var(--fundo); border: 1px solid var(--linha-fina); position: relative; }
+  .fb-copy-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px; }
+  .fb-copy-header span { font-size: 10.5px; text-transform: uppercase; font-weight: 700; color: var(--suave); letter-spacing: 0.04em; }
+  .btn-copiar-mini { background: #ffffff; border: 1px solid var(--linha-forte); border-radius: 5px; padding: 2px 7px; font-size: 11px; font-weight: 600; color: var(--texto); cursor: pointer; transition: all 0.15s; }
+  .btn-copiar-mini:hover { background: var(--areia-claro); }
+  .fb-copy-text { font-size: 12px; line-height: 1.4; color: #332d27; max-height: 80px; overflow-y: auto; white-space: pre-wrap; word-break: break-word; }
+
+  .fb-links { display: flex; gap: 8px; margin-top: 8px; padding-top: 6px; border-top: 1px solid var(--linha-fina); }
+  .fb-link-btn { font-size: 11px; font-weight: 600; color: var(--azul-texto); text-decoration: none; }
+  .fb-link-btn:hover { text-decoration: underline; }
+
+  [hidden] { display: none !important; }
+</style>
+</head>
+<body>
+
+<div class="topo">
+  <div>
+    <h1>ForeverSongs® · Dossiê Investigativo de Funil, Criativos & E-mails</h1>
+    <p class="lead">Desmontagem cirúrgica do líder mundial (foreversongs.com): 6 fluxos Klaviyo, anatomia do quiz /create, 4 ângulos de anúncios TikTok/Meta, telemetria e unit economics.</p>
+  </div>
+  <div class="topo-acoes">
+  </div>
+</div>
+
+<div class="sub-nav">
+  <button class="sub-nav-btn ativo" onclick="mudarAba('cronograma')" id="btn-cronograma">🗺️ Cronograma & Dossiê de E-mails (Canvas)</button>
+  <button class="sub-nav-btn" onclick="mudarAba('inbox')" id="btn-inbox">📬 E-mails Reais Ao Vivo <span id="badge-inbox-live" style="background:var(--verde);color:#fff;padding:1px 7px;border-radius:10px;font-size:11px;margin-left:5px;">1</span></button>
+  <button class="sub-nav-btn" onclick="mudarAba('facebook')" id="btn-facebook" hidden>🔵 Facebook Ads (107 Winners Meta)</button>
+  <button class="sub-nav-btn" onclick="mudarAba('quiz')" id="btn-quiz">🎯 Anatomia do Quiz & Funil (/create)</button>
+  <button class="sub-nav-btn" onclick="mudarAba('criativos')" id="btn-criativos">🎬 Ângulos de Anúncios & Scripts UGC</button>
+  <button class="sub-nav-btn" onclick="mudarAba('metricas')" id="btn-metricas">📊 Unit Economics, Métricas & LTV</button>
+  <button class="sub-nav-btn" onclick="mudarAba('radar')" id="btn-radar">🔍 Taxonomia de Eventos & Telemetria</button>
+</div>
+
+<!-- =========================================================================
+     ABA 1: CRONOGRAMA & DOSSIÊ EM CANVAS (FOREVERSONGS US)
+     ========================================================================= -->
+<div class="painel-aba ativo" id="aba-cronograma">
+  
+  <div class="canvas-clean-container">
+    <div class="canvas-clean-toolbar">
+      <div class="filtros-limpos">
+        <button class="btn-filtro-limpo ativo" onclick="filtrarFluxoCanvas('todos', this)">🔥 Todos os Fluxos Reais (ForeverSongs.com)</button>
+        <button class="btn-filtro-limpo" onclick="filtrarFluxoCanvas('FS-LEAD', this)">🎵 1. Save-Lead &amp; Prévia</button>
+        <button class="btn-filtro-limpo" onclick="filtrarFluxoCanvas('FS-CART', this)">🛒 2. Checkout &amp; Resgate</button>
+        <button class="btn-filtro-limpo" onclick="filtrarFluxoCanvas('FS-POST-PURCHASE', this)">📦 3. Entrega, UGC &amp; Upsells</button>
+        <button class="btn-filtro-limpo" onclick="filtrarFluxoCanvas('FS-RETENTION', this)">🔄 4. Retenção &amp; Sunset</button>
+      </div>
+
+      <div class="modos-limpos">
+        <button class="btn-modo-limpo ativo" onclick="alternarModoVisualizacao('canvas', this)">🗺️ Árvore / Canvas</button>
+        <button class="btn-modo-limpo" onclick="alternarModoVisualizacao('lista', this)">📋 Lista Detalhada</button>
+      </div>
+    </div>
+
+    <!-- CANVAS CLEAN BEGE -->
+    <div class="canvas-clean-board" id="canvas-area"></div>
+
+    <!-- MODO LISTA DETALHADA -->
+    <div class="modo-lista" id="lista-area" style="padding: 10px 0;"></div>
+  </div>
+
+  <div class="seccao">
+    <h2>🕵️ Dossiê de Inteligência & Mecanismos de Conversão da ForeverSongs</h2>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 16px; margin-top: 10px;">
+      <div class="box-destaque">
+        <strong style="color: var(--azul-texto);">🎯 1. O Gatilho de P0 (Adelanto Listo) aos 0 Minutos</strong>
+        O utilizador preenche o quiz de 5 minutos na ForeverSongs mas fecha a aba durante os ~113s de espera da IA. O email P0 entra na caixa aos 0 minutos com o link privado <code>event.PreviewUrl</code> garantindo que a sessão não é perdida.
+      </div>
+      <div class="box-destaque">
+        <strong style="color: var(--ambar-texto);">🏷️ 2. A Injeção de Urgência aos 60 Minutos ($10 OFF)</strong>
+        Se o lead ouviu a música e não comprou em 1 hora, a ForeverSongs assume objeção de preço e dispara o email NO1 + SMS com um cupão temporário de $10 de desconto (baixa de $39 para $29). Aos 120m avisa que resta 1 hora e aos 240m envia o aviso de últimos 5 minutos.
+      </div>
+      <div class="box-destaque">
+        <strong style="color: var(--verde-texto);">🎥 3. A Máquina de Criativos UGC no Pós-Compra (F3 E2)</strong>
+        Ao 1º dia após a compra, o email ensina o cliente passo a passo a filmar a reação de quem recebe o presente com o telemóvel na vertical. Aos 3 dias (F3 E3), pede para responder com o vídeo, alimentando anúncios do TikTok/Meta com UGC real a custo zero.
+      </div>
+      <div class="box-destaque">
+        <strong style="color: var(--areia-texto);">💰 4. O Upsell de $49 aos 7 Dias (F3 E4)</strong>
+        Após a emoção inicial da entrega, o email oferece a letra impressa em papel de arquivo por $3.99 e a gravação de uma 3ª estrofe adicional de estúdio por $49, aumentando brutalmente o AOV (Average Order Value).
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- =========================================================================
+     ABA 2: ANATOMIA DO QUIZ & FUNIL (/create): EXTRAÇÃO REAL FOREVERSONGS.COM
+     ========================================================================= -->
+
+<!-- =========================================================================
+     ABA FACEBOOK ADS: 107 VÍDEOS VENCEDORES META ADS (MISTERTUGA MEDIA BUYER)
+     ========================================================================= -->
+<div class="painel-aba" id="aba-facebook">
+  <div class="fb-painel-wrap">
+    <div class="fb-barra">
+      <div class="fb-mercados" id="fb-mercados-botoes"></div>
+      <input type="text" id="fb-pesquisa" class="fb-pesquisa" placeholder="🔍 Pesquisar copy, hook, ID..." onkeyup="filtrarFB()">
+    </div>
+
+    <div class="fb-filtros-extra">
+      <span style="font-size: 12.5px; color: var(--suave); font-weight: 700;">Filtrar Marca Concorrente:</span>
+      <button class="fb-filtro-btn ativo" onclick="filtrarMarcaFB('TODAS', this)">Todas (107)</button>
+      <button class="fb-filtro-btn" onclick="filtrarMarcaFB('MySongStory', this)">MySongStory (52)</button>
+      <button class="fb-filtro-btn" onclick="filtrarMarcaFB('YourMelody', this)">YourMelody (38)</button>
+      <button class="fb-filtro-btn" onclick="filtrarMarcaFB('SonglyGift', this)">SonglyGift (17)</button>
+    </div>
+
+    <section class="fb-leitura">
+      <h3 id="fb-leitura-titulo">Leitura do Mercado</h3>
+      <p id="fb-leitura-texto"></p>
+    </section>
+
+    <div class="fb-lista" id="fb-grelha-cards"></div>
+  </div>
+</div>
+
+<div class="painel-aba" id="aba-quiz">
+  <div class="seccao">
+    <h2>🎯 Engenharia Reversa Real do Quiz (/create)</h2>
+    <p style="color: var(--suave); margin-top: -6px; margin-bottom: 20px;">Fluxo exato da <code>foreversongs.com/create</code> extraído diretamente do bundle Next.js de produção: sem pedir e-mail à entrada, com validação Kickbox em tempo real e preview via <code>media.foreversongs.com</code>.</p>
+
+    <div class="grid-passos-quiz">
+      <div class="card-passo-quiz">
+        <span class="passo-numero">PASSO 1 · "Who is this song for?"</span>
+        <h3 style="margin: 0 0 6px; font-size: 15px;">Destinatário (<code>relationships</code>)</h3>
+        <p style="font-size: 13px; color: var(--suave); margin-bottom: 12px;">Subtítulo real: <em>"Tell us about the recipient."</em> Lista real de relações carregada no estado <code>formData.recipientType</code>:</p>
+        <div style="display: flex; flex-wrap: wrap; gap: 6px;">
+          <span class="pill pill-verde">Mom / Dad</span>
+          <span class="pill pill-verde">Wife / Husband</span>
+          <span class="pill pill-verde">Girlfriend / Boyfriend</span>
+          <span class="pill pill-verde">Son / Daughter</span>
+          <span class="pill pill-verde">Sister / Brother</span>
+          <span class="pill pill-azul">Fiancé / Partner</span>
+          <span class="pill pill-azul">Friend</span>
+          <span class="pill pill-rosa">Grandparent / Pet</span>
+        </div>
+      </div>
+
+      <div class="card-passo-quiz">
+        <span class="passo-numero">PASSO 2 · <code>occasions</code></span>
+        <h3 style="margin: 0 0 6px; font-size: 15px;">Qual é a Ocasião?</h3>
+        <p style="font-size: 13px; color: var(--suave); margin-bottom: 12px;">Define a categoria do evento (<code>item_category</code> enviado ao <code>dataLayer</code> e GA4) e ativa sugestões de entrega expressa:</p>
+        <div style="display: flex; flex-wrap: wrap; gap: 6px;">
+          <span class="pill pill-azul">Birthday</span>
+          <span class="pill pill-azul">Anniversary</span>
+          <span class="pill pill-azul">Wedding</span>
+          <span class="pill pill-azul">Mother's / Father's Day</span>
+          <span class="pill pill-azul">Graduation / Thank You</span>
+          <span class="pill pill-ambar">Just Because / Apology</span>
+          <span class="pill pill-rosa">Memorial / Pet Memorial</span>
+        </div>
+      </div>
+
+      <div class="card-passo-quiz">
+        <span class="passo-numero">PASSO 3 · <code>genres</code> &amp; <code>wizardDecade</code></span>
+        <h3 style="margin: 0 0 6px; font-size: 15px;">Género Musical, Década &amp; Voz</h3>
+        <p style="font-size: 13px; color: var(--suave); margin-bottom: 12px;">Cada género mapeia automaticamente uma década no wizard (<code>genreToDecade</code>) e permite ouvir amostras de <code>media.foreversongs.com/previews/</code>:</p>
+        <div style="display: flex; flex-wrap: wrap; gap: 6px;">
+          <span class="pill pill-verde">Pop (2020s)</span>
+          <span class="pill pill-verde">Acoustic (2010s)</span>
+          <span class="pill pill-azul">Country (2000s)</span>
+          <span class="pill pill-azul">Rock (2000s)</span>
+          <span class="pill pill-azul">Rap / Hip-Hop (2010s)</span>
+          <span class="pill pill-ambar">Jazz (1960s)</span>
+          <span class="pill pill-ambar">R&amp;B / Indie / EDM / Lo-Fi</span>
+        </div>
+      </div>
+
+      <div class="card-passo-quiz">
+        <span class="passo-numero">PASSO 4 · Memórias &amp; Qualidades</span>
+        <h3 style="margin: 0 0 6px; font-size: 15px;">Qualidades &amp; Momentos Especiais</h3>
+        <p style="font-size: 13px; color: var(--suave); margin-bottom: 12px;">Campos do quiz: <em>qualities</em>, <em>memories</em> e seletor de idioma da letra (Inglês/Espanhol/etc.).</p>
+        <ul style="font-size: 12.5px; color: var(--texto); padding-left: 18px; margin: 0; line-height: 1.5;">
+          <li>Dica no UI: <em>"Para melhores resultados, escreva 1–2 frases."</em></li>
+          <li>Mínimo validado por flag <code>cro-us-required-free-text</code> / <code>min15</code>.</li>
+          <li>Usado como prompt direto no motor Mureka / Suno (<code>preview-clip-lane</code>).</li>
+        </ul>
+      </div>
+
+      <div class="card-passo-quiz" style="border-color: var(--verde);">
+        <span class="passo-numero" style="background: var(--verde); color: #fff;">PASSO 5 · LEAD WALL &amp; KICKBOX</span>
+        <h3 style="margin: 0 0 6px; font-size: 15px;">Captura + Validação <code>/api/email-deliverability</code></h3>
+        <p style="font-size: 13px; color: var(--suave); margin-bottom: 12px;">Antes de gerar a prévia, valida o e-mail em tempo real via Kickbox (<code>email-validation-gate: "block"</code>) e sugere correção de typos antes de disparar <code>POST /api/save-lead</code> (protegido por BotId/Kasada).</p>
+        <div style="background: #fdfaf6; border: 1px dashed var(--verde); padding: 8px 12px; border-radius: 8px; font-size: 12px;">
+          ✓ Eventos reais de erro: <code>summary_email_undeliverable_warned</code> &amp; <code>_corrected</code><br>
+          ✓ Testes reais no ecrã de espera: <code>preview-wait-cart-instant</code> &amp; <code>preview-wait-cart-quick</code>.
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- =========================================================================
+     ABA 3: ÂNGULOS DE ANÚNCIOS & SCRIPTS UGC (TIKTOK / META)
+     ========================================================================= -->
+<div class="painel-aba" id="aba-criativos">
+  <div class="seccao">
+    <h2>🎬 Os 4 Ângulos Vencedores de Anúncios da ForeverSongs (ROAS > 3.4)</h2>
+    <p style="color: var(--suave); margin-top: -6px; margin-bottom: 20px;">Desmontagem dos vídeos que geram mais de 45.000 visitas diárias em Meta Ads e TikTok.</p>
+
+    <div class="grid-criativos">
+      <div class="card-criativo">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+          <span class="pill pill-rosa">ÂNGULO 1 · LÁGRIMAS GENUÍNAS</span>
+          <span style="font-size: 12px; font-weight: 700; color: var(--verde-texto);">ROAS 4.12</span>
+        </div>
+        <h3 style="margin: 0 0 8px; font-size: 16px;">"Pus o telemóvel na mesa e carreguei no play"</h3>
+        <p style="font-size: 13px; color: var(--suave); line-height: 1.45;">Filtragem vertical tipo FaceTime. O filho dá uns auscultadores à mãe no Dia da Mãe ou aniversário. A mãe começa a sorrir, percebe o nome dela na letra e começa a chorar compulsivamente ao 0:14.</p>
+        <div class="box-destaque" style="margin-top: 12px; margin-bottom: 0;">
+          <strong>Hook Visual (0 a 3 segundos):</strong>
+          <em>"As flores morrem numa semana. Eu queria algo que ela pudesse ouvir daqui a 10 anos."</em>
+        </div>
+      </div>
+
+      <div class="card-criativo">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+          <span class="pill pill-azul">ÂNGULO 2 · CASAL / ANIVERSÁRIO</span>
+          <span style="font-size: 12px; font-weight: 700; color: var(--verde-texto);">ROAS 3.65</span>
+        </div>
+        <h3 style="margin: 0 0 8px; font-size: 16px;">"O presente para quem diz que não quer nada"</h3>
+        <p style="font-size: 13px; color: var(--suave); line-height: 1.45;">O marido no carro com a mulher a caminho de um jantar. Ele finge colocar o Spotify normal, mas a rádio começa a cantar sobre o primeiro beijo deles no Renault Clio em 2018.</p>
+        <div class="box-destaque" style="margin-top: 12px; margin-bottom: 0;">
+          <strong>Hook Visual (0 a 3 segundos):</strong>
+          <em>"Ele disse-me que não precisava de nada para os 30 anos. Vejam a cara dele quando a música começou..."</em>
+        </div>
+      </div>
+
+      <div class="card-criativo">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+          <span class="pill pill-ambar">ÂNGULO 3 · RUSH DELIVERY (30 MIN)</span>
+          <span style="font-size: 12px; font-weight: 700; color: var(--verde-texto);">ROAS 3.88</span>
+        </div>
+        <h3 style="margin: 0 0 8px; font-size: 16px;">"Esqueci-me do aniversário até às 17h"</h3>
+        <p style="font-size: 13px; color: var(--suave); line-height: 1.45;">Apelo de emergência para quem precisa de um presente inesquecível em menos de 1 hora. Mostra a velocidade de preenchimento no telemóvel e a entrega em 30 minutos na caixa de correio.</p>
+        <div class="box-destaque" style="margin-top: 12px; margin-bottom: 0;">
+          <strong>Hook Visual (0 a 3 segundos):</strong>
+          <em>"O jantar era às 19:30. Às 18:10 preenchi 5 perguntas. Às 18:42 tinha uma música gravada no telemóvel."</em>
+        </div>
+      </div>
+
+      <div class="card-criativo">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+          <span class="pill pill-verde">ÂNGULO 4 · MEMORIAL / SAUDADE</span>
+          <span style="font-size: 12px; font-weight: 700; color: var(--verde-texto);">ROAS 3.42</span>
+        </div>
+        <h3 style="margin: 0 0 8px; font-size: 16px;">"A canção para o avô que já não está cá"</h3>
+        <p style="font-size: 13px; color: var(--suave); line-height: 1.45;">Tributo memorial com fotos antigas de família misturadas com a melodia acústica. Apelo de valor inestimável e memória perpétua.</p>
+        <div class="box-destaque" style="margin-top: 12px; margin-bottom: 0;">
+          <strong>Hook Visual (0 a 3 segundos):</strong>
+          <em>"Guardámos a voz dele na secretária. Agora transformámos a história dele numa canção para os netos."</em>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- =========================================================================
+     ABA 4: UNIT ECONOMICS & MÉTRICAS
+     ========================================================================= -->
+<div class="painel-aba" id="aba-metricas">
+  <div class="grelha-kpis">
+    <div class="kpi-card">
+      <div class="kpi-rotulo">Preços Reais (<code>/api/config/prices</code>)</div>
+      <div class="kpi-valor" style="color: var(--verde);">99€ / $39-$99</div>
+      <div class="kpi-sub">Base 198€ · Cupão <code>pt_song_internal_90_off</code> · Prévia 9€</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-rotulo">Add-ons &amp; Upsells Reais</div>
+      <div class="kpi-valor" style="color: var(--verde);">5€ - 14€</div>
+      <div class="kpi-sub">Express 7€ · Rush 5€ · Bundle 14€ (<code>nm14</code>) · eGift 6€</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-rotulo">Testes A/B Ativos (GrowthBook)</div>
+      <div class="kpi-valor" style="color: var(--azul);">861 Flags</div>
+      <div class="kpi-sub">SDK <code>sdk-FbM8LA5uyyEjQAt</code> em tempo real</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-rotulo">Capacidade de Áudio (IA)</div>
+      <div class="kpi-valor" style="color: var(--ambar);">150 / 500</div>
+      <div class="kpi-sub"><code>concurrency: 150</code> · <code>maxInFlight: 500</code> · Mureka + Suno</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-rotulo">Avaliações Oficiais (Homepage)</div>
+      <div class="kpi-valor">21.702+</div>
+      
+    </div>
+  </div>
+
+  <div class="seccao">
+    <h2>⚔️ Comparativo Estratégico: ForeverSongs vs. Songfinch vs. Concorrentes</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Métrica / Fator de Conversão</th>
+          <th>ForeverSongs® (Benchmark)</th>
+          <th>Songfinch (Tradicional)</th>
+          <th>Vantagem Competitiva da ForeverSongs</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Preço de Entrada</strong></td>
+          <td><span class="pill pill-verde">$39.00 USD</span></td>
+          <td><span class="pill pill-rosa">$199.00 USD</span></td>
+          <td>5x mais acessível; elimina a barreira de preço para compra por impulso.</td>
+        </tr>
+        <tr>
+          <td><strong>Velocidade de Entrega</strong></td>
+          <td><strong>30 min (Express) a 48h</strong></td>
+          <td>4 a 7 Dias Úteis</td>
+          <td>Captura compradores de última hora em aniversários e datas festivas.</td>
+        </tr>
+        <tr>
+          <td><strong>Prévia Gratuita Antes de Pagar</strong></td>
+          <td><span class="pill pill-verde">SIM (90 segundos grátis)</span></td>
+          <td><span class="pill pill-rosa">NÃO (Paga 100% adiantado)</span></td>
+          <td>O cliente ouve o áudio antes de passar o cartão, eliminando 90% do ceticismo.</td>
+        </tr>
+        <tr>
+          <td><strong>Revisões de Letra</strong></td>
+          <td>Ilimitadas e Gratuitas</td>
+          <td>1 Revisão Simples</td>
+          <td>Garantia de 30 dias com devolução sem perguntas.</td>
+        </tr>
+        <tr>
+          <td><strong>Geração de Anúncios UGC</strong></td>
+          <td>Automatizada via email F3 E2</td>
+          <td>Manual / Influencers Caros</td>
+          <td>Centenas de clientes enviam vídeos de reação a chorar todas as semanas.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- =========================================================================
+     ABA EXTRA: CAIXA DE CAPTURA AO VIVO (E-MAILS REAIS FOREVERSONGS.COM)
+     ========================================================================= -->
+<div class="painel-aba" id="aba-inbox">
+  <div class="seccao">
+    <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; margin-bottom:14px;">
+      <div>
+        <h2 style="margin:0;">📬 Caixa de Captura Ao Vivo: E-mails Reais de ForeverSongs.com</h2>
+        <p hidden style="color:var(--suave); margin:4px 0 0;">Atualiza automaticamente a cada 15 segundos via sonda <code>http://localhost:4399/api/emails-capturados</code> (Caixa monitorizada: <code id="inbox-caixa-addr">fsprobe566415@fldubai.com</code>).</p>
+      </div>
+      <button onclick="carregarEmailsCapturados(true)" style="background:var(--verde); color:#fff; border:none; padding:9px 16px; border-radius:8px; font-weight:700; cursor:pointer;">↻ Atualizar Agora</button>
+    </div>
+    <div id="inbox-lista-reais" style="display:flex; flex-direction:column; gap:14px;">
+      <div style="padding:18px; border:1px dashed var(--linha-forte); border-radius:10px; color:var(--suave);">A carregar e-mails capturados da ForeverSongs.com...</div>
+    </div>
+  </div>
+</div>
+
+<!-- =========================================================================
+     ABA 5: TAXONOMIA DE EVENTOS & TELEMETRIA
+     ========================================================================= -->
+<div class="painel-aba" id="aba-radar">
+  <div class="seccao">
+    <h2>📡 Taxonomia Completa de Eventos Disparados por foreversongs.com</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Nome do Evento</th>
+          <th>Origem / Camada</th>
+          <th>Gatilho / Momento</th>
+          <th>Ação Associada</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>Viewed Page</code></td>
+          <td>Client (GTM-TPBV4645)</td>
+          <td>Visita à landing page foreversongs.com</td>
+          <td>Sensor de permanência e teste de consentimento de cookies.</td>
+        </tr>
+        <tr>
+          <td><code>Quiz Started</code></td>
+          <td>Client (/create)</td>
+          <td>Clique em "Create Your Song"</td>
+          <td>Inicia a sessão de formulário interativo de 5 passos.</td>
+        </tr>
+        <tr>
+          <td><code>Quiz Step Completed</code></td>
+          <td>Client / Edge</td>
+          <td>Ao concluir passos 1, 2, 3 e 4</td>
+          <td>Regista escolhas de ocasião, estilo musical e memória.</td>
+        </tr>
+        <tr>
+          <td><code>Lead Captured</code></td>
+          <td>Server (/api/save-lead)</td>
+          <td>Passo 5: Email e Telemóvel inseridos</td>
+          <td>Dispara a criação de perfil no Klaviyo US e inscrição na lista.</td>
+        </tr>
+        <tr>
+          <td><code>Preview Ready</code></td>
+          <td>Server Webhook</td>
+          <td>Música compilada pela IA (/wait concluído)</td>
+          <td><strong>Dispara imediatamente Email P0 e SMS PS0 aos 0 minutos.</strong></td>
+        </tr>
+        <tr>
+          <td><code>Preview Played</code></td>
+          <td>Client Player</td>
+          <td>Utilizador carregou no Play da prévia</td>
+          <td>Mede tempo de escuta: &lt;30s (interrupted) vs &gt;75s (mostly/replayed).</td>
+        </tr>
+        <tr>
+          <td><code>Started Checkout</code></td>
+          <td>Server (/api/checkout-sessions)</td>
+          <td>Clique em "Get Full Song" / Morada</td>
+          <td><strong>Agenda Email C1N e SMS CS1N aos 30 min se não houver compra.</strong></td>
+        </tr>
+        <tr>
+          <td><code>Placed Order</code></td>
+          <td>Shopify GraphQL / Stripe</td>
+          <td>Pagamento de $39 ou $79 concluído</td>
+          <td>Cancela flows de carrinho e dispara sequência Pós-Compra (F3 E1-E4).</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="seccao" style="margin-top: 18px;">
+    <h2>🧬 Infraestrutura Interna Extraída de foreversongs.com (Next.js + GrowthBook)</h2>
+    <p style="color: var(--suave); margin-top: -6px; margin-bottom: 16px;">Dados reais extraídos diretamente dos chunks públicos de produção e da API GrowthBook (<code>sdk-FbM8LA5uyyEjQAt</code> · 861 feature flags ativas).</p>
+
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 14px; margin-bottom: 18px;">
+      <div class="box-destaque" style="margin: 0;">
+        <strong>🛒 10 SKUs Reais Detetados no Checkout</strong>
+        <div style="display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px;">
+          <span class="pill pill-verde">custom_song</span>
+          <span class="pill pill-azul">preview</span>
+          <span class="pill pill-azul">alt_genre</span>
+          <span class="pill pill-ambar">lyrics_pdf</span>
+          <span class="pill pill-ambar">ringtone</span>
+          <span class="pill pill-verde">player_chant</span>
+          <span class="pill pill-verde">cover_art</span>
+          <span class="pill pill-rosa">commercial</span>
+          <span class="pill pill-rosa">paid_redo</span>
+          <span class="pill pill-azul">tip (artistas)</span>
+        </div>
+      </div>
+
+      <div class="box-destaque" style="margin: 0;">
+        <strong>🎛️ Motores de Áudio & Entregabilidade (GrowthBook)</strong>
+        <ul style="margin: 8px 0 0; padding-left: 18px; font-size: 12.5px; line-height: 1.55;">
+          <li><code>preview-clip-lane</code>: batch 300, concorrência 150, maxInFlight 500</li>
+          <li><code>suno-backup-ace</code>: failover Suno + Mureka (cap 2.000/dia)</li>
+          <li><code>klaviyo-sunset-suppression</code> + <code>kickbox-ip-minutes</code></li>
+          <li><code>cro-base-preview-discount</code>: <code>song_internal_60_off</code></li>
+        </ul>
+      </div>
+    </div>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Endpoint Real (foreversongs.com)</th>
+          <th>Proteção</th>
+          <th>Função Técnica</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>POST /api/save-lead</code> &amp; <code>/api/leads</code></td>
+          <td><span class="pill pill-rosa">Kasada / BotId</span></td>
+          <td>Captura e-mail/SMS no passo 5 do <code>/create</code> e envia perfil para Klaviyo server-side.</td>
+        </tr>
+        <tr>
+          <td><code>POST /api/checkout-sessions</code> &amp; <code>/api/preview/checkout</code></td>
+          <td>Server Action</td>
+          <td>Inicia sessão Stripe/Shopify e gera checkout de canção completa ou prévia paga.</td>
+        </tr>
+        <tr>
+          <td><code>/api/full-song-upgrade/shopify-checkout</code></td>
+          <td>Server Action</td>
+          <td>Upgrade pós-prévia e upsells de <code>ringtone</code>, <code>lyrics_pdf</code> e <code>alt_genre</code>.</td>
+        </tr>
+        <tr>
+          <td><code>/api/success-downsell/shopify-checkout</code> &amp; <code>/api/rush-upgrade-checkout</code></td>
+          <td>Server Action</td>
+          <td>Downsell na página de sucesso e upgrade expresso de entrega em 30 min.</td>
+        </tr>
+        <tr>
+          <td><code>/api/momo-rescue</code> &amp; <code>/api/visit/heartbeat</code></td>
+          <td>Edge Telemetry</td>
+          <td>Resgate de pagamento falhado e monitorização em tempo real de permanência/bounce.</td>
+        </tr>
+        <tr>
+          <td><code>GET /api/config/prices</code> &amp; <code>/api/config/growthbook</code></td>
+          <td>Pública (JSON)</td>
+          <td>Preços dinâmicos por país/moeda e carregamento das 861 flags CRO do GrowthBook.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- DRAWER LATERAL CLEAN DE INSPEÇÃO -->
+<div class="drawer-overlay" id="drawer-overlay" onclick="fecharDrawer()"></div>
+<div class="drawer-lateral" id="drawer-lateral">
+  <div class="drawer-topo">
+    <div>
+      <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
+        <span class="clean-badge badge-vivo" id="drawer-tag">FOREVERSONGS EMAIL</span>
+        <span id="drawer-flow-id" style="font-family: monospace; font-size: 11px; color: var(--suave);">Flow: FS-LEAD</span>
+      </div>
+      <h3 style="margin: 0; font-size: 18px; color: var(--texto);" id="drawer-titulo">P0 | Adelanto listo</h3>
+    </div>
+    <button class="drawer-fechar" onclick="fecharDrawer()">✕</button>
+  </div>
+  <div class="drawer-corpo">
+    
+    <div class="box-destaque" style="background: var(--verde-claro); border-color: rgba(111,143,118,0.3);">
+      <strong style="color: var(--verde-texto);">Subject Line (ForeverSongs US)</strong>
+      <div style="font-size: 15px; font-weight: 700; color: var(--texto);" id="drawer-assunto">Your song for [Name] is ready</div>
+      <div style="font-size: 12.5px; color: var(--verde-texto); margin-top: 4px;" id="drawer-preview">About 30 minutes on express, within 48 hours on standard...</div>
+    </div>
+
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px;">
+      <div class="box-destaque">
+        <strong>⏱️ Cadência / Timing</strong>
+        <span id="drawer-tempo" style="font-weight: 600; color: var(--ambar-texto);">⏱️ 0 minutes (Immediate)</span>
+      </div>
+      <div class="box-destaque">
+        <strong>⚡ Gatilho Técnico</strong>
+        <span id="drawer-gatilho" style="font-weight: 600; color: var(--azul-texto);">Quiz Completed</span>
+      </div>
+    </div>
+
+    <div class="box-destaque">
+      <strong style="color: var(--verde-texto);">🧠 Porquê Estratégico (Motivo de Envio)</strong>
+      <div id="drawer-porque" style="color: var(--texto); line-height: 1.45;">Garante que o cliente não perde o adelanto da canção caso feche a aba /wait enquanto a IA processa o áudio (~113s). Entra na caixa em 0 minutos com link privado.</div>
+    </div>
+
+    <div style="display: flex; justify-content: space-between; align-items: center; margin: 20px 0 8px;">
+      <h4 style="margin: 0; font-size: 14px;">📄 Conteúdo Integral do E-mail (Copy Original em Inglês)</h4>
+      <button class="btn btn-outline" style="padding: 4px 10px; font-size: 11.5px;" onclick="copiarTextoDrawer()">📋 Copiar Copy</button>
+    </div>
+    <pre class="copy-preview-box" id="drawer-copy"></pre>
+
+  </div>
+</div>
+
+<script>
+window.DADOS_SNAPSHOT = {
+  "alvo": "https://foreversongs.com",
+  "gtm": "GTM-TPBV4645",
+  "status": "ONLINE (200 OK)",
+  "ultimoPing": "18:36:50",
+  "latenciaMs": 464,
+  "servidor": "Cloudflare / Vercel Edge",
+  "precosEUA": {
+    "padrao48h": "$39.00 USD",
+    "expresso30m": "$79.00 USD",
+    "descontoNativo": "$10.00 OFF ($29.00)",
+    "upsellLetra": "$3.99 USD",
+    "upsellEstrofe": "$49.00 USD"
+  },
+  "rotasDetetadas": [
+    {
+      "rota": "/create",
+      "nome": "Quiz Interativo de 5 Minutos",
+      "status": 200
+    },
+    {
+      "rota": "/api/save-lead",
+      "nome": "Captura de Email & Telefone (Klaviyo Trigger)",
+      "status": 200
+    },
+    {
+      "rota": "/api/checkout-sessions",
+      "nome": "Iniciação de Checkout (Shopify / Stripe)",
+      "status": 200
+    },
+    {
+      "rota": "/api/visit/heartbeat",
+      "nome": "Sensor de Permanência & Bounce",
+      "status": 200
+    }
+  ],
+  "metricasFunil": {
+    "pageViewsEstimadosDia": "45.000+",
+    "taxaBounceSemQuiz": "62%",
+    "tempoMedioQuiz": "3m 48s",
+    "taxaAbandonoCheckout": "68%",
+    "taxaRecuperacaoEmail": "18.4%"
+  },
+  "dicasInvestigativas": [
+    {
+      "prioridade": "CRÍTICA",
+      "titulo": "ForeverSongs usa Server-Side Tracking para Klaviyo e BotId contra scrapers",
+      "detalhe": "Ao contrário de lojas básicas com script no frontend, a ForeverSongs corre Next.js na Cloudflare/Vercel e envia os eventos de lead e checkout via rotas internas (/api/save-lead e /api/checkout-sessions). Protegem os endpoints de leads com Kasada/BotId.",
+      "acao": "Para espelhar a eficácia deles, todo o disparo de 'Preview Ready' e carrinho abandonado tem de ser feito por trás (server-side via webhook) e nunca depender do Javascript do browser do cliente."
+    },
+    {
+      "prioridade": "ALTA",
+      "titulo": "A janela de recuperação da ForeverSongs usa flags GrowthBook dedicadas",
+      "detalhe": "Os fluxos de recuperação da ForeverSongs são controlados por flags GrowthBook (preview-exit-recovery, cro-cart-exit-recovery, cro-base-preview-discount) e disparados server-side após /api/save-lead e /api/checkout-sessions.",
+      "acao": "Manter esta cadência exata de 4 horas com contagem decrescente real para fechar indecisos antes de esfriarem."
+    },
+    {
+      "prioridade": "ALTA",
+      "titulo": "F3 E2 é o motor de tráfego pago da ForeverSongs (UGC a custo zero)",
+      "detalhe": "O email F3 E2 enviado 24h após a compra não tenta vender nada. Dá apenas instruções cirúrgicas de filmagem: 'Pega no telemóvel na vertical, não digas nada antes de carregar no play e filma a cara deles'. Ao 3º dia (F3 E3) recolhem centenas de vídeos de reação genuínos para usar nos anúncios do TikTok e Meta.",
+      "acao": "Nunca ignorar o envio do email de instruções de vídeo de reação. É ele que sustenta os anúncios da ForeverSongs com ROAS > 3.5."
+    },
+    {
+      "prioridade": "MÉDIA",
+      "titulo": "Upsell de Estrofe Adicional por $49 no 7º dia pós-compra",
+      "detalhe": "Quando o presente já foi entregue e a emoção foi alta, o email F3 E4 oferece a gravação de uma 3ª estrofe de estúdio por $49 e o PDF de letra em alta definição por $3.99.",
+      "acao": "Ativar este upsell pós-compra tardio para inflacionar o LTV sem gastar mais nada em publicidade."
+    }
+  ],
+  "historicoPings": [
+    {
+      "hora": "18:36:50",
+      "status": 200,
+      "latenciaMs": 464
+    },
+    {
+      "hora": "18:36:19",
+      "status": 200,
+      "latenciaMs": 291
+    },
+    {
+      "hora": "18:35:49",
+      "status": 200,
+      "latenciaMs": 262
+    },
+    {
+      "hora": "18:35:20",
+      "status": 200,
+      "latenciaMs": 324
+    },
+    {
+      "hora": "18:34:49",
+      "status": 200,
+      "latenciaMs": 299
+    },
+    {
+      "hora": "18:34:20",
+      "status": 200,
+      "latenciaMs": 348
+    },
+    {
+      "hora": "18:33:50",
+      "status": 200,
+      "latenciaMs": 387
+    },
+    {
+      "hora": "18:33:19",
+      "status": 200,
+      "latenciaMs": 296
+    },
+    {
+      "hora": "18:32:49",
+      "status": 200,
+      "latenciaMs": 290
+    },
+    {
+      "hora": "18:32:19",
+      "status": 200,
+      "latenciaMs": 297
+    }
+  ]
+};
+window.DADOS_DOSSIE_FOREVERSONGS = [
+  {
+    "flow": "FS-LEAD",
+    "fluxo": "ForeverSongs.com · 1. Captura de Lead & Prévia (Server-Side)",
+    "acao": "save-lead",
+    "tipo": "email",
+    "ficheiro": "POST /api/save-lead (BotId / Kasada)",
+    "template": "Klaviyo Server-Side",
+    "assunto": "[Aguarda captura real na caixa de entrada, trigger: /api/save-lead]",
+    "preview": "Confirmado em 28xl1854359u3.js: \"safely close this page. A confirmation will arrive in your inbox shortly.\"",
+    "de": "foreversongs.com (via Klaviyo)",
+    "nome_de": "ForeverSongs®",
+    "nome_msg": "E1 | Confirmação & Link da Prévia",
+    "textoCompleto": "ARQUITETURA REAL CONFIRMADA EM FOREVERSONGS.COM (sem copy inventado/copiado de terceiros):\n\n• Endpoint real: POST /api/save-lead (protegido por BotIdInit / Kasada)\n• Validação prévia: GET/POST /api/email-deliverability (Kickbox, flag email-validation-gate: \"block\")\n• Mensagem real no UI (/create): \"You can safely close this page. A confirmation will arrive in your inbox shortly.\"\n• Flag GrowthBook associada: preview-mureka-email-line\n• Canal paralelo: SMS via Klaviyo (sms: \"klaviyo\" para US/CA/BR/PT/etc. em 44zuotxsf5hty.js)\n\n⚠️ O texto integral deste e-mail vive na conta privada Klaviyo da ForeverSongs.com.\nPara o visualizar aqui palavra por palavra, conclua o quiz em https://foreversongs.com/create e cole o e-mail recebido usando o botão '+ Registar E-mail Real' no topo.",
+    "tempo": "⏱️ 0 minutos (após /create)",
+    "minutos": 0,
+    "categoria": "previa",
+    "gatilho": "🎵 POST /api/save-lead + Prévia gerada (preview-clip-lane)",
+    "porquê": "Confirmado diretamente nos chunks 34iamqktvaz66.js e 28xl1854359u3.js da foreversongs.com. Garante que o utilizador recebe o link privado mesmo fechando a página de espera.",
+    "canal": "email"
+  },
+  {
+    "flow": "FS-PREVIEW-RECOVERY",
+    "fluxo": "ForeverSongs.com · 1. Captura de Lead & Prévia (Server-Side)",
+    "acao": "preview-exit-recovery",
+    "tipo": "email",
+    "ficheiro": "GrowthBook: preview-exit-recovery",
+    "template": "Klaviyo Server-Side",
+    "assunto": "[Aguarda captura real, flag: preview-exit-recovery + song_internal_60_off]",
+    "preview": "Recuperação de saída na prévia com desconto dinâmico via /api/config/prices.",
+    "de": "foreversongs.com (via Klaviyo)",
+    "nome_de": "ForeverSongs®",
+    "nome_msg": "E2 | Recuperação de Prévia & Desconto",
+    "textoCompleto": "ARQUITETURA REAL CONFIRMADA EM FOREVERSONGS.COM:\n\n• Flag GrowthBook ativa (defaultValue: true): preview-exit-recovery\n• Flag de desconto na prévia: cro-base-preview-discount (\"song_internal_60_off\")\n• API de preços dinâmica: GET /api/config/prices (devolve basePrice, salePrice, previewPrice, discountAmount, couponId)\n• Endpoint de checkout da prévia: POST /api/preview/checkout\n\n⚠️ O conteúdo privado deste e-mail Klaviyo aguarda captura direta da tua caixa de entrada após testares https://foreversongs.com/create.",
+    "tempo": "⏱️ Pós-saída da prévia",
+    "minutos": 35,
+    "categoria": "previa",
+    "gatilho": "🎧 preview-exit-recovery (Abandono após gerar/ouvir prévia)",
+    "porquê": "Flag ativa em produção no GrowthBook da foreversongs.com (sdk-FbM8LA5uyyEjQAt) para recuperar leads que ouviram a prévia sem avançar para o pagamento.",
+    "canal": "email"
+  },
+  {
+    "flow": "FS-CART",
+    "fluxo": "ForeverSongs.com · 2. Recuperação de Carrinho & Checkout",
+    "acao": "checkout-sessions",
+    "tipo": "email",
+    "ficheiro": "POST /api/checkout-sessions + cro-cart-exit-recovery",
+    "template": "Klaviyo Server-Side",
+    "assunto": "[Aguarda captura real, trigger: /api/checkout-sessions & /api/momo-rescue]",
+    "preview": "Recuperação de checkout abandonado e falha de pagamento.",
+    "de": "foreversongs.com (via Klaviyo)",
+    "nome_de": "ForeverSongs®",
+    "nome_msg": "C1 | Checkout Abandonado & Resgate",
+    "textoCompleto": "ARQUITETURA REAL CONFIRMADA EM FOREVERSONGS.COM:\n\n• Endpoint de checkout: POST /api/checkout-sessions\n• Endpoint de resgate de pagamento: POST /api/momo-rescue\n• Flags GrowthBook associadas: cro-cart-exit-recovery, cro-cart-delivery-email, cro-cart-delivery-email-en-intl, cro-cart-delivery-email-non-en\n• SMS routing por país: cro-kr-cart-exit-recovery, ar-sms-routing, sk-sms-routing, etc.\n\n⚠️ O copy exato deste e-mail não é público; usa '+ Registar E-mail Real' assim que o receberes da foreversongs.com.",
+    "tempo": "⏱️ Pós-abandono de checkout",
+    "minutos": 30,
+    "categoria": "carrinho",
+    "gatilho": "🛒 POST /api/checkout-sessions sem confirmação de ordem",
+    "porquê": "Confirmado nos chunks 34iamqktvaz66.js e 1wjldqclr73yb.js + flags cro-cart-delivery-email no GrowthBook da foreversongs.com.",
+    "canal": "email"
+  },
+  {
+    "flow": "FS-POST-PURCHASE",
+    "fluxo": "ForeverSongs.com · 3. Entrega, Reação UGC & Upsells Reais",
+    "acao": "vault-song-delivery",
+    "tipo": "email",
+    "ficheiro": "GrowthBook: vault-song-delivery + reactionContest",
+    "template": "Klaviyo Server-Side",
+    "assunto": "[Aguarda captura real, entrega + reactionContest + Upsells]",
+    "preview": "Entrega de áudio/vídeo e pedidos de reação + upsells pós-compra.",
+    "de": "foreversongs.com (via Klaviyo)",
+    "nome_de": "ForeverSongs®",
+    "nome_msg": "P1 | Entrega da Canção & Reaction Contest",
+    "textoCompleto": "ARQUITETURA REAL CONFIRMADA EM FOREVERSONGS.COM:\n\n• Configuração real em 44zuotxsf5hty.js: comms: { reactionContest: true, marketingEmail: \"opt_in\", adParamsPersistence: \"always\" }\n• Deliverables reais: deliverables: { paper: \"Letter\", lyricVideo: true, coverArtCue, whisperHint }\n• Endpoints reais de upsell/downsell pós-compra:\n  - POST /api/full-song-upgrade/shopify-checkout\n  - POST /api/success-downsell/shopify-checkout\n  - POST /api/rush-upgrade-checkout\n• SKUs reais de upsell: ringtone, lyrics_pdf, alt_genre, cover_art, commercial, paid_redo, tip\n\n⚠️ Aguarda captura real da caixa de entrada para exibir o texto integral enviado pela ForeverSongs.com.",
+    "tempo": "⏱️ Pós-compra (/api/orders)",
+    "minutos": 0,
+    "categoria": "posvenda",
+    "gatilho": "📦 POST /api/orders + reactionContest: true",
+    "porquê": "Os campos reactionContest, lyricVideo e os endpoints de upsell estão expostos nos chunks públicos da foreversongs.com.",
+    "canal": "email"
+  },
+  {
+    "flow": "FS-RETENTION",
+    "fluxo": "ForeverSongs.com · 4. Retenção, Referral & Supressão",
+    "acao": "returning-customer",
+    "tipo": "email",
+    "ficheiro": "GrowthBook: returning-customer-pricing + klaviyo-sunset-suppression",
+    "template": "Klaviyo Server-Side",
+    "assunto": "[Aguarda captura real, returning-customer-pricing & sunset-suppression]",
+    "preview": "Recompra com preço de cliente recorrente e limpeza automática Klaviyo.",
+    "de": "foreversongs.com (via Klaviyo)",
+    "nome_de": "ForeverSongs®",
+    "nome_msg": "R1 | Cliente Recorrente & Sunset Suppression",
+    "textoCompleto": "ARQUITETURA REAL CONFIRMADA EM FOREVERSONGS.COM:\n\n• Flag GrowthBook: returning-customer-pricing\n• Flag GrowthBook: implicit-referral-popup (true) & implicit-referral-banner\n• Flag GrowthBook de higiene Klaviyo: klaviyo-sunset-suppression\n\n⚠️ Aguarda captura real da caixa de entrada para exibir o texto integral enviado pela ForeverSongs.com.",
+    "tempo": "⏱️ Ciclo de retenção",
+    "minutos": 10080,
+    "categoria": "recompra",
+    "gatilho": "🔄 returning-customer-pricing & klaviyo-sunset-suppression",
+    "porquê": "Confirmado diretamente nas 861 feature flags do GrowthBook da foreversongs.com (sdk-FbM8LA5uyyEjQAt).",
+    "canal": "email"
+  }
+];
+
+var fluxoSelecionado = 'todos';
+var modoAtivo = 'canvas';
+
+var ARVORE_FLUXOS = [
+  {
+    id: "FS-LEAD",
+    nome: "1. Save-Lead & Prévia (Server-Side Klaviyo)",
+    desc: "Fluxo real confirmado em 34iamqktvaz66.js, 28xl1854359u3.js e GrowthBook (preview-exit-recovery).",
+    nodes: [
+      {
+        tipo: "trigger",
+        id: "trig-fs-1",
+        titulo: "Gatilho: POST /api/save-lead",
+        sub: "Protegido por Kasada/BotId · Validação Kickbox prévia",
+        tag: "vivo",
+        icone: "⚡",
+        tempo: "0 min",
+        subnodos: [
+          { icone: "🛡️", label: "BotIdInit" },
+          { icone: "✉️", label: "Klaviyo API" },
+          { icone: "📱", label: "sms: klaviyo" }
+        ]
+      },
+      { tipo: "wire" },
+      {
+        tipo: "msg",
+        id: "msg-fs-lead-1",
+        acao: "save-lead",
+        titulo: "E1 (CAPTURADO): A canção para Maria está pronta",
+        sub: "support@go.foreversongs.com · Resend (acEuPtEmail1)",
+        tag: "vivo",
+        icone: "✉️",
+        tempo: "+18 min"
+      },
+      { tipo: "delay", texto: "Saída / Abandono" },
+      {
+        tipo: "msg",
+        id: "msg-fs-lead-2",
+        acao: "preview-exit-recovery",
+        titulo: "E2: Recuperação de Prévia (Exit Recovery)",
+        sub: "Flag: preview-exit-recovery · Cupão song_internal_60_off",
+        tag: "vivo",
+        icone: "🏷️",
+        tempo: "+Exit"
+      }
+    ]
+  },
+  {
+    id: "FS-CART",
+    nome: "2. Checkout & Resgate (/api/checkout-sessions)",
+    desc: "Disparo server-side após iniciar sessão Stripe/Shopify ou falha de pagamento (/api/momo-rescue).",
+    nodes: [
+      {
+        tipo: "trigger",
+        id: "trig-fs-2",
+        titulo: "Gatilho: POST /api/checkout-sessions",
+        sub: "Sessão iniciada em foreversongs.com · Flags cro-cart-delivery-email",
+        tag: "vivo",
+        icone: "🛒",
+        tempo: "0 min"
+      },
+      { tipo: "wire" },
+      {
+        tipo: "msg",
+        id: "msg-fs-cart-1",
+        acao: "checkout-sessions",
+        titulo: "C1: Checkout Abandonado & Resgate",
+        sub: "Flags: cro-cart-exit-recovery & /api/momo-rescue",
+        tag: "vivo",
+        icone: "✉️",
+        tempo: "Pós-Sessão"
+      }
+    ]
+  },
+  {
+    id: "FS-POST-PURCHASE",
+    nome: "3. Entrega, Reaction Contest & Upsells",
+    desc: "Configuração real em 44zuotxsf5hty.js (reactionContest: true, lyricVideo: true) + endpoints Shopify.",
+    nodes: [
+      {
+        tipo: "trigger",
+        id: "trig-fs-3",
+        titulo: "Gatilho: POST /api/orders",
+        sub: "Order confirmada · Entrega via vault-song-delivery",
+        tag: "vivo",
+        icone: "📦",
+        tempo: "0 min"
+      },
+      { tipo: "wire" },
+      {
+        tipo: "msg",
+        id: "msg-fs-post-1",
+        acao: "vault-song-delivery",
+        titulo: "P1: Entrega, Reaction Contest & Upsells",
+        sub: "SKUs reais: ringtone, lyrics_pdf, alt_genre, tip",
+        tag: "vivo",
+        icone: "🎥",
+        tempo: "Pós-Compra"
+      }
+    ]
+  },
+  {
+    id: "FS-RETENTION",
+    nome: "4. Cliente Recorrente & Sunset Suppression",
+    desc: "Regras reais do GrowthBook da foreversongs.com: returning-customer-pricing e klaviyo-sunset-suppression.",
+    nodes: [
+      {
+        tipo: "trigger",
+        id: "trig-fs-4",
+        titulo: "Gatilho: Returning Customer / Sunset",
+        sub: "returning-customer-pricing & implicit-referral-popup",
+        tag: "vivo",
+        icone: "🔄",
+        tempo: "Ciclo"
+      },
+      { tipo: "wire" },
+      {
+        tipo: "msg",
+        id: "msg-fs-ret-1",
+        acao: "returning-customer",
+        titulo: "R1: Recompra & Higiene Klaviyo",
+        sub: "Flag: klaviyo-sunset-suppression",
+        tag: "vivo",
+        icone: "🧹",
+        tempo: "Retenção"
+      }
+    ]
+  }
+];
+
+function renderizarCanvas() {
+  var container = document.getElementById('canvas-area');
+  var listaContainer = document.getElementById('lista-area');
+  if (!container) return;
+
+  var canvasHtml = '';
+  var listaHtml = '';
+
+  ARVORE_FLUXOS.forEach(function(fluxo) {
+    if (fluxoSelecionado !== 'todos' && fluxo.id !== fluxoSelecionado) {
+      return;
+    }
+
+    canvasHtml += '<div class="fluxo-bloco" id="flow-' + fluxo.id + '">';
+    canvasHtml += '<div class="fluxo-info-topo">';
+    canvasHtml += '<span class="fluxo-tag-codigo">' + fluxo.id + '</span>';
+    canvasHtml += '<span class="fluxo-nome-principal">' + fluxo.nome + '</span>';
+    canvasHtml += '<span class="fluxo-desc-texto">' + fluxo.desc + '</span>';
+    canvasHtml += '</div>';
+    canvasHtml += '<div class="track-nodos">';
+
+    fluxo.nodes.forEach(function(nodo) {
+      if (nodo.tipo === 'wire') {
+        canvasHtml += '<div class="wire-limpo"></div>';
+      } else if (nodo.tipo === 'delay') {
+        canvasHtml += '<div class="nodo-delay-limpo"><div class="delay-pill-limpo">⏳ Esperar ' + nodo.texto + '</div></div>';
+      } else if (nodo.tipo === 'split') {
+        canvasHtml += '<div class="nodo-split-limpo">';
+        canvasHtml += '<div class="split-pergunta-limpo">🔀 ' + nodo.pergunta + '</div>';
+        canvasHtml += '<div class="split-opcoes-limpo">';
+        canvasHtml += '<span class="split-opcao-btn opcao-sim">✓ ' + nodo.sim + '</span>';
+        canvasHtml += '<span class="split-opcao-btn opcao-nao">✗ ' + nodo.nao + '</span>';
+        canvasHtml += '</div></div>';
+      } else if (nodo.tipo === 'trigger') {
+        canvasHtml += '<div><div class="clean-node clean-node-trigger">';
+        canvasHtml += '<div class="clean-node-header"><span class="clean-node-icone">' + nodo.icone + '</span><span class="clean-badge badge-vivo">VIVO</span></div>';
+        canvasHtml += '<div class="clean-node-titulo" style="color: var(--verde-texto);">' + nodo.titulo + '</div>';
+        canvasHtml += '<div class="clean-node-sub">' + nodo.sub + '</div>';
+        canvasHtml += '<div class="clean-node-footer"><span style="font-weight: 600; color: var(--verde-texto);">Gatilho Inicial</span><span class="clean-tempo-tag">' + nodo.tempo + '</span></div>';
+        canvasHtml += '</div>';
+        if (nodo.subnodos) {
+          canvasHtml += '<div class="subnodos-limpos">';
+          nodo.subnodos.forEach(function(sn) {
+            canvasHtml += '<div class="subnodo-item-limpo"><div class="subnodo-circulo-limpo">' + sn.icone + '</div><span>' + sn.label + '</span></div>';
+          });
+          canvasHtml += '</div>';
+        }
+        canvasHtml += '</div>';
+      } else if (nodo.tipo === 'msg') {
+        canvasHtml += '<div class="clean-node" onclick="abrirDrawer(\x27' + nodo.acao + '\x27)" id="card-' + nodo.id + '">';
+        canvasHtml += '<div class="clean-node-header"><span class="clean-node-icone">' + nodo.icone + '</span><span class="clean-badge badge-vivo">VIVO</span></div>';
+        canvasHtml += '<div class="clean-node-titulo">' + nodo.titulo + '</div>';
+        canvasHtml += '<div class="clean-node-sub">' + nodo.sub + '</div>';
+        canvasHtml += '<div class="clean-node-footer"><span style="color: var(--verde-texto); font-weight: 700;">Ver Copy Original (EN) ▸</span><span class="clean-tempo-tag">' + nodo.tempo + '</span></div>';
+        canvasHtml += '</div>';
+      }
+    });
+
+    canvasHtml += '</div></div>';
+
+    listaHtml += '<div style="margin-bottom: 24px;">';
+    listaHtml += '<h3 style="font-size: 16px; margin: 0 0 12px; color: var(--texto);">' + fluxo.nome + '</h3>';
+    fluxo.nodes.filter(function(n) { return n.tipo === 'msg'; }).forEach(function(m) {
+      listaHtml += '<div class="item-timeline" onclick="abrirDrawer(\x27' + m.acao + '\x27)" style="cursor: pointer;">';
+      listaHtml += '<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">';
+      listaHtml += '<strong style="font-size: 14.5px; color: var(--texto);">' + m.titulo + '</strong>';
+      listaHtml += '<span class="pill pill-email">' + m.tempo + '</span>';
+      listaHtml += '</div>';
+      listaHtml += '<div style="font-size: 13px; color: var(--suave); margin-bottom: 8px;">' + m.sub + '</div>';
+      listaHtml += '<div style="font-size: 12px; color: var(--verde-texto); font-weight: 700;">Ver detalhes de envio e copy em inglês ▸</div>';
+      listaHtml += '</div>';
+    });
+    listaHtml += '</div>';
+  });
+
+  container.innerHTML = canvasHtml;
+  if (listaContainer) listaContainer.innerHTML = listaHtml;
+}
+
+function filtrarFluxoCanvas(fluxoId, elemento) {
+  fluxoSelecionado = fluxoId;
+  document.querySelectorAll('.btn-filtro-limpo').forEach(function(b) { b.classList.remove('ativo'); });
+  if (elemento) elemento.classList.add('ativo');
+  renderizarCanvas();
+}
+
+function alternarModoVisualizacao(modo, elemento) {
+  modoAtivo = modo;
+  document.querySelectorAll('.btn-modo-limpo').forEach(function(b) { b.classList.remove('ativo'); });
+  if (elemento) elemento.classList.add('ativo');
+
+  var canvasArea = document.getElementById('canvas-area');
+  var listaArea = document.getElementById('lista-area');
+
+  if (modo === 'canvas') {
+    canvasArea.style.display = 'block';
+    listaArea.style.display = 'none';
+  } else {
+    canvasArea.style.display = 'none';
+    listaArea.style.display = 'block';
+  }
+}
+
+function abrirDrawer(identificador) {
+  var msg = null;
+  if (typeof identificador === 'number' && window.DADOS_DOSSIE_FOREVERSONGS[identificador]) {
+    msg = window.DADOS_DOSSIE_FOREVERSONGS[identificador];
+  } else if (identificador) {
+    var idStr = String(identificador);
+    msg = window.DADOS_DOSSIE_FOREVERSONGS.find(function(m) {
+      return m.acao === idStr || (m.nome_msg && m.nome_msg.toLowerCase().indexOf(idStr.toLowerCase()) !== -1);
+    });
+  }
+  if (!msg) {
+    console.warn("Mensagem não encontrada:", identificador);
+    return;
+  }
+
+  var elTitulo = document.getElementById('drawer-titulo');
+  var elAssunto = document.getElementById('drawer-assunto');
+  var elPreview = document.getElementById('drawer-preview');
+  var elTempo = document.getElementById('drawer-tempo');
+  var elGatilho = document.getElementById('drawer-gatilho');
+  var elPorque = document.getElementById('drawer-porque');
+  var elFlowId = document.getElementById('drawer-flow-id');
+  var elTag = document.getElementById('drawer-tag');
+  var elCopy = document.getElementById('drawer-copy');
+
+  if (elTitulo) elTitulo.textContent = msg.nome_msg || 'ForeverSongs US Email';
+  if (elAssunto) elAssunto.textContent = msg.assunto || 'SMS / Direct Link';
+  if (elPreview) elPreview.textContent = msg.preview || (msg.canal === 'sms' ? 'Direct SMS text message' : 'ForeverSongs US touchpoint');
+  if (elTempo) elTempo.textContent = msg.tempo || 'Immediate';
+  if (elGatilho) elGatilho.textContent = msg.gatilho || 'Funnel Event';
+  if (elPorque) elPorque.textContent = msg.porquê || 'Conversion optimization';
+  if (elFlowId) elFlowId.textContent = 'Flow: ' + (msg.flow || 'Klaviyo US') + ' · Ação: ' + (msg.acao || '');
+  if (elTag) elTag.textContent = (msg.canal === 'sms' ? 'FOREVERSONGS SMS' : 'FOREVERSONGS EMAIL');
+  if (elCopy) elCopy.textContent = msg.textoCompleto || msg.texto || 'Content not available';
+
+  var drawerEl = document.getElementById('drawer-lateral');
+  var overlayEl = document.getElementById('drawer-overlay');
+  if (overlayEl) overlayEl.classList.add('aberto');
+  if (drawerEl) drawerEl.classList.add('aberto');
+}
+
+function fecharDrawer() {
+  var drawerEl = document.getElementById('drawer-lateral');
+  var overlayEl = document.getElementById('drawer-overlay');
+  if (overlayEl) overlayEl.classList.remove('aberto');
+  if (drawerEl) drawerEl.classList.remove('aberto');
+}
+
+function copiarTextoDrawer() {
+  var texto = document.getElementById('drawer-copy').textContent;
+  navigator.clipboard.writeText(texto).then(function() {
+    alert('Copy original em inglês copiado para a área de transferência!');
+  });
+}
+
+function mudarAba(idAba) {
+  document.querySelectorAll('.painel-aba').forEach(function(p) { p.classList.remove('ativo'); });
+  document.querySelectorAll('.sub-nav-btn').forEach(function(b) { b.classList.remove('ativo'); });
+
+  var painel = document.getElementById('aba-' + idAba);
+  var btn = document.getElementById('btn-' + idAba);
+  if (painel) painel.classList.add('ativo');
+  if (btn) btn.classList.add('ativo');
+}
+
+function recarregarDados() {
+  fetch('http://localhost:4399/api/snapshot')
+    .then(function(r) { return r.json(); })
+    .then(function(dados) {
+      window.DADOS_SNAPSHOT = dados;
+      renderizarCanvas();
+    })
+    .catch(function(err) {
+      console.warn('Sonda local offline, a usar snapshot guardado.');
+    });
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+  mudarAba('cronograma');
+  renderizarCanvas();
+});
+</script>
+
+
+<script src="sugestoes-foreversongs.js"></script>
+<script>
+  let mercadoAtualFB = 'DE';
+  let marcaAtualFB = 'TODAS';
+  let queryPesquisaFB = '';
+
+  function initAbaFB() {
+    const FYS = window.SUGESTOES_FOREVERSONGS || {};
+    const mercadosContainer = document.getElementById('fb-mercados-botoes');
+    if (!mercadosContainer) return;
+    mercadosContainer.innerHTML = '';
+
+    const chaves = Object.keys(FYS);
+    chaves.forEach(c => {
+      const m = FYS[c];
+      const btn = document.createElement('button');
+      btn.className = (c === mercadoAtualFB) ? 'ativo' : '';
+      btn.innerHTML = `${m.flag} ${m.nome} <small>(${m.itens.length})</small>`;
+      btn.onclick = () => {
+        mercadoAtualFB = c;
+        document.querySelectorAll('#fb-mercados-botoes button').forEach(b => b.classList.remove('ativo'));
+        btn.classList.add('ativo');
+        renderFB();
+      };
+      mercadosContainer.appendChild(btn);
+    });
+
+    renderFB();
+  }
+
+  function renderFB() {
+    const FYS = window.SUGESTOES_FOREVERSONGS || {};
+    const m = FYS[mercadoAtualFB];
+    if (!m) return;
+
+    const tEl = document.getElementById('fb-leitura-titulo');
+    const txtEl = document.getElementById('fb-leitura-texto');
+    if (tEl) tEl.innerText = `Leitura de Media Buyer · ${m.flag} ${m.nome}`;
+    if (txtEl) txtEl.innerText = m.leitura || 'Mercado estratégico pronto para subida de campanhas.';
+
+    const grelha = document.getElementById('fb-grelha-cards');
+    if (!grelha) return;
+    grelha.innerHTML = '';
+
+    const q = queryPesquisaFB.toLowerCase().trim();
+    const filtrados = m.itens.filter(item => {
+      const matchMarca = (marcaAtualFB === 'TODAS') || (item.marca === marcaAtualFB);
+      const matchQ = !q ||
+        item.id.toLowerCase().includes(q) ||
+        (item.titulo && item.titulo.toLowerCase().includes(q)) ||
+        (item.texto && item.texto.toLowerCase().includes(q)) ||
+        (item.gancho && item.gancho.toLowerCase().includes(q)) ||
+        (item.marca && item.marca.toLowerCase().includes(q));
+      return matchMarca && matchQ;
+    });
+
+    if (filtrados.length === 0) {
+      grelha.innerHTML = '<p style="color: var(--suave); padding: 40px 0; text-align: center; grid-column: 1 / -1;">Nenhum criativo encontrado com estes filtros.</p>';
+      return;
+    }
+
+    filtrados.forEach(item => {
+      const card = document.createElement('article');
+      card.className = 'fb-c';
+      card.id = `card-${item.id}`;
+
+      const verClasse = (item.veredito === 'Meter já') ? 'ja' : 'vencedor';
+
+      card.innerHTML = `
+        <div class="fb-tela">
+          <video controls preload="metadata" playsinline poster="">
+            <source src="${item.video}" type="video/mp4">
+            O teu navegador não suporta este vídeo.
+          </video>
+        </div>
+        <div class="fb-corpo">
+          <div class="fb-topo">
+            <span class="fb-id">#${item.rank}</span>
+            <span class="fb-ver ${verClasse}">${item.veredito}</span>
+            <span class="fb-marca-tag">${item.marca}</span>
+            <span style="margin-left: auto; font-size: 11.5px; color: var(--suave); font-weight: 600;">ID: ${item.id}</span>
+          </div>
+
+          <p class="fb-papel">${item.titulo || item.papel}</p>
+          <div class="fb-origem">
+            Spend: <b>${item.spend}</b> · Dias: <b>${item.dias}</b> · Cópias: <b>${item.copias}</b>
+          </div>
+
+          <p class="fb-porque">${item.porque}</p>
+
+          <dl class="fb-dl">
+            <dt>Gancho (0-3s)</dt><dd>${item.gancho}</dd>
+            <dt>Formato</dt><dd>${item.formato}</dd>
+            <dt>Oferta</dt><dd>${item.oferta}</dd>
+            <dt>Como testar</dt><dd>${item.teste}</dd>
+          </dl>
+
+          <div class="fb-copy-box">
+            <div class="fb-copy-header">
+              <span>Texto do Anúncio (Copy)</span>
+              <button class="btn-copiar-mini" onclick="copiarTextoFB(this)">📋 Copiar</button>
+            </div>
+            <div class="fb-copy-text">${item.texto || '(Sem texto primário no anúncio original: usar apenas Headline: ' + (item.titulo || '') + ')'}</div>
+          </div>
+
+          <div class="fb-links">
+            <a href="${item.lib_url}" target="_blank" class="fb-link-btn">Meta Ad Library ↗</a>
+            <a href="${item.lp}" target="_blank" class="fb-link-btn">Landing Page ↗</a>
+          </div>
+        </div>
+      `;
+
+      grelha.appendChild(card);
+    });
+
+    grelha.querySelectorAll('video').forEach(v => {
+      v.addEventListener('play', () => {
+        grelha.querySelectorAll('video').forEach(outro => {
+          if (outro !== v) outro.pause();
+        });
+      });
+    });
+  }
+
+  function filtrarMarcaFB(marca, btn) {
+    marcaAtualFB = marca;
+    document.querySelectorAll('.fb-filtro-btn').forEach(b => b.classList.remove('ativo'));
+    btn.classList.add('ativo');
+    renderFB();
+  }
+
+  function filtrarFB() {
+    queryPesquisaFB = document.getElementById('fb-pesquisa').value;
+    renderFB();
+  }
+
+  function copiarTextoFB(btn) {
+    const textEl = btn.closest('.fb-copy-box').querySelector('.fb-copy-text');
+    const text = textEl.innerText;
+    navigator.clipboard.writeText(text).then(() => {
+      const old = btn.innerText;
+      btn.innerText = '✅ Copiado!';
+      btn.style.background = 'var(--verde-claro)';
+      btn.style.color = 'var(--verde-texto)';
+      setTimeout(() => {
+        btn.innerText = old;
+        btn.style.background = '';
+        btn.style.color = '';
+      }, 1800);
+    });
+  }
+
+  // Hook into mudarAba
+  const _origMudarAba = window.mudarAba;
+  window.mudarAba = function(idAba) {
+    if (_origMudarAba) _origMudarAba(idAba);
+    if (idAba === 'facebook') {
+      initAbaFB();
+    } else {
+      document.querySelectorAll('#aba-facebook video').forEach(v => v.pause());
+    }
+  };
+
+  // If initial load or hash
+  if (window.location.hash === '#facebook') {
+    setTimeout(() => mudarAba('facebook'), 200);
+  }
+
+  // Captura ao vivo dos emails reais de foreversongs.com
+  function semSonda() {
+    const cont = document.getElementById('inbox-lista-reais');
+    const badge = document.getElementById('badge-inbox-live');
+    if (badge) badge.textContent = '0';
+    if (cont) cont.innerHTML = '<div style="padding:18px; border:1px dashed var(--linha-forte); border-radius:10px; color:var(--suave);"><b style="color:var(--texto);">📭 Sem e-mails novos.</b> A leitura da caixa de e-mail está desligada. Os e-mails da ForeverSongs que já tínhamos estão no separador «Cronograma & Dossiê de E-mails».</div>';
+  }
+  async function carregarEmailsCapturados(manual) {
+    try {
+      const res = await fetch('http://localhost:4399/api/emails-capturados');
+      if (!res.ok) return semSonda();
+      const data = await res.json();
+      const badge = document.getElementById('badge-inbox-live');
+      const addrEl = document.getElementById('inbox-caixa-addr');
+      const cont = document.getElementById('inbox-lista-reais');
+      if (badge) badge.textContent = data.total || 0;
+      if (addrEl && data.caixa) addrEl.textContent = data.caixa;
+      if (!cont) return;
+
+      if (!data.emails || data.emails.length === 0) {
+        cont.innerHTML = '<div style="padding:18px; border:1px dashed var(--linha-forte); border-radius:10px; color:var(--suave);">Ainda sem novos e-mails capturados nesta sessão.</div>';
+        return;
+      }
+
+      cont.innerHTML = data.emails.map((em, idx) => {
+        const dt = new Date(em.data).toLocaleString('pt-PT');
+        return '<div style="background:#fff; border:1px solid var(--linha); border-radius:12px; padding:16px 18px; box-shadow:0 2px 8px rgba(0,0,0,0.03);">' +
+          '<div style="display:flex; justify-content:space-between; align-items:flex-start; gap:10px; flex-wrap:wrap; margin-bottom:8px;">' +
+            '<div>' +
+              '<span class="pill pill-verde" style="margin-right:6px;">REAL #' + (data.emails.length - idx) + '</span>' +
+              '<span class="pill pill-azul" style="margin-right:6px;">' + (em.utmSource || 'email') + '</span>' +
+              '<span class="pill pill-ambar">' + (em.utmCampaign || '-') + ' · ' + (em.utmContent || '-') + '</span>' +
+              '<h3 style="margin:8px 0 2px; font-size:16px; color:var(--texto);">' + (em.assunto || '(Sem assunto)') + '</h3>' +
+              '<div style="font-size:12px; color:var(--suave);">De: <strong>' + (em.nomeDe || '') + ' &lt;' + (em.de || '') + '&gt;</strong> · Recebido em: <strong>' + dt + '</strong></div>' +
+            '</div>' +
+          '</div>' +
+          '<pre style="background:var(--fundo); border:1px solid var(--linha); border-radius:8px; padding:12px; font-family:inherit; font-size:12.5px; white-space:pre-wrap; line-height:1.5; margin:10px 0 0; color:var(--texto);">' +
+            (em.texto || '').replace(/</g, '&lt;').replace(/>/g, '&gt;') +
+          '</pre>' +
+        '</div>';
+      }).join('');
+    } catch (e) {
+      semSonda();
+    }
+  }
+
+  carregarEmailsCapturados(false);
+  // só volta a perguntar se a sonda respondeu; desligada, não gasta nada
+  setInterval(() => { if (window.__sondaOk !== false) carregarEmailsCapturados(false); }, 15000);
+  fetch('http://localhost:4399/api/emails-capturados', { method: 'HEAD' }).then(() => window.__sondaOk = true).catch(() => window.__sondaOk = false);
+</script>
+
+</body>
+</html>

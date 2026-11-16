@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <title>Centro de Denúncias · Takedowns Oficiais</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+    body { background: #f1f5f9; color: #0f172a; padding: 24px; }
+    .container { max-width: 1250px; margin: 0 auto; }
+    
+    /* Top Card */
+    .top-card { background: white; border-radius: 12px; padding: 22px 24px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; border-left: 6px solid #0b2265; }
+    .top-title h1 { font-size: 22px; font-weight: 800; color: #0b2265; }
+    .top-title p { font-size: 13px; color: #64748b; margin-top: 4px; }
+    
+    /* Contadores Principais (Linha 1) */
+    .stats-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 16px; }
+    .stat-box { background: white; padding: 16px 20px; border-radius: 12px; box-shadow: 0 2px 6px rgba(0,0,0,0.04); text-align: center; border: 1px solid #e2e8f0; }
+    .stat-box .num { font-size: 30px; font-weight: 800; }
+    .stat-box .label { font-size: 12px; text-transform: uppercase; font-weight: 700; color: #64748b; margin-top: 4px; }
+    .stat-blue .num { color: #2563eb; }
+    .stat-green .num { color: #16a34a; }
+    .stat-orange .num { color: #ea580c; }
+
+    /* Contadores por País (Linha 2) */
+    .paises-card { background: white; border-radius: 12px; padding: 16px 20px; box-shadow: 0 2px 6px rgba(0,0,0,0.04); border: 1px solid #e2e8f0; margin-bottom: 20px; }
+    .paises-title { font-size: 12px; font-weight: 800; text-transform: uppercase; color: #475569; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; }
+    .paises-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 12px; }
+    .pais-chip { background: #f8fafc; border: 1.5px solid #e2e8f0; border-radius: 10px; padding: 10px 14px; text-align: center; cursor: pointer; transition: 0.15s; }
+    .pais-chip:hover, .pais-chip.active { background: #eff6ff; border-color: #3b82f6; transform: translateY(-2px); }
+    .pais-chip .flag-name { font-size: 13px; font-weight: 700; color: #1e293b; display: block; }
+    .pais-chip .count { font-size: 18px; font-weight: 800; color: #0b2265; margin-top: 2px; display: block; }
+    .pais-chip .sub { font-size: 11px; color: #64748b; font-weight: 600; }
+    
+    /* Caixa de Bcc */
+    .bcc-box { background: #eff6ff; border: 1.5px solid #bfdbfe; border-radius: 12px; padding: 14px 20px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; }
+    .bcc-text { font-size: 13px; color: #1e3a8a; }
+    .bcc-text strong { font-size: 13px; }
+    .btn-copy-bcc { background: #2563eb; color: white; border: none; border-radius: 8px; padding: 9px 16px; font-size: 13px; font-weight: 700; cursor: pointer; transition: 0.15s; }
+    .btn-copy-bcc:hover { background: #1d4ed8; }
+    
+    /* Tabela */
+    .table-card { background: white; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); overflow: hidden; border: 1px solid #e2e8f0; }
+    table { width: 100%; border-collapse: collapse; text-align: left; }
+    thead th { background: #f8fafc; padding: 14px 16px; font-size: 12px; font-weight: 800; text-transform: uppercase; color: #475569; border-bottom: 2px solid #e2e8f0; }
+    tbody td { padding: 14px 16px; font-size: 14px; border-bottom: 1px solid #f1f5f9; vertical-align: middle; }
+    tbody tr:hover { background: #f8fafc; }
+    
+    /* Badges */
+    .badge { padding: 5px 10px; border-radius: 6px; font-size: 12px; font-weight: 700; display: inline-block; }
+    .badge-done { background: #dcfce7; color: #15803d; border: 1px solid #86efac; }
+    .badge-queue { background: #fef3c7; color: #b45309; border: 1px solid #fcd34d; }
+    .badge-geo { background: #e2e8f0; color: #1e293b; font-size: 11px; }
+    
+    /* Botoes de Acao */
+    .btn-action { background: #0b2265; color: white; border: none; border-radius: 6px; padding: 8px 14px; font-size: 13px; font-weight: 700; cursor: pointer; transition: 0.15s; }
+    .btn-action:hover { background: #1d4ed8; }
+    .btn-secondary { background: #64748b; }
+    .btn-secondary:hover { background: #475569; }
+    
+    /* Modal */
+    .modal-overlay { position: fixed; inset: 0; background: rgba(15, 23, 42, 0.6); display: none; justify-content: center; align-items: center; z-index: 1000; backdrop-filter: blur(2px); }
+    .modal-content { background: white; width: 720px; max-height: 88vh; border-radius: 14px; padding: 24px; box-shadow: 0 20px 40px rgba(0,0,0,0.25); overflow-y: auto; }
+    .modal-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #e2e8f0; padding-bottom: 14px; margin-bottom: 16px; }
+    .modal-header h3 { font-size: 18px; color: #0b2265; font-weight: 800; }
+    .modal-close { background: none; border: none; font-size: 24px; cursor: pointer; color: #64748b; }
+    pre { background: #f8fafc; padding: 14px; border-radius: 8px; font-size: 12px; line-height: 1.5; white-space: pre-wrap; word-break: break-all; border: 1px solid #cbd5e1; margin-bottom: 18px; }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <!-- Top Bar -->
+  <div class="top-card">
+    <div class="top-title">
+      <h1>Painel de Denúncias · Takedowns Concorrentes</h1>
+      <p>Monitorização de infrações, subdomínios internos Shopify e disparo direto para canais jurídicos</p>
+    </div>
+    <div style="text-align: right;">
+      <span style="font-size: 12px; color: #64748b; font-weight: 600;">Rede Jurídica Notificada:</span><br>
+      <strong style="font-size: 13px; color: #0b2265;">Shopify · Stripe · Nike · Puma · ASAE</strong>
+    </div>
+  </div>
+
+  <!-- Contadores Globais (Linha 1) -->
+  <div class="stats-row">
+    <div class="stat-box stat-blue">
+      <div class="num" id="stat-total">30</div>
+      <div class="label">Total de Lojas Mapeadas</div>
+    </div>
+    <div class="stat-box stat-green">
+      <div class="num" id="stat-done">30</div>
+      <div class="label">Denúncias Enviadas</div>
+    </div>
+    <div class="stat-box stat-orange">
+      <div class="num" id="stat-queue">0</div>
+      <div class="label">Lojas Pendentes na Fila</div>
+    </div>
+  </div>
+
+  <!-- Contadores Específicos por Mercado (Linha 2) -->
+  <div class="paises-card">
+    <div class="paises-title">
+      <span>DISTRIBUIÇÃO GEOGRÁFICA DOS CONCORRENTES (CLICA NUM PAÍS PARA FILTRAR NA TABELA)</span>
+      <span style="font-size:12px; color:#2563eb; font-weight:700; cursor:pointer;" onclick="filtrarPais('TODOS')">🔄 Mostrar Todas as Lojas</span>
+    </div>
+    <div class="paises-grid">
+      <div class="pais-chip" id="chip-PT" onclick="filtrarPais('PT')">
+        <span class="flag-name">🇵🇹 Portugal</span>
+        <span class="count">11</span>
+        <span class="sub" style="color:#16a34a;">11 Enviados · 0 Fila</span>
+      </div>
+      <div class="pais-chip" id="chip-ES" onclick="filtrarPais('ES')">
+        <span class="flag-name">🇪🇸 Espanha</span>
+        <span class="count">7</span>
+        <span class="sub" style="color:#16a34a;">7 Enviados · 0 Fila</span>
+      </div>
+      <div class="pais-chip" id="chip-US" onclick="filtrarPais('US')">
+        <span class="flag-name">🇺🇸 Estados Unidos</span>
+        <span class="count">4</span>
+        <span class="sub" style="color:#16a34a;">4 Enviados · 0 Fila</span>
+      </div>
+      <div class="pais-chip" id="chip-GB" onclick="filtrarPais('GB')">
+        <span class="flag-name">🇬🇧 Reino Unido</span>
+        <span class="count">4</span>
+        <span class="sub" style="color:#16a34a;">4 Enviados · 0 Fila</span>
+      </div>
+      <div class="pais-chip" id="chip-NL" onclick="filtrarPais('NL')">
+        <span class="flag-name">🇳🇱 Holanda</span>
+        <span class="count">2</span>
+        <span class="sub" style="color:#16a34a;">2 Enviados · 0 Fila</span>
+      </div>
+      <div class="pais-chip" id="chip-IT" onclick="filtrarPais('IT')">
+        <span class="flag-name">🇮🇹 Itália / DE</span>
+        <span class="count">2</span>
+        <span class="sub" style="color:#16a34a;">2 Enviados · 0 Fila</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bcc Oficial em Destaque -->
+  <div class="bcc-box">
+    <div class="bcc-text">
+      <strong>📋 Lista Oficial de Bcc (Copia uma vez para o Outlook):</strong><br>
+      <code>legal@shopify.com, complaints@stripe.com, notices@stripe.com, brand.guard@nike.com, service@puma.com, product.safety@puma.com, correio.asae@asae.pt</code>
+    </div>
+    <button class="btn-copy-bcc" onclick="copiarBCC(this)">Copiar Lista Bcc</button>
+  </div>
+
+  <!-- Tabela Limpa -->
+  <div class="table-card">
+    <table>
+      <thead>
+        <tr>
+          <th style="width: 5%;">#</th>
+          <th style="width: 22%;">Loja</th>
+          <th style="width: 14%;">Mercado</th>
+          <th style="width: 25%;">Subdomínio Shopify</th>
+          <th style="width: 14%;">Instagram</th>
+          <th style="width: 12%;">Estado (Clica p/ mudar)</th>
+          <th style="width: 10%; text-align: center;">Ação</th>
+        </tr>
+      </thead>
+      <tbody id="tabela-linhas">
+        <tr data-pais="PT">
+          <td><strong>1</strong></td>
+          <td><strong style="color:#0b2265; font-size:15px;">Wolf Sports</strong><br><span style="font-size:12px; color:#64748b;">wolfsports.pt</span></td>
+          <td><span class="badge badge-geo">🇵🇹 Portugal</span></td>
+          <td><code>issvu3-fq.myshopify.com</code></td>
+          <td><span style="font-size:13px; color:#2563eb; font-weight:600;">@wolfsports.pt1</span></td>
+          <td><span class="badge badge-done" id="badge-0" onclick="alternarEstado(0)" style="cursor:pointer;" title="Clica para alternar entre Enviado e Na Fila">✅ Enviado</span></td>
+          <td style="text-align: center;">
+            <button class="btn-action btn-secondary" id="btn-0" onclick="abrirDossier(0)">Ver Dossiê</button>
+          </td>
+        </tr>
+        <tr data-pais="PT">
+          <td><strong>2</strong></td>
+          <td><strong style="color:#0b2265; font-size:15px;">90 Minutos</strong><br><span style="font-size:12px; color:#64748b;">90minutos.pt</span></td>
+          <td><span class="badge badge-geo">🇵🇹 Portugal</span></td>
+          <td><code>hg9xvd-ca.myshopify.com</code></td>
+          <td><span style="font-size:13px; color:#2563eb; font-weight:600;">@90minutoss.pt</span></td>
+          <td><span class="badge badge-done" id="badge-1" onclick="alternarEstado(1)" style="cursor:pointer;" title="Clica para alternar entre Enviado e Na Fila">✅ Enviado</span></td>
+          <td style="text-align: center;">
+            <button class="btn-action btn-secondary" id="btn-1" onclick="abrirDossier(1)">Ver Dossiê</button>
+          </td>
+        </tr>
+        <tr data-pais="PT">
+          <td><strong>3</strong></td>
+          <td><strong style="color:#0b2265; font-size:15px;">Vencedores Club</strong><br><span style="font-size:12px; color:#64748b;">vencedoresclub.com</span></td>
+          <td><span class="badge badge-geo">🇵🇹 Portugal</span></td>
+          <td><code>2pqkak-t4.myshopify.com</code></td>
+          <td><span style="font-size:13px; color:#2563eb; font-weight:600;">@vencedores.club</span></td>
+          <td><span class="badge badge-done" id="badge-2" onclick="alternarEstado(2)" style="cursor:pointer;" title="Clica para alternar entre Enviado e Na Fila">✅ Enviado</span></td>
+          <td style="text-align: center;">
+            <button class="btn-action btn-secondary" id="btn-2" onclick="abrirDossier(2)">Ver Dossiê</button>
+          </td>
+        </tr>
+        <tr data-pais="PT">
+          <td><strong>4</strong></td>
+          <td><strong style="color:#0b2265; font-size:15px;">Reino do Futebol</strong><br><span style="font-size:12px; color:#64748b;">reinodofutebol.com</span></td>
+          <td><span class="badge badge-geo">🇵🇹 Portugal</span></td>
+          <td><code>dpxsg0-55.myshopify.com</code></td>
+          <td><span style="font-size:13px; color:#2563eb; font-weight:600;">@reinodofutebolpt</span></td>
+          <td><span class="badge badge-done" id="badge-3" onclick="alternarEstado(3)" style="cursor:pointer;" title="Clica para alternar entre Enviado e Na Fila">✅ Enviado</span></td>
+          <td style="text-align: center;">
+            <button class="btn-action btn-secondary" id="btn-3" onclick="abrirDossier(3)">Ver Dossiê</button>
+          </td>
+        </tr>
+        <tr data-pais="PT">
+          <td><strong>5</strong></td>
+          <td><strong style="color:#0b2265; font-size:15px;">GK Imports</strong><br><span style="font-size:12px; color:#64748b;">gkimports.store</span></td>
+          <td><span class="badge badge-geo">🇵🇹 Portugal</span></td>
+          <td><code>2acfla-53.myshopify.com</code></td>
+          <td><span style="font-size:13px; color:#2563eb; font-weight:600;">@g.k_importspt</span></td>
+          <td><span class="badge badge-done" id="badge-4" onclick="alternarEstado(4)" style="cursor:pointer;" title="Clica para alternar entre Enviado e Na Fila">✅ Enviado</span></td>
+          <td style="text-align: center;">
+            <button class="btn-action btn-secondary" id="btn-4" onclick="abrirDossier(4)">Ver Dossiê</button>
+          </td>
+        </tr>
+        <tr data-pais="PT">
+          <td><strong>6</strong></td>
+          <td><strong style="color:#0b2265; font-size:15px;">PrimeKits Club</strong><br><span style="font-size:12px; color:#64748b;">primekitsclub.com</span></td>
+          <td><span class="badge badge-geo">🇵🇹 Portugal</span></td>
+          <td><code>y8skcb-7u.myshopify.com</code></td>
+          <td><span style="font-size:13px; color:#2563eb; font-weight:600;">@primekits.club</span></td>
+          <td><span class="badge badge-done" id="badge-5" onclick="alternarEstado(5)" style="cursor:pointer;" title="Clica para alternar entre Enviado e Na Fila">✅ Enviado</span></td>
+          <td style="text-align: center;">
+            <button class="btn-action btn-secondary" id="btn-5" onclick="abrirDossier(5)">Ver Dossiê</button>
+          </td>
+        </tr>
+        <tr data-pais="PT">
+          <td><strong>7</strong></td>
+          <td><strong style="color:#0b2265; font-size:15px;">Faded Store</strong><br><span style="font-size:12px; color:#64748b;">fadedstore.com</span></td>
+          <td><span class="badge badge-geo">🇵🇹 PT / 🇮🇹 IT</span></td>
+          <td><code>faded-1990.myshopify.com</code></td>
+          <td><span style="font-size:13px; color:#2563eb; font-weight:600;">@faded_store_</span></td>
+          <td><span class="badge badge-done" id="badge-6" onclick="alternarEstado(6)" style="cursor:pointer;" title="Clica para alternar entre Enviado e Na Fila">✅ Enviado</span></td>
+          <td style="text-align: center;">
+            <button class="btn-action btn-secondary" id="btn-6" onclick="abrirDossier(6)">Ver Dossiê</button>
+          </td>
+        </tr>
+        <tr data-pais="PT">
+          <td><strong>8</strong></td>
+          <td><strong style="color:#0b2265; font-size:15px;">Camisola 10</strong><br><span style="font-size:12px; color:#64748b;">camisola10.com</span></td>
+          <td><span class="badge badge-geo">🇵🇹 Portugal</span></td>
+          <td><code>72b3zm-0y.myshopify.com</code></td>
+          <td><span style="font-size:13px; color:#2563eb; font-weight:600;">@camisola10_oficial</span></td>
+          <td><span class="badge badge-done" id="badge-7" onclick="alternarEstado(7)" style="cursor:pointer;" title="Clica para alternar entre Enviado e Na Fila">✅ Enviado</span></td>
+          <td style="text-align: center;">
+            <button class="btn-action btn-secondary" id="btn-7" onclick="abrirDossier(7)">Ver Dossiê</button>
+          </td>
+        </tr>
+        <tr data-pais="PT">
+          <td><strong>9</strong></td>
+          <td><strong style="color:#0b2265; font-size:15px;">Imperial Retro</strong><br><span style="font-size:12px; color:#64748b;">imperialretro.com</span></td>
+          <td><span class="badge badge-geo">🇵🇹 Portugal</span></td>
+          <td><code>imperialpt.myshopify.com</code></td>
+          <td><span style="font-size:13px; color:#2563eb; font-weight:600;">@imperialretropt</span></td>
+          <td><span class="badge badge-done" id="badge-8" onclick="alternarEstado(8)" style="cursor:pointer;" title="Clica para alternar entre Enviado e Na Fila">✅ Enviado</span></td>
+          <td style="text-align: center;">
+            <button class="btn-action btn-secondary" id="btn-8" onclick="abrirDossier(8)">Ver Dossiê</button>
+          </td>
+        </tr>
+        <tr data-pais="PT">
+          <td><strong>10</strong></td>
+          <td><strong style="color:#0b2265; font-size:15px;">B5 Imports</strong><br><span style="font-size:12px; color:#64748b;">b5imports.com</span></td>
+          <td><span class="badge badge-geo">🇵🇹 Portugal</span></td>
+          <td><code>dm0mrz-uv.myshopify.com</code></td>
+          <td><span style="font-size:13px; color:#2563eb; font-weight:600;">@b5_imports</span></td>
+          <td><span class="badge badge-done" id="badge-9" onclick="alternarEstado(9)" style="cursor:pointer;" title="Clica para alternar entre Enviado e Na Fila">✅ Enviado</span></td>
+          <td style="text-align: center;">
+            <button class="btn-action btn-secondary" id="btn-9" onclick="abrirDossier(9)">Ver Dossiê</button>
+          </td>
+        </tr>
+        <tr data-pais="PT">
+          <td><strong>11</strong></td>
+          <td><strong style="color:#0b2265; font-size:15px;">G&M Store PT</strong><br><span style="font-size:12px; color:#64748b;">gmstorept.com</span></td>
+          <td><span class="badge badge-geo">🇵🇹 Portugal</span></td>
+          <td><code>ec2842.myshopify.com</code></td>
+          <td><span style="font-size:13px; color:#2563eb; font-weight:600;">@gmstore_pt</span></td>
+          <td><span class="badge badge-done" id="badge-10" onclick="alternarEstado(10)" style="cursor:pointer;" title="Clica para alternar entre Enviado e Na Fila">✅ Enviado</span></td>
+          <td style="text-align: center;">
+            <button class="btn-action btn-secondary" id="btn-10" onclick="abrirDossier(10)">Ver Dossiê</button>
+          </td>
+        </tr>
+        <tr data-pais="ES">
+          <td><strong>12</strong></td>
+          <td><strong style="color:#0b2265; font-size:15px;">Cami Clásica</strong><br><span style="font-size:12px; color:#64748b;">camiclasica.com</span></td>
+          <td><span class="badge badge-geo">🇪🇸 ES / 🇵🇹 PT</span></td>
+          <td><code>camiclasica.myshopify.com</code></td>
+          <td><span style="font-size:13px; color:#2563eb; font-weight:600;">@camiclasica</span></td>
+          <td><span class="badge badge-done" id="badge-11" onclick="alternarEstado(11)" style="cursor:pointer;" title="Clica para alternar entre Enviado e Na Fila">✅ Enviado</span></td>
+          <td style="text-align: center;">
+            <button class="btn-action btn-secondary" id="btn-11" onclick="abrirDossier(11)">Ver Dossiê</button>
+          </td>
+        </tr>
+        <tr data-pais="ES">
+          <td><strong>13</strong></td>
+          <td><strong style="color:#0b2265; font-size:15px;">Vesterez</strong><br><span style="font-size:12px; color:#64748b;">vesterez.com</span></td>
+          <td><span class="badge badge-geo">🇪🇸 Espanha</span></td>
+          <td><code>wd9b6q-09.myshopify.com</code></td>
+          <td><span style="font-size:13px; color:#2563eb; font-weight:600;">@vesterez.co</span></td>
+          <td><span class="badge badge-done" id="badge-12" onclick="alternarEstado(12)" style="cursor:pointer;" title="Clica para alternar entre Enviado e Na Fila">✅ Enviado</span></td>
+          <td style="text-align: center;">
+            <button class="btn-action btn-secondary" id="btn-12" onclick="abrirDossier(12)">Ver Dossiê</button>
+          </td>
+        </tr>
+        <tr data-pais="ES">
+          <td><strong>14</strong></td>
+          <td><strong style="color:#0b2265; font-size:15px;">Imperio Deportivo</strong><br><span style="font-size:12px; color:#64748b;">imperiodeportivo.com.es</span></td>
+          <td><span class="badge badge-geo">🇪🇸 Espanha</span></td>
+          <td><code>wfhd9z-1a.myshopify.com</code></td>
+          <td><span style="font-size:13px; color:#2563eb; font-weight:600;">@imperiodeportivo__</span></td>
+          <td><span class="badge badge-done" id="badge-13" onclick="alternarEstado(13)" style="cursor:pointer;" title="Clica para alternar entre Enviado e Na Fila">✅ Enviado</span></td>
+          <td style="text-align: center;">
+            <button class="btn-action btn-secondary" id="btn-13" onclick="abrirDossier(13)">Ver Dossiê</button>
+          </td>
+        </tr>
+        <tr data-pais="ES">
+          <td><strong>15</strong></td>
+          <td><strong style="color:#0b2265; font-size:15px;">The Cool Crab</strong><br><span style="font-size:12px; color:#64748b;">thecoolcrab.com</span></td>
+          <td><span class="badge badge-geo">🇪🇸 Espanha</span></td>
+          <td><code>coolcrab-8379.myshopify.com</code></td>
+          <td><span style="font-size:13px; color:#2563eb; font-weight:600;">@cool.crab_</span></td>
+          <td><span class="badge badge-done" id="badge-14" onclick="alternarEstado(14)" style="cursor:pointer;" title="Clica para alternar entre Enviado e Na Fila">✅ Enviado</span></td>
+          <td style="text-align: center;">
+            <button class="btn-action btn-secondary" id="btn-14" onclick="abrirDossier(14)">Ver Dossiê</button>
+          </td>
+        </tr>
+        <tr data-pais="ES">
+          <td><strong>16</strong></td>
+          <td><strong style="color:#0b2265; font-size:15px;">Palestino Store</strong><br><span style="font-size:12px; color:#64748b;">palestino.store</span></td>
+          <td><span class="badge badge-geo">🇪🇸 Espanha / 🇵🇹 PT</span></td>
+          <td><code>72eec7-2.myshopify.com</code></td>
+          <td><span style="font-size:13px; color:#2563eb; font-weight:600;">@palestino.store</span></td>
+          <td><span class="badge badge-done" id="badge-15" onclick="alternarEstado(15)" style="cursor:pointer;" title="Clica para alternar entre Enviado e Na Fila">✅ Enviado</span></td>
+          <td style="text-align: center;">
+            <button class="btn-action btn-secondary" id="btn-15" onclick="abrirDossier(15)">Ver Dossiê</button>
+          </td>
+        </tr>
+        <tr data-pais="ES">
+          <td><strong>17</strong></td>
+          <td><strong style="color:#0b2265; font-size:15px;">Leg3nd Style</strong><br><span style="font-size:12px; color:#64748b;">leg3nd.es</span></td>
+          <td><span class="badge badge-geo">🇪🇸 Espanha</span></td>
+          <td><code>leg3nd-style.myshopify.com</code></td>
+          <td><span style="font-size:13px; color:#2563eb; font-weight:600;">@leg3ndstyle</span></td>
+          <td><span class="badge badge-done" id="badge-16" onclick="alternarEstado(16)" style="cursor:pointer;" title="Clica para alternar entre Enviado e Na Fila">✅ Enviado</span></td>
+          <td style="text-align: center;">
+            <button class="btn-action btn-secondary" id="btn-16" onclick="abrirDossier(16)">Ver Dossiê</button>
+          </td>
+        </tr>
+        <tr data-pais="ES">
+          <td><strong>18</strong></td>
+          <td><strong style="color:#0b2265; font-size:15px;">Mystery Shirt in a Box</strong><br><span style="font-size:12px; color:#64748b;">mysteryshirtinabox.com</span></td>
+          <td><span class="badge badge-geo">🇪🇸 Espanha / 🇬🇧 GB</span></td>
+          <td><code>mysteryshirtinabox.myshopify.com</code></td>
+          <td><span style="font-size:13px; color:#2563eb; font-weight:600;">@shirtinabox</span></td>
+          <td><span class="badge badge-done" id="badge-17" onclick="alternarEstado(17)" style="cursor:pointer;" title="Clica para alternar entre Enviado e Na Fila">✅ Enviado</span></td>
+          <td style="text-align: center;">
+            <button class="btn-action btn-secondary" id="btn-17" onclick="abrirDossier(17)">Ver Dossiê</button>
+          </td>
+        </tr>
+        <tr data-pais="US">
+          <td><strong>19</strong></td>
+          <td><strong style="color:#0b2265; font-size:15px;">Retro Soccer Kit</strong><br><span style="font-size:12px; color:#64748b;">retrosoccerkit.com</span></td>
+          <td><span class="badge badge-geo">🇺🇸 US / 🇵🇹 PT</span></td>
+          <td><code>9b931f-2.myshopify.com</code></td>
+          <td><span style="font-size:13px; color:#2563eb; font-weight:600;">@retrosoccerkit_</span></td>
+          <td><span class="badge badge-done" id="badge-18" onclick="alternarEstado(18)" style="cursor:pointer;" title="Clica para alternar entre Enviado e Na Fila">✅ Enviado</span></td>
+          <td style="text-align: center;">
+            <button class="btn-action btn-secondary" id="btn-18" onclick="abrirDossier(18)">Ver Dossiê</button>
+          </td>
+        </tr>
+        <tr data-pais="US">
+          <td><strong>20</strong></td>
+          <td><strong style="color:#0b2265; font-size:15px;">Retro Locker</strong><br><span style="font-size:12px; color:#64748b;">retrolocker.com</span></td>
+          <td><span class="badge badge-geo">🇺🇸 US / 🇵🇹 PT</span></td>
+          <td><code>7xg36q-ei.myshopify.com</code></td>
+          <td><span style="font-size:13px; color:#2563eb; font-weight:600;">@retrolocker</span></td>
+          <td><span class="badge badge-done" id="badge-19" onclick="alternarEstado(19)" style="cursor:pointer;" title="Clica para alternar entre Enviado e Na Fila">✅ Enviado</span></td>
+          <td style="text-align: center;">
+            <button class="btn-action btn-secondary" id="btn-19" onclick="abrirDossier(19)">Ver Dossiê</button>
+          </td>
+        </tr>
+        <tr data-pais="US">
+          <td><strong>21</strong></td>
+          <td><strong style="color:#0b2265; font-size:15px;">All Star Elite</strong><br><span style="font-size:12px; color:#64748b;">allstarelite.com</span></td>
+          <td><span class="badge badge-geo">🇺🇸 Estados Unidos</span></td>
+          <td><code>cg7ccp-66.myshopify.com</code></td>
+          <td><span style="font-size:13px; color:#2563eb; font-weight:600;">@allstarelite</span></td>
+          <td><span class="badge badge-done" id="badge-20" onclick="alternarEstado(20)" style="cursor:pointer;" title="Clica para alternar entre Enviado e Na Fila">✅ Enviado</span></td>
+          <td style="text-align: center;">
+            <button class="btn-action btn-secondary" id="btn-20" onclick="abrirDossier(20)">Ver Dossiê</button>
+          </td>
+        </tr>
+        <tr data-pais="US">
+          <td><strong>22</strong></td>
+          <td><strong style="color:#0b2265; font-size:15px;">Q9 Sport</strong><br><span style="font-size:12px; color:#64748b;">q9-sport.com</span></td>
+          <td><span class="badge badge-geo">🇺🇸 Estados Unidos</span></td>
+          <td><code>q9sport.myshopify.com</code></td>
+          <td><span style="font-size:13px; color:#2563eb; font-weight:600;">@q9sport.qa</span></td>
+          <td><span class="badge badge-done" id="badge-21" onclick="alternarEstado(21)" style="cursor:pointer;" title="Clica para alternar entre Enviado e Na Fila">✅ Enviado</span></td>
+          <td style="text-align: center;">
+            <button class="btn-action btn-secondary" id="btn-21" onclick="abrirDossier(21)">Ver Dossiê</button>
+          </td>
+        </tr>
+        <tr data-pais="GB">
+          <td><strong>23</strong></td>
+          <td><strong style="color:#0b2265; font-size:15px;">Surprise Shirts</strong><br><span style="font-size:12px; color:#64748b;">surpriseshirts.co.uk</span></td>
+          <td><span class="badge badge-geo">🇬🇧 Reino Unido</span></td>
+          <td><code>surpriseshirts.myshopify.com</code></td>
+          <td><span style="font-size:13px; color:#2563eb; font-weight:600;">@surprise_shirts</span></td>
+          <td><span class="badge badge-done" id="badge-22" onclick="alternarEstado(22)" style="cursor:pointer;" title="Clica para alternar entre Enviado e Na Fila">✅ Enviado</span></td>
+          <td style="text-align: center;">
+            <button class="btn-action btn-secondary" id="btn-22" onclick="abrirDossier(22)">Ver Dossiê</button>
+          </td>
+        </tr>
+        <tr data-pais="GB">
+          <td><strong>24</strong></td>
+          <td><strong style="color:#0b2265; font-size:15px;">Mystery Boxd</strong><br><span style="font-size:12px; color:#64748b;">mysteryboxd.com</span></td>
+          <td><span class="badge badge-geo">🇬🇧 Reino Unido</span></td>
+          <td><code>mysteryboxd.myshopify.com</code></td>
+          <td><span style="font-size:13px; color:#2563eb; font-weight:600;">@mystery_boxd</span></td>
+          <td><span class="badge badge-done" id="badge-23" onclick="alternarEstado(23)" style="cursor:pointer;" title="Clica para alternar entre Enviado e Na Fila">✅ Enviado</span></td>
+          <td style="text-align: center;">
+            <button class="btn-action btn-secondary" id="btn-23" onclick="abrirDossier(23)">Ver Dossiê</button>
+          </td>
+        </tr>
+        <tr data-pais="GB">
+          <td><strong>25</strong></td>
+          <td><strong style="color:#0b2265; font-size:15px;">Mystique Jerseys</strong><br><span style="font-size:12px; color:#64748b;">mystiquejerseys.com</span></td>
+          <td><span class="badge badge-geo">🇬🇧 Reino Unido</span></td>
+          <td><code>mystery-jerseys.myshopify.com</code></td>
+          <td><span style="font-size:13px; color:#2563eb; font-weight:600;">@mystiquejerseys</span></td>
+          <td><span class="badge badge-done" id="badge-24" onclick="alternarEstado(24)" style="cursor:pointer;" title="Clica para alternar entre Enviado e Na Fila">✅ Enviado</span></td>
+          <td style="text-align: center;">
+            <button class="btn-action btn-secondary" id="btn-24" onclick="abrirDossier(24)">Ver Dossiê</button>
+          </td>
+        </tr>
+        <tr data-pais="GB">
+          <td><strong>26</strong></td>
+          <td><strong style="color:#0b2265; font-size:15px;">Black Hype World</strong><br><span style="font-size:12px; color:#64748b;">blackhypeworld.com</span></td>
+          <td><span class="badge badge-geo">🇬🇧 Reino Unido</span></td>
+          <td><code>xzvgfq-si.myshopify.com</code></td>
+          <td><span style="font-size:13px; color:#2563eb; font-weight:600;">@blackhype_store_ofc</span></td>
+          <td><span class="badge badge-done" id="badge-25" onclick="alternarEstado(25)" style="cursor:pointer;" title="Clica para alternar entre Enviado e Na Fila">✅ Enviado</span></td>
+          <td style="text-align: center;">
+            <button class="btn-action btn-secondary" id="btn-25" onclick="abrirDossier(25)">Ver Dossiê</button>
+          </td>
+        </tr>
+        <tr data-pais="NL">
+          <td><strong>27</strong></td>
+          <td><strong style="color:#0b2265; font-size:15px;">Old School Voetbalshirts</strong><br><span style="font-size:12px; color:#64748b;">oldschoolvoetbalshirts.nl</span></td>
+          <td><span class="badge badge-geo">🇳🇱 Holanda</span></td>
+          <td><code>0590f1.myshopify.com</code></td>
+          <td><span style="font-size:13px; color:#2563eb; font-weight:600;">@oldschoolvoetbalshirts</span></td>
+          <td><span class="badge badge-done" id="badge-26" onclick="alternarEstado(26)" style="cursor:pointer;" title="Clica para alternar entre Enviado e Na Fila">✅ Enviado</span></td>
+          <td style="text-align: center;">
+            <button class="btn-action btn-secondary" id="btn-26" onclick="abrirDossier(26)">Ver Dossiê</button>
+          </td>
+        </tr>
+        <tr data-pais="NL">
+          <td><strong>28</strong></td>
+          <td><strong style="color:#0b2265; font-size:15px;">Middo</strong><br><span style="font-size:12px; color:#64748b;">middo.nl</span></td>
+          <td><span class="badge badge-geo">🇳🇱 Holanda / 🇧🇪 BE</span></td>
+          <td><code>njinked.myshopify.com</code></td>
+          <td><span style="font-size:13px; color:#2563eb; font-weight:600;">@middo.nl</span></td>
+          <td><span class="badge badge-done" id="badge-27" onclick="alternarEstado(27)" style="cursor:pointer;" title="Clica para alternar entre Enviado e Na Fila">✅ Enviado</span></td>
+          <td style="text-align: center;">
+            <button class="btn-action btn-secondary" id="btn-27" onclick="abrirDossier(27)">Ver Dossiê</button>
+          </td>
+        </tr>
+        <tr data-pais="IT">
+          <td><strong>29</strong></td>
+          <td><strong style="color:#0b2265; font-size:15px;">Iconic Shirts</strong><br><span style="font-size:12px; color:#64748b;">iconicshirts.com</span></td>
+          <td><span class="badge badge-geo">🇮🇹 Itália / 🇳🇱 NL</span></td>
+          <td><code>scyuy0-sr.myshopify.com</code></td>
+          <td><span style="font-size:13px; color:#2563eb; font-weight:600;">@iconicshirtscom</span></td>
+          <td><span class="badge badge-done" id="badge-28" onclick="alternarEstado(28)" style="cursor:pointer;" title="Clica para alternar entre Enviado e Na Fila">✅ Enviado</span></td>
+          <td style="text-align: center;">
+            <button class="btn-action btn-secondary" id="btn-28" onclick="abrirDossier(28)">Ver Dossiê</button>
+          </td>
+        </tr>
+        <tr data-pais="DE">
+          <td><strong>30</strong></td>
+          <td><strong style="color:#0b2265; font-size:15px;">MyBallerBox</strong><br><span style="font-size:12px; color:#64748b;">myballerbox.de</span></td>
+          <td><span class="badge badge-geo">🇩🇪 Alemanha</span></td>
+          <td><code>2bff6f-2.myshopify.com</code></td>
+          <td><span style="font-size:13px; color:#2563eb; font-weight:600;">@myballerbox</span></td>
+          <td><span class="badge badge-done" id="badge-29" onclick="alternarEstado(29)" style="cursor:pointer;" title="Clica para alternar entre Enviado e Na Fila">✅ Enviado</span></td>
+          <td style="text-align: center;">
+            <button class="btn-action btn-secondary" id="btn-29" onclick="abrirDossier(29)">Ver Dossiê</button>
+          </td>
+        </tr>
+
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- Modal com Texto Pronto -->
+<div class="modal-overlay" id="modal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h3 id="modal-loja">Dossiê</h3>
+      <button class="modal-close" onclick="fecharModal()">&times;</button>
+    </div>
+    
+    <div style="margin-bottom: 12px;">
+      <label style="font-size: 12px; font-weight: 800; color: #475569;">ASSUNTO DO E-MAIL:</label>
+      <input type="text" id="modal-assunto" style="width: 100%; padding: 10px; border-radius: 6px; border: 1.5px solid #cbd5e1; font-weight: 700; margin-top: 4px;" readonly>
+    </div>
+
+    <div style="margin-bottom: 16px;">
+      <label style="font-size: 12px; font-weight: 800; color: #475569;">CORPO DA DENÚNCIA (COPIAR E ENVIAR):</label>
+      <pre id="modal-corpo"></pre>
+    </div>
+
+    <div style="display: flex; justify-content: flex-end; gap: 12px;">
+      <button class="btn-action btn-secondary" onclick="fecharModal()">Fechar</button>
+      <button class="btn-action" style="background: #16a34a; font-size: 14px; padding: 10px 20px;" onclick="copiarTextoModal()">Copiar Texto Novamente</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  const LOJAS = [{"loja": "Wolf Sports", "dominio": "wolfsports.pt", "myshopify": "issvu3-fq.myshopify.com", "ig": "@wolfsports.pt1", "mercado": "\ud83c\uddf5\ud83c\uddf9 Portugal", "pais": "PT", "status": "enviado"}, {"loja": "90 Minutos", "dominio": "90minutos.pt", "myshopify": "hg9xvd-ca.myshopify.com", "ig": "@90minutoss.pt", "mercado": "\ud83c\uddf5\ud83c\uddf9 Portugal", "pais": "PT", "status": "enviado"}, {"loja": "Vencedores Club", "dominio": "vencedoresclub.com", "myshopify": "2pqkak-t4.myshopify.com", "ig": "@vencedores.club", "mercado": "\ud83c\uddf5\ud83c\uddf9 Portugal", "pais": "PT", "status": "enviado"}, {"loja": "Reino do Futebol", "dominio": "reinodofutebol.com", "myshopify": "dpxsg0-55.myshopify.com", "ig": "@reinodofutebolpt", "mercado": "\ud83c\uddf5\ud83c\uddf9 Portugal", "pais": "PT", "status": "enviado"}, {"loja": "GK Imports", "dominio": "gkimports.store", "myshopify": "2acfla-53.myshopify.com", "ig": "@g.k_importspt", "mercado": "\ud83c\uddf5\ud83c\uddf9 Portugal", "pais": "PT", "status": "enviado"}, {"loja": "PrimeKits Club", "dominio": "primekitsclub.com", "myshopify": "y8skcb-7u.myshopify.com", "ig": "@primekits.club", "mercado": "\ud83c\uddf5\ud83c\uddf9 Portugal", "pais": "PT", "status": "enviado"}, {"loja": "Faded Store", "dominio": "fadedstore.com", "myshopify": "faded-1990.myshopify.com", "ig": "@faded_store_", "mercado": "\ud83c\uddf5\ud83c\uddf9 PT / \ud83c\uddee\ud83c\uddf9 IT", "pais": "PT", "status": "enviado"}, {"loja": "Camisola 10", "dominio": "camisola10.com", "myshopify": "72b3zm-0y.myshopify.com", "ig": "@camisola10_oficial", "mercado": "\ud83c\uddf5\ud83c\uddf9 Portugal", "pais": "PT", "status": "enviado"}, {"loja": "Imperial Retro", "dominio": "imperialretro.com", "myshopify": "imperialpt.myshopify.com", "ig": "@imperialretropt", "mercado": "\ud83c\uddf5\ud83c\uddf9 Portugal", "pais": "PT", "status": "enviado"}, {"loja": "B5 Imports", "dominio": "b5imports.com", "myshopify": "dm0mrz-uv.myshopify.com", "ig": "@b5_imports", "mercado": "\ud83c\uddf5\ud83c\uddf9 Portugal", "pais": "PT", "status": "enviado"}, {"loja": "G&M Store PT", "dominio": "gmstorept.com", "myshopify": "ec2842.myshopify.com", "ig": "@gmstore_pt", "mercado": "\ud83c\uddf5\ud83c\uddf9 Portugal", "pais": "PT", "status": "enviado"}, {"loja": "Cami Cl\u00e1sica", "dominio": "camiclasica.com", "myshopify": "camiclasica.myshopify.com", "ig": "@camiclasica", "mercado": "\ud83c\uddea\ud83c\uddf8 ES / \ud83c\uddf5\ud83c\uddf9 PT", "pais": "ES", "status": "enviado"}, {"loja": "Vesterez", "dominio": "vesterez.com", "myshopify": "wd9b6q-09.myshopify.com", "ig": "@vesterez.co", "mercado": "\ud83c\uddea\ud83c\uddf8 Espanha", "pais": "ES", "status": "enviado"}, {"loja": "Imperio Deportivo", "dominio": "imperiodeportivo.com.es", "myshopify": "wfhd9z-1a.myshopify.com", "ig": "@imperiodeportivo__", "mercado": "\ud83c\uddea\ud83c\uddf8 Espanha", "pais": "ES", "status": "enviado"}, {"loja": "The Cool Crab", "dominio": "thecoolcrab.com", "myshopify": "coolcrab-8379.myshopify.com", "ig": "@cool.crab_", "mercado": "\ud83c\uddea\ud83c\uddf8 Espanha", "pais": "ES", "status": "enviado"}, {"loja": "Palestino Store", "dominio": "palestino.store", "myshopify": "72eec7-2.myshopify.com", "ig": "@palestino.store", "mercado": "\ud83c\uddea\ud83c\uddf8 Espanha / \ud83c\uddf5\ud83c\uddf9 PT", "pais": "ES", "status": "enviado"}, {"loja": "Leg3nd Style", "dominio": "leg3nd.es", "myshopify": "leg3nd-style.myshopify.com", "ig": "@leg3ndstyle", "mercado": "\ud83c\uddea\ud83c\uddf8 Espanha", "pais": "ES", "status": "enviado"}, {"loja": "Mystery Shirt in a Box", "dominio": "mysteryshirtinabox.com", "myshopify": "mysteryshirtinabox.myshopify.com", "ig": "@shirtinabox", "mercado": "\ud83c\uddea\ud83c\uddf8 Espanha / \ud83c\uddec\ud83c\udde7 GB", "pais": "ES", "status": "enviado"}, {"loja": "Retro Soccer Kit", "dominio": "retrosoccerkit.com", "myshopify": "9b931f-2.myshopify.com", "ig": "@retrosoccerkit_", "mercado": "\ud83c\uddfa\ud83c\uddf8 US / \ud83c\uddf5\ud83c\uddf9 PT", "pais": "US", "status": "enviado"}, {"loja": "Retro Locker", "dominio": "retrolocker.com", "myshopify": "7xg36q-ei.myshopify.com", "ig": "@retrolocker", "mercado": "\ud83c\uddfa\ud83c\uddf8 US / \ud83c\uddf5\ud83c\uddf9 PT", "pais": "US", "status": "enviado"}, {"loja": "All Star Elite", "dominio": "allstarelite.com", "myshopify": "cg7ccp-66.myshopify.com", "ig": "@allstarelite", "mercado": "\ud83c\uddfa\ud83c\uddf8 Estados Unidos", "pais": "US", "status": "enviado"}, {"loja": "Q9 Sport", "dominio": "q9-sport.com", "myshopify": "q9sport.myshopify.com", "ig": "@q9sport.qa", "mercado": "\ud83c\uddfa\ud83c\uddf8 Estados Unidos", "pais": "US", "status": "enviado"}, {"loja": "Surprise Shirts", "dominio": "surpriseshirts.co.uk", "myshopify": "surpriseshirts.myshopify.com", "ig": "@surprise_shirts", "mercado": "\ud83c\uddec\ud83c\udde7 Reino Unido", "pais": "GB", "status": "enviado"}, {"loja": "Mystery Boxd", "dominio": "mysteryboxd.com", "myshopify": "mysteryboxd.myshopify.com", "ig": "@mystery_boxd", "mercado": "\ud83c\uddec\ud83c\udde7 Reino Unido", "pais": "GB", "status": "enviado"}, {"loja": "Mystique Jerseys", "dominio": "mystiquejerseys.com", "myshopify": "mystery-jerseys.myshopify.com", "ig": "@mystiquejerseys", "mercado": "\ud83c\uddec\ud83c\udde7 Reino Unido", "pais": "GB", "status": "enviado"}, {"loja": "Black Hype World", "dominio": "blackhypeworld.com", "myshopify": "xzvgfq-si.myshopify.com", "ig": "@blackhype_store_ofc", "mercado": "\ud83c\uddec\ud83c\udde7 Reino Unido", "pais": "GB", "status": "enviado"}, {"loja": "Old School Voetbalshirts", "dominio": "oldschoolvoetbalshirts.nl", "myshopify": "0590f1.myshopify.com", "ig": "@oldschoolvoetbalshirts", "mercado": "\ud83c\uddf3\ud83c\uddf1 Holanda", "pais": "NL", "status": "enviado"}, {"loja": "Middo", "dominio": "middo.nl", "myshopify": "njinked.myshopify.com", "ig": "@middo.nl", "mercado": "\ud83c\uddf3\ud83c\uddf1 Holanda / \ud83c\udde7\ud83c\uddea BE", "pais": "NL", "status": "enviado"}, {"loja": "Iconic Shirts", "dominio": "iconicshirts.com", "myshopify": "scyuy0-sr.myshopify.com", "ig": "@iconicshirtscom", "mercado": "\ud83c\uddee\ud83c\uddf9 It\u00e1lia / \ud83c\uddf3\ud83c\uddf1 NL", "pais": "IT", "status": "enviado"}, {"loja": "MyBallerBox", "dominio": "myballerbox.de", "myshopify": "2bff6f-2.myshopify.com", "ig": "@myballerbox", "mercado": "\ud83c\udde9\ud83c\uddea Alemanha", "pais": "DE", "status": "enviado"}];
+  const BCC_OFICIAL = "legal@shopify.com, complaints@stripe.com, notices@stripe.com, brand.guard@nike.com, service@puma.com, product.safety@puma.com, correio.asae@asae.pt";
+  let lojaAtualIdx = null;
+
+  function copiarBCC(btn) {
+    navigator.clipboard.writeText(BCC_OFICIAL).then(() => {
+      const orig = btn.innerText;
+      btn.innerText = "✅ Bcc Copiado!";
+      setTimeout(() => btn.innerText = orig, 2000);
+    });
+  }
+
+  function filtrarPais(pais) {
+    const chips = document.querySelectorAll('.pais-chip');
+    chips.forEach(c => c.classList.remove('active'));
+    if (pais !== 'TODOS') {
+      const c = document.getElementById('chip-' + pais);
+      if (c) c.classList.add('active');
+    }
+
+    const rows = document.querySelectorAll('#tabela-linhas tr');
+    rows.forEach(r => {
+      if (pais === 'TODOS' || r.getAttribute('data-pais') === pais) {
+        r.style.display = '';
+      } else {
+        r.style.display = 'none';
+      }
+    });
+  }
+
+  function alternarEstado(idx) {
+    const b = document.getElementById('badge-' + idx);
+    const btn = document.getElementById('btn-' + idx);
+    if (b.innerText.includes('Enviado')) {
+      b.className = 'badge badge-queue';
+      b.innerText = '⏳ Na Fila';
+      btn.className = 'btn-action';
+      btn.innerText = 'Copiar Dossiê';
+    } else {
+      b.className = 'badge badge-done';
+      b.innerText = '✅ Enviado';
+      btn.className = 'btn-action btn-secondary';
+      btn.innerText = 'Ver Dossiê';
+    }
+    atualizarContadores();
+  }
+
+  function abrirDossier(idx) {
+    lojaAtualIdx = idx;
+    const l = LOJAS[idx];
+    document.getElementById('modal-loja').innerText = "Dossiê Cease & Desist · " + l.loja + " (" + l.myshopify + ")";
+    document.getElementById('modal-assunto').value = "URGENT IP INFRINGEMENT & COUNTERFEIT NOTICE: " + l.dominio + " (Shopify: " + l.myshopify + ")";
+    
+    const texto = "To: Shopify Legal & Trust/Safety, Stripe Financial Risk & Compliance, Global Brand Protection (Nike, Puma), and Regulatory Authorities,\n\nFORMAL NOTICE OF MASS-SCALE INTELLECTUAL PROPERTY INFRINGEMENT, COMMERCIAL TRADEMARK COUNTERFEITING, AND FINANCIAL FRAUD\n\n1. INFRINGING ENTITY IDENTIFICATION:\n- Store Name: " + l.loja + "\n- Infringing Domain / Store URL: https://" + l.dominio + "\n- Associated Shopify Store ID / Subdomain: " + l.myshopify + "\n- Marketing Channel: Instagram " + l.ig + "\n- Target Jurisdictions: " + l.mercado + " and European Union\n\n2. NATURE OF ILLEGAL ACTIVITY:\nThe merchant operating under " + l.dominio + " (" + l.myshopify + ") is actively marketing and distributing unlicensed, counterfeit football shirts and replica merchandise reproducing registered trademarks of Nike, Adidas, Puma, and associated European football clubs without authorization or licensing agreements.\n\n3. PAYMENT PROCESSOR & HOSTING COMPLIANCE VIOLATION:\n- Hosting Platform: Shopify Inc.\n- Payment Gateways: Shopify Payments / Stripe Inc.\nUnder Section 512 of the DMCA, European Directive 2000/31/EC, the Shopify Acceptable Use Policy, and Stripe Prohibited Businesses policy, facilitating payment settlements and digital hosting for counterfeit products constitutes actionable liability upon formal notification.\n\n4. REQUIRED ENFORCEMENT ACTION:\n- Shopify Trust & Safety: Immediately deactivate store instance " + l.myshopify + ".\n- Stripe Risk Operations: Suspend payout settlements and initiate immediate underwriting audit on accounts tied to " + l.dominio + ".\n- Brand Protection Officers: File priority DMCA and anti-counterfeiting notices with host and payment processors.\n\nSubmitted by:\nDaniel Weber\nLegal & Compliance Counsel\nHoffmann Counsel\nlegal@hoffmanncounsel.de";
+
+    document.getElementById('modal-corpo').innerText = texto;
+    document.getElementById('modal').style.display = 'flex';
+  }
+
+  function fecharModal() {
+    document.getElementById('modal').style.display = 'none';
+  }
+
+  function copiarTextoModal() {
+    const texto = document.getElementById('modal-corpo').innerText;
+    navigator.clipboard.writeText(texto).then(() => {
+      const b = document.getElementById('badge-' + lojaAtualIdx);
+      if (b) {
+        b.className = "badge badge-done";
+        b.innerText = "✅ Enviado";
+      }
+      atualizarContadores();
+      fecharModal();
+    });
+  }
+
+  function atualizarContadores() {
+    const badgesDone = document.querySelectorAll('.badge-done').length;
+    const total = LOJAS.length;
+    document.getElementById('stat-done').innerText = badgesDone;
+    document.getElementById('stat-queue').innerText = total - badgesDone;
+  }
+</script>
+</body>
+</html>

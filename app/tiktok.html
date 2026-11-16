@@ -1,0 +1,333 @@
+<!doctype html>
+<html lang="pt-PT">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TikTok Ads · MisterTuga e MisterFútbol</title>
+<style>
+  :root {
+    --fundo: #f5f1ea; --cartao: #ffffff; --linha: #e6ddd0; --linha-forte: #d6c9b6; --texto: #2b2723; --suave: #7a7066;
+    --verde: #6f8f76; --verde-escuro: #56735d; --verde-claro: #e7efe8; --rosa: #b07c7c; --rosa-escuro: #8f5c5c; --rosa-claro: #f4e7e5;
+    --areia: #d8c7ab; --areia-claro: #f2ebdf; --ecra: #171513;
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-font-smoothing: antialiased; }
+  body { margin: 0; background: var(--fundo); color: var(--texto); font: 14.5px/1.45 -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", sans-serif; }
+  button { font: inherit; color: inherit; }
+  code { font: 12.5px/1.4 ui-monospace, "SF Mono", Menlo, monospace; background: var(--areia-claro); padding: 1px 5px; border-radius: 5px; overflow-wrap: anywhere; }
+  a { color: var(--verde-escuro); }
+
+  /* topo */
+  .topo { max-width: 1500px; margin: 0 auto; padding: 26px 32px 0; display: flex; align-items: flex-end; gap: 24px; border-bottom: 1px solid var(--linha); }
+  .topo h1 { font-size: 26px; font-weight: 650; margin: 0 0 4px; letter-spacing: -0.01em; }
+  .topo h1 .logo { width: 26px; height: 26px; vertical-align: -4px; margin-right: 10px; }
+  .conta { color: var(--suave); margin: 0 0 14px; font-size: 13.5px; }
+  .conta b { color: var(--texto); font-weight: 600; }
+  .vistas { margin-left: auto; display: flex; gap: 24px; }
+  .vistas button { background: none; border: 0; padding: 10px 0 12px; font-size: 15px; color: var(--suave); cursor: pointer; border-bottom: 2px solid transparent; margin-bottom: -1px; }
+  .vistas button:hover { color: var(--texto); }
+  .vistas button.ativo { color: var(--texto); font-weight: 600; border-bottom-color: var(--texto); }
+  .vista { display: none; }
+  .vista.ativa { display: block; }
+
+  /* mercados */
+  .barra { max-width: 1500px; margin: 0 auto; padding: 18px 32px 0; display: flex; align-items: center; gap: 18px; flex-wrap: wrap; }
+  .mercados { display: flex; gap: 6px; flex-wrap: wrap; }
+  .mercados button { font-size: 14px; padding: 7px 13px; border-radius: 8px; border: 1px solid var(--linha-forte); background: var(--cartao); cursor: pointer; }
+  .mercados button:hover { border-color: var(--suave); }
+  .mercados button.ativo { background: var(--texto); border-color: var(--texto); color: #fff; }
+  .sobre { color: var(--suave); font-size: 13.5px; }
+  .sobre b { color: var(--texto); font-weight: 600; }
+
+  /* preparar */
+  .preparar { max-width: 1500px; margin: 0 auto; padding: 18px 32px 60px; display: grid; grid-template-columns: minmax(0, 1fr) 480px; gap: 28px; align-items: start; }
+  .titulo { display: flex; align-items: baseline; gap: 14px; margin: 4px 0 12px; }
+  .titulo h2 { font-size: 17px; font-weight: 650; margin: 0; }
+  .titulo p { margin: 0; color: var(--suave); font-size: 13.5px; }
+  .titulo .direita { margin-left: auto; }
+  .secundario { font-size: 13.5px; padding: 6px 12px; border-radius: 8px; border: 1px solid var(--linha-forte); background: var(--cartao); cursor: pointer; }
+  .secundario:hover { border-color: var(--suave); }
+  .grelha { display: grid; grid-template-columns: repeat(auto-fill, minmax(176px, 1fr)); gap: 14px; }
+  .cv { background: var(--cartao); border: 1px solid var(--linha); border-radius: 12px; overflow: hidden; cursor: pointer; position: relative; text-align: left; padding: 0; display: flex; flex-direction: column; }
+  .cv:hover { border-color: var(--linha-forte); }
+  .cv.escolhido { border-color: var(--verde); outline: 2px solid var(--verde); outline-offset: -2px; }
+  .cv .tela { aspect-ratio: 9 / 16; background: var(--ecra); position: relative; }
+  .cv video { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .cv .letra { position: absolute; top: 8px; left: 8px; background: var(--verde); color: #fff; font-weight: 700; font-size: 13px; padding: 2px 8px; border-radius: 6px; display: none; }
+  .cv.escolhido .letra { display: block; }
+  .cv .formato { position: absolute; top: 8px; right: 8px; background: rgba(23, 21, 19, .62); color: #fff; font-size: 11.5px; padding: 2px 6px; border-radius: 5px; }
+  .cv .formato:empty { display: none; }
+  .cv .dados { padding: 9px 11px 11px; font-size: 12.5px; color: var(--suave); }
+  .cv .dados b { display: block; font-size: 14px; color: var(--texto); margin-bottom: 1px; }
+  .cv .dados .mau { color: var(--rosa-escuro); }
+  .vazio { color: var(--suave); padding: 30px 0; }
+  .cv.fixo { cursor: default; }
+  .campo .v .mau { color: var(--rosa-escuro); }
+  .campo .v .texto { font-weight: 400; }
+
+  /* o plano */
+  .painel { position: sticky; top: 14px; background: var(--cartao); border: 1px solid var(--linha); border-radius: 12px; max-height: calc(100vh - 28px); display: flex; flex-direction: column; }
+  .painel .corpo { overflow: auto; padding: 2px 20px 8px; }
+  .painel .pe { border-top: 1px solid var(--linha); padding: 14px 20px 16px; }
+  .painel h2 { font-size: 17px; font-weight: 650; margin: 16px 0 2px; }
+  .painel .nota { color: var(--suave); font-size: 13px; margin: 0 0 4px; }
+  .bloco h3 { font-size: 11.5px; text-transform: uppercase; letter-spacing: .07em; color: var(--suave); margin: 20px 0 4px; font-weight: 650; }
+  .campo { display: grid; grid-template-columns: 118px minmax(0, 1fr) auto; gap: 10px; align-items: baseline; padding: 8px 0; border-top: 1px solid #f1ebe2; }
+  .bloco h3 + .campo { border-top: 0; }
+  .campo .r { color: var(--suave); font-size: 13px; }
+  .campo .v { font-weight: 550; min-width: 0; }
+  .campo .v small { display: block; font-weight: 400; color: var(--suave); font-size: 12.5px; margin-top: 2px; }
+  .copiar { font-size: 12.5px; color: var(--verde-escuro); background: none; border: 1px solid var(--linha-forte); border-radius: 6px; padding: 3px 9px; cursor: pointer; white-space: nowrap; }
+  .copiar:hover { border-color: var(--verde); }
+  .copiar.feito { color: var(--texto); border-color: var(--verde); background: var(--verde-claro); }
+  .numero { display: inline-flex; align-items: center; border: 1px solid var(--linha-forte); border-radius: 8px; overflow: hidden; background: var(--cartao); }
+  .numero span { padding: 4px 0 4px 9px; color: var(--suave); }
+  .numero input { font: inherit; font-weight: 600; width: 74px; border: 0; padding: 4px 9px 4px 2px; outline: none; background: transparent; }
+  .ligeiro { background: none; border: 0; padding: 0; color: var(--verde-escuro); cursor: pointer; text-decoration: underline; text-underline-offset: 3px; font-size: 12.5px; }
+  .anuncio { border: 1px solid var(--linha); border-radius: 10px; padding: 10px 12px 4px; margin: 8px 0 12px; }
+  .anuncio .cab { display: flex; align-items: center; gap: 12px; margin-bottom: 2px; }
+  .anuncio .mini { width: 34px; aspect-ratio: 9 / 16; border-radius: 5px; object-fit: cover; background: var(--ecra); flex: none; }
+  .anuncio .cab b { font-size: 15px; }
+  .anuncio .cab span { color: var(--suave); font-size: 12.5px; }
+  .anuncio .cab .tirar { margin-left: auto; }
+  .anuncio .campo { grid-template-columns: 70px minmax(0, 1fr) auto; }
+  textarea { width: 100%; font: inherit; font-weight: 400; color: var(--texto); border: 1px solid var(--linha-forte); border-radius: 8px; padding: 7px 9px; resize: vertical; min-height: 58px; outline: none; background: var(--cartao); }
+  textarea:focus { border-color: var(--verde); }
+  textarea.mal { border-color: var(--rosa); background: #fdf8f7; }
+  .contador { font-size: 12px; color: var(--suave); font-weight: 400; margin-top: 3px; }
+  .contador.mal { color: var(--rosa-escuro); }
+  .sem { color: var(--suave); font-size: 13.5px; padding: 6px 0 10px; }
+  .principal { width: 100%; font-size: 15px; font-weight: 600; padding: 12px; border: 0; border-radius: 10px; background: var(--verde); color: #fff; cursor: pointer; }
+  .principal:hover { background: var(--verde-escuro); }
+  .principal:disabled { background: #d3cabd; cursor: default; }
+  .estado { list-style: none; margin: 10px 0 0; padding: 0; font-size: 13px; }
+  .estado:empty { display: none; }
+  .estado li { display: flex; gap: 10px; padding: 3px 0; }
+  .estado li span:last-child { margin-left: auto; color: var(--suave); }
+  .estado .ok span:last-child { color: var(--verde-escuro); }
+  .estado .erro span:last-child { color: var(--rosa-escuro); }
+  .feito-msg { margin-top: 10px; font-size: 13.5px; }
+  .feito-msg:empty { display: none; }
+  .aviso-pe { color: var(--rosa-escuro); font-size: 13px; margin: 0 0 10px; }
+  .aviso-pe:empty { display: none; }
+
+  /* decidir */
+  .pagina { max-width: 1060px; margin: 0 auto; padding: 24px 32px 70px; }
+  .pagina > h2 { font-size: 22px; font-weight: 650; margin: 4px 0 4px; letter-spacing: -0.01em; }
+  .pagina > p.lead { color: var(--suave); margin: 0 0 20px; max-width: 760px; }
+  .decidir { display: grid; grid-template-columns: minmax(0, 1fr) 420px; gap: 24px; align-items: start; }
+  .caixa { background: var(--cartao); border: 1px solid var(--linha); border-radius: 12px; padding: 18px 20px; }
+  .form { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px 16px; }
+  .form label { display: block; font-size: 12.5px; color: var(--suave); }
+  .form input, .form select { display: block; width: 100%; margin-top: 4px; font: inherit; font-weight: 600; border: 1px solid var(--linha-forte); border-radius: 8px; padding: 7px 9px; background: var(--cartao); outline: none; }
+  .form input:focus, .form select:focus { border-color: var(--verde); }
+  .form .alvo { grid-column: span 3; display: flex; gap: 16px; align-items: flex-end; border-bottom: 1px solid #f1ebe2; padding-bottom: 14px; }
+  .form .alvo label { flex: 1; }
+  .veredito { border-radius: 12px; padding: 18px 20px; border: 1px solid var(--linha); background: var(--cartao); }
+  .veredito .palavra { font-size: 26px; font-weight: 700; letter-spacing: .02em; margin: 0 0 6px; }
+  .veredito p { margin: 0 0 8px; }
+  .veredito .faz { font-weight: 600; }
+  .veredito .numeros { color: var(--suave); font-size: 13px; border-top: 1px solid rgba(43, 39, 35, .1); padding-top: 10px; margin-top: 12px; }
+  .veredito.escalar { background: var(--verde-claro); border-color: #c9dccb; } .veredito.escalar .palavra { color: var(--verde-escuro); }
+  .veredito.cortar { background: var(--rosa-claro); border-color: #e7cfcb; } .veredito.cortar .palavra { color: var(--rosa-escuro); }
+  .veredito.manter { background: var(--areia-claro); border-color: #e4d6bf; } .veredito.manter .palavra { color: #7a6340; }
+  .veredito.esperar .palavra { color: var(--suave); }
+
+  /* regras */
+  .regras section { margin: 0 0 26px; }
+  .regras h3 { font-size: 16px; font-weight: 650; margin: 0 0 8px; }
+  .regras h3 small { font-weight: 400; color: var(--suave); font-size: 13.5px; margin-left: 6px; }
+  .regras ol { list-style: none; margin: 0; padding: 0; background: var(--cartao); border: 1px solid var(--linha); border-radius: 12px; }
+  .regras ol li { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 18px; align-items: baseline; padding: 12px 18px; border-top: 1px solid #f1ebe2; }
+  .regras ol li:first-child { border-top: 0; }
+  .regras .de { display: flex; gap: 6px; white-space: nowrap; }
+  .tag { font-size: 11.5px; font-weight: 600; padding: 2px 7px; border-radius: 5px; text-decoration: none; }
+  .tag.tt { background: var(--verde-claro); color: var(--verde-escuro); }
+  .tag.pr { background: var(--areia-claro); color: #7a6340; }
+  .tag.lj { background: var(--rosa-claro); color: var(--rosa-escuro); }
+  .tag.nos { background: #ece8e3; color: var(--suave); }
+  a.tag:hover { text-decoration: underline; }
+  .legenda { display: flex; gap: 16px; flex-wrap: wrap; color: var(--suave); font-size: 13px; margin: 0 0 22px; }
+  .legenda span { display: inline-flex; gap: 6px; align-items: baseline; }
+  .fontes { columns: 2; color: var(--suave); font-size: 13px; padding-left: 18px; }
+  .fontes li { margin: 0 0 4px; }
+
+  /* conta: os dados para voltar a entrar, em cartões iguais aos do painel */
+  .conta-grelha { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; align-items: start; }
+  .conta-grelha .caixa { padding: 2px 20px 10px; }
+
+  @media (max-width: 1100px) {
+    .preparar, .decidir, .conta-grelha { grid-template-columns: 1fr; }
+    .painel { position: static; max-height: none; }
+  }
+</style>
+</head>
+<body>
+<header class="topo">
+  <div>
+    <h1><img class="logo" src="marca/tiktok.svg" alt="">TikTok Ads</h1>
+    <p class="conta" id="conta"></p>
+  </div>
+  <nav class="vistas" id="vistas">
+    <button data-v="campanha" id="b-campanha" hidden>Campanha</button>
+    <button data-v="sugestoes">Sugestões</button>
+    <button data-v="preparar" class="ativo">Preparar</button>
+    <button data-v="decidir">Decidir</button>
+    <button data-v="moderador">Moderador</button>
+    <button data-v="regras">Regras</button>
+    <button data-v="conta">Conta</button>
+  </nav>
+</header>
+
+<div class="vista" id="v-sugestoes"></div>
+
+<div class="vista ativa" id="v-preparar">
+  <div class="barra">
+    <div class="mercados" id="mercados"></div>
+    <div class="sobre" id="sobre"></div>
+  </div>
+  <div class="preparar">
+    <div>
+      <div class="titulo">
+        <h2>1. Vídeos</h2>
+        <p id="sub-videos"></p>
+        <button class="secundario direita" id="do-mac">Escolher do Mac</button>
+      </div>
+      <div class="grelha" id="grelha"></div>
+    </div>
+    <aside class="painel">
+      <div class="corpo" id="plano"></div>
+      <div class="pe">
+        <p class="aviso-pe" id="aviso"></p>
+        <button class="principal" id="fazer" disabled>Escolhe os vídeos</button>
+        <ul class="estado" id="estado"></ul>
+        <div class="feito-msg" id="feito"></div>
+      </div>
+    </aside>
+  </div>
+</div>
+
+<div class="vista" id="v-campanha">
+  <div class="barra">
+    <div class="mercados" id="c-mercados"></div>
+    <div class="sobre" id="c-sobre"></div>
+  </div>
+  <div class="preparar">
+    <div>
+      <div class="titulo">
+        <h2>Os vídeos</h2>
+        <p id="c-sub"></p>
+      </div>
+      <div class="grelha" id="c-grelha"></div>
+    </div>
+    <aside class="painel">
+      <div class="corpo" id="c-plano"></div>
+      <div class="pe">
+        <p class="aviso-pe" id="c-aviso"></p>
+        <button class="principal" id="c-fazer" disabled>Fazer os vídeos</button>
+        <ul class="estado" id="c-estado"></ul>
+        <div class="feito-msg" id="c-feito"></div>
+      </div>
+    </aside>
+  </div>
+</div>
+
+<div class="vista" id="v-decidir">
+  <div class="pagina">
+    <h2>Decidir</h2>
+    <p class="lead">Mete os números de um anúncio, tal como estão no TikTok Ads Manager, e a app diz se é para escalar, manter, esperar ou cortar, e porquê. As contas seguem as regras do separador Regras.</p>
+    <div class="decidir">
+      <div class="caixa">
+        <div class="form" id="form"></div>
+      </div>
+      <div class="veredito" id="veredito"></div>
+    </div>
+  </div>
+</div>
+
+<div class="vista" id="v-regras">
+  <div class="pagina regras" id="regras"></div>
+</div>
+
+<div class="vista" id="v-moderador">
+  <div class="pagina">
+    <h2>Moderador de Comentários (TikTok Ads)</h2>
+    <p class="lead">Varredura automática e eliminação em tempo real de comentários de hate, queixas e alegações de burla/réplica.</p>
+    <div class="conta-grelha">
+      <div class="caixa bloco">
+        <h3>Estado do Bot</h3>
+        <div class="campo"><span class="r">Estado</span><div class="v" id="mod-status"><span style="display:inline-block;width:10px;height:10px;background:#6f8f76;border-radius:50%;margin-right:6px;"></span>Ativo (Segundo Plano)</div><div></div></div>
+        <div class="campo"><span class="r">Navegador</span><div class="v">AdsPower Profile 10 «TIKTOK» (CDP :54384)</div><div></div></div>
+        <div class="campo"><span class="r">Motor NLP</span><div class="v">124 Palavras + 35 Padrões de Frases Longas</div><div></div></div>
+        <div class="campo"><span class="r">Ciclo</span><div class="v">Varredura a cada 15 segundos</div><div></div></div>
+      </div>
+      <div class="caixa bloco">
+        <h3>Proteção & Whitelist</h3>
+        <div class="campo"><span class="r">Elimina</span><div class="v">Burlas, réplicas, ASAE, roubo, atrasos de envio</div><div></div></div>
+        <div class="campo"><span class="r">Protege</span><div class="v">Elogios, 5 estrelas, "top", "qualidade boa", emojis 🔥❤️</div><div></div></div>
+        <div class="campo"><span class="r">Ficheiro</span><div class="v"><code>tiktok_blacklist_palavras.txt</code></div><div></div></div>
+      </div>
+    </div>
+    <div style="margin-top:24px;">
+      <h3 style="font-size:15px;margin-bottom:10px;">Registo de Atividade em Tempo Real</h3>
+      <div id="mod-logs" style="background:#171513;color:#a8e6cf;font-family:ui-monospace,Menlo,monospace;font-size:12.5px;padding:16px;border-radius:10px;max-height:320px;overflow:auto;line-height:1.6;">
+        [A carregar registo do moderador...]
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Os dados da conta, para não se esquecerem. Passwords nunca aqui. -->
+<div class="vista" id="v-conta">
+  <div class="pagina">
+    <h2>Conta</h2>
+    <p class="lead">Os dados da conta de anúncios do TikTok e de como se entra nela. As passwords não ficam aqui.</p>
+    <div class="conta-grelha">
+      <div class="caixa bloco">
+        <h3>Conta de anúncios</h3>
+        <div class="campo"><span class="r">Nome</span><div class="v"><code>CONTA_TOP_DOLLARES_01</code></div><div><button class="copiar" data-copiar="CONTA_TOP_DOLLARES_01">Copiar</button></div></div>
+        <div class="campo"><span class="r">ID</span><div class="v"><code>7703611195114307590</code></div><div><button class="copiar" data-copiar="7703611195114307590">Copiar</button></div></div>
+        <div class="campo"><span class="r">Criada</span><div class="v">2 de novembro de 2026<small>aprovada; é a que se usa</small></div><div></div></div>
+        <div class="campo"><span class="r">Moeda</span><div class="v">Dólares (USD)<small>à hora de Londres</small></div><div></div></div>
+        <div class="campo"><span class="r">Business Center</span><div class="v"><code>7703609744539582465</code></div><div><button class="copiar" data-copiar="7703609744539582465">Copiar</button></div></div>
+      </div>
+      <div class="caixa bloco">
+        <h3>Como entrar</h3>
+        <div class="campo"><span class="r">Email</span><div class="v"><code>x.opscorp4@gmail.com</code><small>o login do TikTok for Business</small></div><div><button class="copiar" data-copiar="x.opscorp4@gmail.com">Copiar</button></div></div>
+        <div class="campo"><span class="r">Browser</span><div class="v">AdsPower Global<small>o atalho está na Secretária; conta ajudamistertuga, plano Free (só 2 perfis)</small></div><div></div></div>
+        <div class="campo"><span class="r">Perfil</span><div class="v">10 «TIKTOK»<small>abre o TikTok Ads Manager já com a conta</small></div><div></div></div>
+        <div class="campo"><span class="r">Proxy</span><div class="v"><code>82.140.183.228:50100</code><small>HTTP, em Lisboa (IP de datacenter, Datacamp); SOCKS5 na 50101</small></div><div><button class="copiar" data-copiar="82.140.183.228:50100">Copiar</button></div></div>
+      </div>
+      <div class="caixa bloco">
+        <h3>Ligado à conta</h3>
+        <div class="campo"><span class="r">Pixel</span><div class="v">pixel tuga <code>D6G5LHRC77UF3AJEKD5G</code><small>está na MisterTuga e na MisterFútbol, em todos os países</small></div><div><button class="copiar" data-copiar="D6G5LHRC77UF3AJEKD5G">Copiar ID</button></div></div>
+        <div class="campo"><span class="r">Identidade</span><div class="v"><code>@mr.tuga2</code><small>o perfil do TikTok dos anúncios, ligado por QR a 2/11; ID 7703596531119144968</small></div><div><button class="copiar" data-copiar="@mr.tuga2">Copiar</button></div></div>
+      </div>
+      <div class="caixa bloco">
+        <h3>A conta antiga, não usar</h3>
+        <div class="campo"><span class="r">Nome</span><div class="v">CONTA_TOP_00<small>ID 7565331252144898065 · BC 7565331219018366993</small></div><div></div></div>
+        <div class="campo"><span class="r">Porquê</span><div class="v">Está em libras e a moeda não muda<small>o apoio do TikTok confirmou no ticket 4532305</small></div><div></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="dados.js"></script>
+<script src="campanhas.js"></script>
+<script src="tiktok.js"></script>
+<script src="sugestoes.js"></script>
+<script src="sugestoes-vista.js"></script>
+<script>
+  // Sugestões de vídeos com a análise de media buyer: a página abre nesta vista e os vídeos param ao trocar de vista
+  (function () {
+    const el = document.getElementById('v-sugestoes');
+    desenhaSugestoes('tiktok', el);
+    document.getElementById('vistas').addEventListener('click', (ev) => {
+      const b = ev.target.closest('button[data-v]');
+      if (b && b.dataset.v !== 'sugestoes') paraSugestoes(el);
+    });
+    if (window.mtTikTok) window.mtTikTok.mostraVista('sugestoes');
+  })();
+</script>
+</body>
+</html>

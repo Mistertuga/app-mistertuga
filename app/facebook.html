@@ -1,0 +1,348 @@
+<!doctype html>
+<html lang="pt-PT">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Facebook Ads · ForYouSong & ForeverSongs (Meta Winners)</title>
+<style>
+  :root {
+    --fundo: #f5f1ea; --cartao: #ffffff; --linha: #e6ddd0; --linha-fina: #efe9df; --linha-forte: #d6c9b6; --texto: #2b2723; --suave: #7a7066;
+    --verde: #6f8f76; --verde-escuro: #56735d; --verde-claro: #e7efe8; --verde-texto: #3f5a46;
+    --azul: #0284c7; --azul-claro: #e0f2fe; --azul-texto: #0369a1;
+    --rosa: #b07c7c; --rosa-escuro: #8f5c5c; --rosa-claro: #f4e7e5; --rosa-texto: #7d4f4f;
+    --ambar: #d97706; --ambar-claro: #fef3c7; --ambar-texto: #92400e;
+    --areia: #d8c7ab; --areia-claro: #f2ebdf; --ecra: #171513;
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-font-smoothing: antialiased; background-color: var(--fundo); }
+  body { margin: 0; background: var(--fundo); color: var(--texto); font: 14.5px/1.45 -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", sans-serif; }
+  button { font: inherit; color: inherit; }
+
+  /* CABEÇALHO */
+  .topo { max-width: 1500px; margin: 0 auto; padding: 26px 32px 18px; display: flex; justify-content: space-between; align-items: flex-end; gap: 24px; border-bottom: 1px solid var(--linha); flex-wrap: wrap; }
+  .topo h1 { font-size: 26px; font-weight: 650; margin: 0 0 4px; letter-spacing: -0.01em; display: flex; align-items: center; gap: 10px; }
+  .topo h1 .logo { width: 26px; height: 26px; }
+  .conta { color: var(--suave); margin: 0; font-size: 13.5px; }
+  .conta b { color: var(--texto); font-weight: 600; }
+
+  /* SELECTOR DE CONTA NO TOPO */
+  .conta-selector { display: flex; gap: 8px; background: var(--cartao); padding: 4px; border-radius: 10px; border: 1px solid var(--linha-forte); }
+  .btn-conta { border: none; background: transparent; padding: 6px 14px; border-radius: 7px; font-size: 13px; font-weight: 600; cursor: pointer; color: var(--suave); transition: all 0.2s; }
+  .btn-conta:hover { color: var(--texto); }
+  .btn-conta.ativo { background: var(--texto); color: #fff; }
+
+  /* ÁREA DE CONTEÚDO FORYOUSONG */
+  .sg { max-width: 1500px; margin: 0 auto; padding: 20px 32px 60px; }
+  .sg-barra { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; margin-bottom: 18px; }
+  .sg-mercados { display: flex; gap: 8px; flex-wrap: wrap; }
+  .sg-mercados button { font: inherit; font-size: 14px; padding: 8px 15px; border-radius: 9px; border: 1px solid var(--linha-forte); background: var(--cartao); color: var(--texto); cursor: pointer; font-weight: 550; transition: all 0.15s; }
+  .sg-mercados button:hover { border-color: var(--suave); background: #faf7f2; }
+  .sg-mercados button.ativo { background: var(--texto); border-color: var(--texto); color: #fff; }
+  .sg-mercados small { margin-left: 6px; opacity: .75; font-variant-numeric: tabular-nums; font-size: 12px; }
+
+  .sg-filtros-extra { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 18px; }
+  .filtro-marca-btn { font: inherit; font-size: 13px; padding: 5px 12px; border-radius: 7px; border: 1px solid var(--linha); background: var(--cartao); color: var(--suave); cursor: pointer; }
+  .filtro-marca-btn.ativo { background: var(--verde-claro); border-color: var(--verde); color: var(--verde-texto); font-weight: 600; }
+  .input-pesquisa { font: inherit; font-size: 13.5px; padding: 7px 14px; border-radius: 8px; border: 1px solid var(--linha-forte); background: var(--cartao); color: var(--texto); width: 280px; outline: none; margin-left: auto; }
+  .input-pesquisa:focus { border-color: var(--verde); }
+
+  .sg-leitura { background: var(--cartao); border: 1px solid var(--linha); border-left: 4px solid var(--verde); border-radius: 10px; padding: 14px 18px; margin: 0 0 22px; }
+  .sg-leitura h3 { margin: 0 0 5px; font-size: 13px; font-weight: 700; color: var(--verde-texto); text-transform: uppercase; letter-spacing: 0.04em; }
+  .sg-leitura p { margin: 0; font-size: 14px; line-height: 1.55; color: var(--texto); }
+
+  /* GRELHA DE CARTÕES (LAYOUT MISTERTUGA 200px + 1fr) */
+  .sg-lista { display: grid; grid-template-columns: repeat(auto-fill, minmax(560px, 1fr)); gap: 20px; }
+  .sg-c { background: var(--cartao); border: 1px solid var(--linha); border-radius: 14px; display: grid; grid-template-columns: 210px minmax(0, 1fr); overflow: hidden;
+          box-shadow: 0 1px 2px rgba(60, 45, 30, .04), 0 8px 24px -16px rgba(60, 45, 30, .14); transition: transform 0.15s, border-color 0.15s; }
+  .sg-c:hover { border-color: var(--linha-forte); }
+  .sg-tela { padding: 14px 0 14px 14px; }
+  .sg-tela video { width: 100%; aspect-ratio: 9 / 16; object-fit: contain; display: block; background: var(--ecra, #171513); border-radius: 10px; position: sticky; top: 14px; }
+  .sg-corpo { padding: 14px 18px 16px; min-width: 0; display: flex; flex-direction: column; }
+  
+  .sg-topo { display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; margin-bottom: 4px; }
+  .sg-id { font-size: 19px; font-weight: 750; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
+  .sg-ver { font-size: 12px; font-weight: 700; padding: 2px 7px; border-radius: 5px; }
+  .sg-ver.ja { background: var(--verde-claro); color: var(--verde-texto); }
+  .sg-ver.vencedor { background: #fdf2e9; color: #b45309; }
+  .sg-marca-tag { font-size: 11.5px; font-weight: 600; padding: 2px 7px; border-radius: 5px; background: var(--areia-claro); color: var(--areia-texto); border: 1px solid rgba(216, 199, 171, 0.5); }
+  
+  .sg-papel { margin: 6px 0 3px; font-size: 14.5px; font-weight: 650; line-height: 1.35; color: var(--texto); }
+  .sg-origem { color: var(--suave); font-size: 12px; font-variant-numeric: tabular-nums; margin-bottom: 8px; }
+  .sg-origem b { color: var(--texto); }
+  
+  .sg-porque { margin: 0 0 10px; font-size: 13.5px; line-height: 1.45; color: #443e38; }
+  .sg-dl { margin: 0 0 12px; display: grid; grid-template-columns: 110px minmax(0, 1fr); gap: 5px 10px; font-size: 12.5px; line-height: 1.4; border-top: 1px solid var(--linha-fina); padding-top: 8px; }
+  .sg-dl dt { color: var(--suave); font-weight: 500; }
+  .sg-dl dd { margin: 0; overflow-wrap: anywhere; }
+  
+  /* CAIXA DE TEXTO / COPY COM BOTÃO COPIAR */
+  .sg-copy-box { margin-top: auto; padding: 10px 12px; border-radius: 9px; background: var(--fundo); border: 1px solid var(--linha-fina); position: relative; }
+  .sg-copy-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
+  .sg-copy-header span { font-size: 11px; text-transform: uppercase; font-weight: 700; color: var(--suave); letter-spacing: 0.04em; }
+  .btn-copiar-mini { background: #ffffff; border: 1px solid var(--linha-forte); border-radius: 6px; padding: 3px 8px; font-size: 11px; font-weight: 600; color: var(--texto); cursor: pointer; transition: all 0.15s; }
+  .btn-copiar-mini:hover { background: var(--areia-claro); }
+  .sg-copy-text { font-size: 12.5px; line-height: 1.45; color: #332d27; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; max-height: 85px; overflow-y: auto; white-space: pre-wrap; word-break: break-word; }
+
+  .sg-links { display: flex; gap: 10px; margin-top: 10px; padding-top: 8px; border-top: 1px solid var(--linha-fina); }
+  .sg-link-btn { font-size: 11.5px; font-weight: 600; color: var(--azul-texto); text-decoration: none; }
+  .sg-link-btn:hover { text-decoration: underline; }
+
+  @media (max-width: 1240px) { .sg-lista { grid-template-columns: minmax(0, 1fr); } }
+  @media (max-width: 640px) {
+    .topo { padding: 18px 16px 14px; }
+    .sg { padding: 14px 16px 48px; }
+    .sg-c { grid-template-columns: minmax(0, 1fr); }
+    .sg-tela { padding: 12px 12px 0; }
+    .sg-tela video { position: static; max-height: 480px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="topo">
+  <div>
+    <h1><img class="logo" src="marca/facebook.svg" alt="">Facebook Winners</h1>
+    <p class="conta" id="conta-desc"><b>ForYouSong / ForeverSongs</b> · 107 Vídeos Vencedores de Concorrentes (MySongStory, YourMelody, SonglyGift)</p>
+  </div>
+  <div class="conta-selector" style="display:none">
+    <button class="btn-conta ativo" id="btn-fys" onclick="trocarConta('fys')">🎵 ForYouSong (107 Winners)</button>
+    <button class="btn-conta" id="btn-mistertuga" onclick="trocarConta('mistertuga')">⚽ MisterTuga (Futebol)</button>
+  </div>
+</header>
+
+<main id="conteudo-principal">
+  <!-- VISTA FORYOUSONG (107 WINNERS) -->
+  <div id="vista-fys" class="sg">
+    <div class="sg-barra">
+      <div class="sg-mercados" id="fys-mercados-botoes"></div>
+      <input type="text" id="fys-pesquisa" class="input-pesquisa" placeholder="🔍 Pesquisar copy, hook, ID..." onkeyup="filtrarFYS()">
+    </div>
+
+    <div class="sg-filtros-extra">
+      <span style="font-size: 12.5px; color: var(--suave); font-weight: 600;">Filtrar Loja:</span>
+      <button class="filtro-marca-btn ativo" onclick="filtrarMarca('TODAS', this)">Todas (107)</button>
+      <button class="filtro-marca-btn" onclick="filtrarMarca('MySongStory', this)">MySongStory (52)</button>
+      <button class="filtro-marca-btn" onclick="filtrarMarca('YourMelody', this)">YourMelody (38)</button>
+      <button class="filtro-marca-btn" onclick="filtrarMarca('SonglyGift', this)">SonglyGift (17)</button>
+    </div>
+
+    <section class="sg-leitura" id="fys-leitura-bloco">
+      <h3 id="fys-leitura-titulo">Leitura do Mercado</h3>
+      <p id="fys-leitura-texto"></p>
+    </section>
+
+    <div class="sg-lista" id="fys-grelha-cards"></div>
+  </div>
+
+  <!-- VISTA MISTERTUGA (CONTA FUTEBOL) -->
+  <div id="vista-mistertuga" style="display: none;">
+    <main id="sugestoes"></main>
+  </div>
+</main>
+
+<!-- Scripts da base MisterTuga -->
+<script src="sugestoes.js"></script>
+<script src="sugestoes-facebook.js"></script>
+<script src="sugestoes-vista.js"></script>
+<!-- Dados estruturados ForYouSong / ForeverSongs -->
+<script src="sugestoes-foreversongs.js"></script>
+
+<script>
+  let mercadoAtualFYS = 'DE';
+  let marcaAtualFYS = 'TODAS';
+  let queryPesquisa = '';
+
+  const FYS = window.SUGESTOES_FOREVERSONGS || {};
+
+  function initFYS() {
+    const mercadosContainer = document.getElementById('fys-mercados-botoes');
+    mercadosContainer.innerHTML = '';
+
+    const chaves = Object.keys(FYS);
+    chaves.forEach(c => {
+      const m = FYS[c];
+      const btn = document.createElement('button');
+      btn.className = (c === mercadoAtualFYS) ? 'ativo' : '';
+      btn.innerHTML = `${m.flag} ${m.nome} <small>(${m.itens.length})</small>`;
+      btn.onclick = () => {
+        mercadoAtualFYS = c;
+        document.querySelectorAll('#fys-mercados-botoes button').forEach(b => b.classList.remove('ativo'));
+        btn.classList.add('ativo');
+        renderFYS();
+      };
+      mercadosContainer.appendChild(btn);
+    });
+
+    renderFYS();
+  }
+
+  function renderFYS() {
+    const m = FYS[mercadoAtualFYS];
+    if (!m) return;
+
+    // Leitura
+    document.getElementById('fys-leitura-titulo').innerText = `Leitura de Media Buyer · ${m.flag} ${m.nome}`;
+    document.getElementById('fys-leitura-texto').innerText = m.leitura || 'Mercado estratégico pronto para subida de campanhas.';
+
+    // Cards
+    const grelha = document.getElementById('fys-grelha-cards');
+    grelha.innerHTML = '';
+
+    const q = queryPesquisa.toLowerCase().trim();
+    const filtrados = m.itens.filter(item => {
+      const matchMarca = (marcaAtualFYS === 'TODAS') || (item.marca === marcaAtualFYS);
+      const matchQ = !q ||
+        item.id.toLowerCase().includes(q) ||
+        (item.titulo && item.titulo.toLowerCase().includes(q)) ||
+        (item.texto && item.texto.toLowerCase().includes(q)) ||
+        (item.gancho && item.gancho.toLowerCase().includes(q)) ||
+        (item.marca && item.marca.toLowerCase().includes(q));
+      return matchMarca && matchQ;
+    });
+
+    if (filtrados.length === 0) {
+      grelha.innerHTML = '<p style="color: var(--suave); padding: 40px 0; text-align: center; grid-column: 1 / -1;">Nenhum vídeo encontrado com estes filtros.</p>';
+      return;
+    }
+
+    filtrados.forEach(item => {
+      const card = document.createElement('article');
+      card.className = 'sg-c';
+      card.id = `card-${item.id}`;
+
+      const verClasse = (item.veredito === 'Meter já') ? 'ja' : 'vencedor';
+      const cleanTextForAttr = (item.texto || '').replace(/"/g, '&quot;');
+
+      card.innerHTML = `
+        <div class="sg-tela">
+          <video controls preload="none" playsinline data-lazy>
+            <source src="${encodeURI(item.video)}#t=0.1" type="video/mp4">
+            O teu navegador não suporta este vídeo.
+          </video>
+        </div>
+        <div class="sg-corpo">
+          <div class="sg-topo">
+            <span class="sg-id">#${item.rank}</span>
+            <span class="sg-ver ${verClasse}">${item.veredito}</span>
+            <span class="sg-marca-tag">${item.marca}</span>
+            <span style="margin-left: auto; font-size: 12px; color: var(--suave); font-weight: 600;">ID: ${item.id}</span>
+          </div>
+
+          <p class="sg-papel">${item.titulo || item.papel}</p>
+          <div class="sg-origem">
+            Spend: <b>${item.spend}</b> · Dias: <b>${item.dias}</b> · Cópias: <b>${item.copias}</b>
+          </div>
+
+          <p class="sg-porque">${item.porque}</p>
+
+          <dl class="sg-dl">
+            <dt>Gancho (0-3s)</dt><dd>${item.gancho}</dd>
+            <dt>Formato</dt><dd>${item.formato}</dd>
+            <dt>Oferta</dt><dd>${item.oferta}</dd>
+            <dt>Como testar</dt><dd>${item.teste}</dd>
+          </dl>
+
+          <div class="sg-copy-box">
+            <div class="sg-copy-header">
+              <span>Texto do Anúncio (Copy)</span>
+              <button class="btn-copiar-mini" onclick="copiarTexto(this)">📋 Copiar</button>
+            </div>
+            <div class="sg-copy-text">${item.texto || '(Sem texto primário no anúncio original — usar apenas Headline: ' + (item.titulo || '') + ')'}</div>
+          </div>
+
+          <div class="sg-links">
+            <a href="${item.lib_url}" target="_blank" class="sg-link-btn">Meta Ad Library ↗</a>
+            <a href="${item.lp}" target="_blank" class="sg-link-btn">Landing Page ↗</a>
+          </div>
+        </div>
+      `;
+
+      grelha.appendChild(card);
+    });
+
+    // Parar vídeos quando outro começa a tocar
+    grelha.querySelectorAll('video').forEach(v => {
+      v.addEventListener('play', () => {
+        grelha.querySelectorAll('video').forEach(outro => {
+          if (outro !== v) outro.pause();
+        });
+      });
+    });
+  }
+
+  function filtrarMarca(marca, btn) {
+    marcaAtualFYS = marca;
+    document.querySelectorAll('.filtro-marca-btn').forEach(b => b.classList.remove('ativo'));
+    btn.classList.add('ativo');
+    renderFYS();
+  }
+
+  function filtrarFYS() {
+    queryPesquisa = document.getElementById('fys-pesquisa').value;
+    renderFYS();
+  }
+
+  function copiarTexto(btn) {
+    const textEl = btn.closest('.sg-copy-box').querySelector('.sg-copy-text');
+    const text = textEl.innerText;
+    navigator.clipboard.writeText(text).then(() => {
+      const old = btn.innerText;
+      btn.innerText = '✅ Copiado!';
+      btn.style.background = 'var(--verde-claro)';
+      btn.style.color = 'var(--verde-texto)';
+      setTimeout(() => {
+        btn.innerText = old;
+        btn.style.background = '';
+        btn.style.color = '';
+      }, 1800);
+    });
+  }
+
+  // A conta vem do separador (MisterTuga ou ForYouSong): ?conta=mistertuga|fys; a app de Mac chama trocarConta diretamente.
+  addEventListener('DOMContentLoaded', () => {
+    const c = new URLSearchParams(location.search).get('conta');
+    if (c === 'mistertuga' || c === 'fys') trocarConta(c);
+  });
+  function trocarConta(conta) {
+    const btnFYS = document.getElementById('btn-fys');
+    const btnMT = document.getElementById('btn-mistertuga');
+    const vistaFYS = document.getElementById('vista-fys');
+    const vistaMT = document.getElementById('vista-mistertuga');
+    const desc = document.getElementById('conta-desc');
+
+    if (conta === 'fys') {
+      btnFYS.classList.add('ativo');
+      btnMT.classList.remove('ativo');
+      vistaFYS.style.display = 'block';
+      vistaMT.style.display = 'none';
+      desc.innerHTML = '<b>ForYouSong / ForeverSongs</b> · 107 Vídeos Vencedores de Concorrentes (MySongStory, YourMelody, SonglyGift)';
+      if (window.paraSugestoes) window.paraSugestoes(document.getElementById('sugestoes'));
+    } else {
+      btnMT.classList.add('ativo');
+      btnFYS.classList.remove('ativo');
+      vistaFYS.style.display = 'none';
+      vistaMT.style.display = 'block';
+      desc.innerHTML = '<b>Mister ads</b> (act_1594727445584440) · Sugestões de vídeos de futebol com análise de media buyer';
+      if (document.getElementById('vista-fys')) {
+        document.querySelectorAll('#vista-fys video').forEach(v => v.pause());
+      }
+      desenhaSugestoes('facebook', document.getElementById('sugestoes'));
+    }
+  }
+
+  // Inicializar na vista ForYouSong
+  initFYS();
+</script>
+<script>
+  // os vídeos só pedem a primeira imagem quando chegam perto do ecrã (antes eram os 107 de uma vez)
+  (() => {
+    const io = new IntersectionObserver((es) => es.forEach((e) => {
+      if (!e.isIntersecting) return;
+      const v = e.target; io.unobserve(v); v.preload = "metadata"; v.load();
+    }), { rootMargin: "600px 0px" });
+    const ve = () => document.querySelectorAll("video[data-lazy]").forEach((v) => { v.removeAttribute("data-lazy"); io.observe(v); });
+    new MutationObserver(ve).observe(document.body, { childList: true, subtree: true }); ve();
+  })();
+</script>
+</body>
+</html>

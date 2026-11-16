@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="pt-PT">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Moderador de Comentários · TikTok Ads</title>
+<style>
+  :root {
+    --fundo: #f5f1ea; --cartao: #ffffff; --linha: #e6ddd0; --linha-forte: #d6c9b6; --texto: #2b2723; --suave: #7a7066;
+    --verde: #6f8f76; --verde-escuro: #56735d; --verde-claro: #e7efe8; --rosa: #b07c7c; --rosa-escuro: #8f5c5c;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--fundo); color: var(--texto); font: 14.5px/1.45 -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif; padding: 26px 36px 60px; max-width: 1400px; margin: 0 auto; }
+  h1 { font-size: 26px; font-weight: 650; margin: 0 0 6px; letter-spacing: -0.01em; }
+  .lead { color: var(--suave); margin: 0 0 24px; font-size: 14px; }
+  .grelha { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px; margin-bottom: 26px; }
+  .caixa { background: var(--cartao); border: 1px solid var(--linha); border-radius: 12px; padding: 20px; }
+  .caixa h3 { font-size: 12px; text-transform: uppercase; letter-spacing: .06em; color: var(--suave); margin: 0 0 14px; }
+  .campo { display: grid; grid-template-columns: 120px 1fr; padding: 9px 0; border-top: 1px solid #f1ebe2; align-items: baseline; }
+  .caixa h3 + .campo { border-top: 0; }
+  .campo .r { color: var(--suave); font-size: 13px; }
+  .campo .v { font-weight: 550; }
+  .tag-on { display: inline-flex; align-items: center; gap: 6px; color: var(--verde-escuro); background: var(--verde-claro); padding: 3px 10px; border-radius: 20px; font-size: 12.5px; }
+  .ponto { width: 8px; height: 8px; border-radius: 50%; background: var(--verde-escuro); display: inline-block; }
+  .terminal { background: #171513; color: #a8e6cf; font-family: ui-monospace, Menlo, monospace; font-size: 12.5px; border-radius: 10px; padding: 18px; line-height: 1.6; max-height: 460px; overflow-y: auto; white-space: pre-wrap; word-break: break-word; }
+  .btn { background: var(--verde); color: #fff; border: 0; padding: 8px 16px; border-radius: 8px; cursor: pointer; font-size: 13.5px; font-weight: 550; }
+  .btn:hover { background: var(--verde-escuro); }
+  .acoes { display: flex; gap: 12px; margin-top: 14px; }
+</style>
+</head>
+<body>
+
+<h1>Moderador Automático de Comentários</h1>
+<p class="lead">Proteção em tempo real das campanhas de TikTok Ads contra comentários de ódio, queixas de entrega e alegações de burla/réplica.</p>
+
+<div class="grelha">
+  <div class="caixa">
+    <h3>Estado do Serviço</h3>
+    <div class="campo"><span class="r">Estado</span><div class="v"><span class="tag-on"><span class="ponto"></span> Ativo em Segundo Plano</span></div></div>
+    <div class="campo"><span class="r">Navegador</span><div class="v">AdsPower Global (Perfil 10 «TIKTOK»)</div></div>
+    <div class="campo"><span class="r">Porta CDP</span><div class="v"><code>127.0.0.1:54384</code> (Chrome DevTools)</div></div>
+    <div class="campo"><span class="r">Varredura</span><div class="v">Automática a cada 15 segundos</div></div>
+  </div>
+
+  <div class="caixa">
+    <h3>Filtros & Inteligência NLP</h3>
+    <div class="campo"><span class="r">Palavras</span><div class="v">124 termos (burla, réplica, asae, polícia, roubo)</div></div>
+    <div class="campo"><span class="r">Frases Longas</span><div class="v">35 padrões semânticos de narrativa/queixa</div></div>
+    <div class="campo"><span class="r">Whitelist</span><div class="v">Elogios, 5 estrelas e feedbacks positivos protegidos</div></div>
+    <div class="campo"><span class="r">Ação</span><div class="v">Clique automático em <b>Ocultar / Eliminar</b></div></div>
+  </div>
+</div>
+
+<div class="caixa">
+  <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+    <h3 style="margin:0;">Registo de Auditoria em Direto</h3>
+    <button class="btn" onclick="atualizarLogs()">Atualizar Agora</button>
+  </div>
+  <div id="logs" class="terminal">A ligar ao registo de auditoria...</div>
+</div>
+
+<script>
+function atualizarLogs() {
+  const el = document.getElementById('logs');
+  fetch('moderation_audit.log?t=' + Date.now())
+    .then(r => r.text())
+    .then(t => {
+      el.textContent = t.trim() ? t : '[Aguardando novos comentários para moderação...]';
+      el.scrollTop = el.scrollHeight;
+    })
+    .catch(() => {
+      el.textContent = 'Moderador ativo em segundo plano.\nA monitorar as abas de anúncios no AdsPower.';
+    });
+}
+atualizarLogs();
+setInterval(atualizarLogs, 10000);
+</script>
+
+</body>
+</html>

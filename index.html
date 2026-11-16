@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="pt-PT">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>App MisterTuga</title>
+<meta name="robots" content="noindex">
+<style>
+  :root { --fundo: #f5f1eb; --cartao: #fff; --texto: #2b2622; --suave: #7a6f66; --linha: #e6dfd6;
+          --verde: #33804d; --laranja: #e8612b; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; height: 100%; background: var(--fundo); color: var(--texto);
+               font: 14px/1.4 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+  body { display: flex; flex-direction: column; }
+  .barra { display: flex; gap: 14px; align-items: center; padding: 10px 16px; background: var(--cartao);
+           border-bottom: 1px solid var(--linha); overflow-x: auto; scrollbar-width: none; flex: none; }
+  .barra::-webkit-scrollbar { display: none; }
+  .grupo { display: flex; align-items: center; gap: 2px; padding: 4px 4px 4px 12px; border-radius: 12px; flex: none; }
+  .grupo.mt { background: rgba(51,128,77,.10); border: 1px solid rgba(51,128,77,.35); }
+  .grupo.fys { background: rgba(232,97,43,.10); border: 1px solid rgba(232,97,43,.35); }
+  .rot { font-size: 11px; font-weight: 800; letter-spacing: .05em; margin-right: 8px; white-space: nowrap; }
+  .mt .rot { color: var(--verde); } .fys .rot { color: var(--laranja); }
+  .barra button { display: flex; align-items: center; gap: 6px; border: 0; background: none; padding: 6px 10px; border-radius: 8px;
+                  font: inherit; color: var(--texto); cursor: pointer; white-space: nowrap; }
+  .barra button img { width: 18px; height: 18px; }
+  .barra button:hover { background: rgba(0,0,0,.05); }
+  .barra button.ativo { background: var(--cartao); box-shadow: 0 1px 3px rgba(0,0,0,.12); font-weight: 600; }
+  iframe { flex: 1; width: 100%; border: 0; background: var(--fundo); }
+</style>
+</head>
+<body>
+<nav class="barra" id="barra">
+  <div class="grupo mt"><span class="rot">⚽ MISTERTUGA</span>
+    <button data-a="criativos"><img src="app/marca/criativos.svg" alt="">Criativos</button>
+    <button data-a="metadados"><img src="app/marca/metadados.svg" alt="">Metadados</button>
+    <button data-a="tiktok"><img src="app/marca/tiktok-64.png" alt="">TikTok</button>
+    <button data-a="facebook-mt"><img src="app/marca/facebook-64.png" alt="">Facebook</button>
+    <button data-a="emails"><img src="app/marca/emails.svg" alt="">Emails</button>
+    <button data-a="moderador"><img src="app/marca/moderador.svg" alt="">Moderador</button>
+  </div>
+  <div class="grupo fys"><span class="rot">🎵 FORYOUSONG</span>
+    <button data-a="anuncios"><img src="app/marca/vencedores.svg" alt="">Anúncios</button>
+    <button data-a="facebook-fys"><img src="app/marca/facebook-64.png" alt="">Facebook</button>
+    <button data-a="eventos"><img src="app/marca/eventos.svg" alt="">Eventos</button>
+  </div>
+</nav>
+<iframe id="vista" title="Página da app"></iframe>
+<script>
+  // cada aba: a página e, no Facebook, a marca a mostrar
+  const ABAS = {
+    "criativos": { u: "../criativos/" },
+    "metadados": { u: "app/limpar-metadados.html" },
+    "tiktok": { u: "app/tiktok.html" },
+    "facebook-mt": { u: "app/facebook.html", conta: "mistertuga" },
+    "emails": { u: "app/emails.html" },
+    "moderador": { u: "app/moderador.html" },
+    "anuncios": { u: "../vencedores-fys/" },
+    "facebook-fys": { u: "app/facebook.html", conta: "fys" },
+    "eventos": { u: "app/eventos.html" },
+  };
+  const vista = document.getElementById("vista");
+  let atual = null;
+  function abre(a) {
+    if (!ABAS[a]) a = "criativos";
+    atual = a;
+    document.querySelectorAll("#barra button").forEach((b) => b.classList.toggle("ativo", b.dataset.a === a));
+    const alvo = new URL(ABAS[a].u, location.href).href;
+    if (vista.src !== alvo) vista.src = alvo; else ajusta();
+    if (location.hash !== "#" + a) history.replaceState(null, "", "#" + a);
+  }
+  // como na app do Mac: esconde a barra própria das páginas e escolhe a marca no Facebook
+  function ajusta() {
+    try {
+      const d = vista.contentDocument;
+      if (d && !d.getElementById("casca-estilo")) {
+        const e = d.createElement("style"); e.id = "casca-estilo";
+        e.textContent = "nav #aba-limpeza,.conta-selector{display:none!important}";
+        d.documentElement.appendChild(e);
+      }
+      const c = ABAS[atual] && ABAS[atual].conta;
+      if (c && vista.contentWindow.trocarConta) vista.contentWindow.trocarConta(c);
+    } catch (e) {}
+  }
+  vista.addEventListener("load", ajusta);
+  document.querySelectorAll("#barra button").forEach((b) => b.onclick = () => abre(b.dataset.a));
+  addEventListener("hashchange", () => abre(location.hash.slice(1)));
+  abre(location.hash.slice(1));
+</script>
+</body>
+</html>
