@@ -21,6 +21,7 @@
   .campo .r { color: var(--suave); font-size: 13px; }
   .campo .v { font-weight: 550; }
   .tag-on { display: inline-flex; align-items: center; gap: 6px; color: var(--verde-escuro); background: var(--verde-claro); padding: 3px 10px; border-radius: 20px; font-size: 12.5px; }
+  .tag-on.off { color: var(--suave); background: #efe9e1; } .tag-on.off .ponto { background: #b5a99b; }
   .ponto { width: 8px; height: 8px; border-radius: 50%; background: var(--verde-escuro); display: inline-block; }
   .terminal { background: #171513; color: #a8e6cf; font-family: ui-monospace, Menlo, monospace; font-size: 12.5px; border-radius: 10px; padding: 18px; line-height: 1.6; max-height: 460px; overflow-y: auto; white-space: pre-wrap; word-break: break-word; }
   .btn { background: var(--verde); color: #fff; border: 0; padding: 8px 16px; border-radius: 8px; cursor: pointer; font-size: 13.5px; font-weight: 550; }
@@ -36,7 +37,7 @@
 <div class="grelha">
   <div class="caixa">
     <h3>Estado do Serviço</h3>
-    <div class="campo"><span class="r">Estado</span><div class="v"><span class="tag-on"><span class="ponto"></span> Ativo em Segundo Plano</span></div></div>
+    <div class="campo"><span class="r">Estado</span><div class="v"><span class="tag-on" id="estado"><span class="ponto"></span> A verificar...</span></div></div>
     <div class="campo"><span class="r">Navegador</span><div class="v">AdsPower Global (Perfil 10 «TIKTOK»)</div></div>
     <div class="campo"><span class="r">Porta CDP</span><div class="v"><code>127.0.0.1:54384</code> (Chrome DevTools)</div></div>
     <div class="campo"><span class="r">Varredura</span><div class="v">Automática a cada 15 segundos</div></div>
@@ -60,17 +61,33 @@
 </div>
 
 <script>
+// o estado vem do registo: ativo só se escreveu alguma coisa na última hora
+const HORA_MS = 60 * 60 * 1000;
+function quando(d) { return d.toLocaleString("pt-PT", { day: "2-digit", month: "2-digit", hour: "2-digit", minute: "2-digit" }); }
+function poeEstado(ultima) {
+  const e = document.getElementById("estado");
+  const ativo = ultima && Date.now() - ultima < HORA_MS;
+  e.classList.toggle("off", !ativo);
+  e.innerHTML = '<span class="ponto"></span> ' + (ativo ? "Ativo, último sinal às " + quando(ultima).split(" ")[1]
+    : ultima ? "Parado desde " + quando(ultima) : "Sem registo");
+}
 function atualizarLogs() {
-  const el = document.getElementById('logs');
-  fetch('moderation_audit.log?t=' + Date.now())
-    .then(r => r.text())
-    .then(t => {
-      el.textContent = t.trim() ? t : '[Aguardando novos comentários para moderação...]';
+  const el = document.getElementById("logs");
+  fetch("moderation_audit.log?t=" + Date.now())
+    .then((r) => r.text())
+    .then((t) => {
+      const linhas = t.trim().split("\n").filter(Boolean);
+      let ultima = null;
+      el.textContent = linhas.length ? linhas.map((l) => {
+        const m = l.match(/^\[([^\]]+)\]\s*(.*)$/);
+        if (!m) return l;
+        const d = new Date(m[1]); if (!isNaN(d)) ultima = d;
+        return (isNaN(d) ? m[1] : quando(d)) + "   " + m[2];
+      }).join("\n") : "Ainda não há registos.";
       el.scrollTop = el.scrollHeight;
+      poeEstado(ultima);
     })
-    .catch(() => {
-      el.textContent = 'Moderador ativo em segundo plano.\nA monitorar as abas de anúncios no AdsPower.';
-    });
+    .catch(() => { el.textContent = "Não consegui ler o registo do moderador."; poeEstado(null); });
 }
 atualizarLogs();
 setInterval(atualizarLogs, 10000);
