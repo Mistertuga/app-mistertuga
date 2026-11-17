@@ -46,7 +46,7 @@
 <main>
   <h1>🎬 Remakes ForYouSong</h1>
   <p class="sub">Os 8 maiores vencedores com marca de outra loja, refeitos em 4 guiões novos com a marca ForYouSong. Só se aproveita o formato e o ritmo: imagens, textos e voz são todos novos.</p>
-  <div class="aviso">Antes de gravar: confirma o que a ForYouSong oferece de facto (prévia grátis, tempo de entrega, preço). Os guiões não prometem nada disso para não inventar ofertas.</div>
+  <div class="aviso" id="regras"></div>
   <div class="linguas" id="linguas"></div>
   <div class="grelha" id="grelha"></div>
 </main>
@@ -72,6 +72,7 @@
       <details open><summary>Legendas em ${LINGUAS[lingua]}</summary>
         <div class="leg">${Object.keys(L).map((k) => `<div><span>${ROTULOS[k] || k}</span><span>${esc(L[k][lingua])}</span></div>`).join("")}</div>
       </details>
+      ${fecho(r)}
       <details><summary>Prompts de vídeo e imagem</summary>
         <div class="prompt"><small>Vídeo</small>${esc(r.prompts.video)}<button class="copiar">Copiar</button></div>
         <div class="prompt"><small>Imagem</small>${esc(r.prompts.imagem)}<button class="copiar">Copiar</button></div>
@@ -83,7 +84,22 @@
     </article>`;
   }
 
+  function fecho(r) {
+    const F = window.FECHO_FYS, f = F && F.guioes[r.id];
+    if (!f) return "";
+    return `<details open><summary>Fecho e pedido em ${LINGUAS[lingua]}</summary><div class="leg">
+      <div><span>No ecrã</span><span><b>${esc(f.ecra[lingua])}</b></span></div>
+      ${f.voz ? `<div><span>Voz</span><span>${esc(f.voz[lingua])}</span></div>` : `<div><span>Voz</span><span>Sem voz: a canção continua por baixo.</span></div>`}
+      <div><span>Botão</span><span>Saber mais · na landing: «${esc(F.botao[lingua])}»</span></div>
+      <div><span>Prazo</span><span>${f.prazo ? "Sim, no ecrã e na voz" : "Não (fica para a landing)"}</span></div>
+      <div><span>Preço</span><span>Não</span></div>
+      <div><span>Texto do anúncio</span><span>Acabar com: «${esc(F.garantia[lingua])}»</span></div>
+    </div></details>`;
+  }
+
   function desenhar() {
+    const F = window.FECHO_FYS;
+    if (F) document.getElementById("regras").innerHTML = "<b>O que fecha cada guião</b> (confirmado no site e no código a 17/11/2026):<br>" + F.regras.map(esc).join("<br>");
     document.getElementById("linguas").innerHTML = Object.entries(LINGUAS)
       .map(([k, n]) => `<button data-l="${k}" class="${k === lingua ? "ativo" : ""}">${n}</button>`).join("");
     document.getElementById("grelha").innerHTML = (window.REMAKES_FYS || []).map(cartao).join("");

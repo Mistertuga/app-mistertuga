@@ -101,7 +101,7 @@ window.REMAKES_FYS = [
       gancho: "0,0 s: palavras grandes em maiúsculas ao centro, a aparecerem uma a uma com a voz («CRIAR ALGO INESQUECÍVEL SÓ…»).",
       texto: "Texto grande, em maiúsculas, palavra a palavra, ao longo do vídeo todo.",
       cortes: "0 a 1 cortes em 33 s: um só plano (pessoa a ouvir ou a abrir a prenda).",
-      audio: "Voz off rápida (121 a 147 palavras por minuto) a explicar os passos: contar a história, escolher o estilo e a voz, receber a canção.",
+      audio: "Voz off rápida (121 a 147 palavras por minuto) a explicar os passos do concorrente.",
       cta: "Falado no fim: visitar a loja e criar a canção."
     },
     porque: "É o mais simples de produzir (um plano e uma voz) e explica o produto em 30 s. Os dois vídeos têm o mesmo guião e ambos escalaram.",
@@ -124,11 +124,11 @@ window.REMAKES_FYS = [
         ES: "CREAR ALGO INOLVIDABLE ES MUY FÁCIL"
       },
       passos: {
-        DE: "Erzähl eure Geschichte · wähle Stil und Stimme · fertig",
-        IT: "Racconta la vostra storia · scegli stile e voce · fatto",
-        FR: "Raconte votre histoire · choisis le style et la voix · c'est prêt",
-        EN: "Tell your story · pick a style and voice · done",
-        ES: "Cuenta vuestra historia · elige estilo y voz · listo"
+        DE: "Ein paar Fragen beantworten · Gratis-Vorschau anhören · Song per E-Mail",
+        IT: "Rispondi a qualche domanda · ascolta l'anteprima gratis · canzone via email",
+        FR: "Répondez à quelques questions · écoutez l'aperçu gratuit · la chanson par e-mail",
+        EN: "Answer a few questions · hear a free preview · get your song by email",
+        ES: "Responde unas preguntas · escucha el adelanto gratis · tu canción por email"
       },
       frase3: {
         DE: "Persönlich. Emotional. Unvergesslich.",
@@ -193,3 +193,42 @@ window.REMAKES_FYS = [
     }
   }
 ];
+
+// Fecho de cada guião, com o que a ForYouSong oferece de facto (landing em produção e repositório, 17/11/2026):
+// prévia grátis antes de pagar · 2 minutos a responder · entrega por email em 48 h ou 30 min (expresso) · garantia de 30 dias.
+// Preço: nunca no vídeo (muda por mercado na Shopify e com as promoções). Garantia: só no texto do anúncio.
+window.FECHO_FYS = {
+  regras: [
+    "Promessa principal: ouvir uma prévia grátis antes de pagar (é o que a landing promete nas 5 línguas).",
+    "Prazo: só no R3, que explica os passos. Nos outros, o prazo fica para a landing.",
+    "Preço: nunca no vídeo nem no texto. A Shopify mostra o preço de cada mercado e o -75% do Black Friday acaba.",
+    "Garantia de 30 dias: só no texto do anúncio, nunca «sem perguntas», porque a política pede primeiro uma alteração.",
+    "Botão da Meta: «Saber mais» (leva ao questionário, não a uma compra)."
+  ],
+  botao: { DE: "Hör dir eine kostenlose Hörprobe an", IT: "Ascolta un'anteprima gratis", FR: "Écoutez un aperçu gratuit", EN: "Listen to a free preview", ES: "Escucha un adelanto gratis" },
+  garantia: { DE: "30 Tage Geld-zurück-Garantie.", IT: "Garanzia di rimborso di 30 giorni.", FR: "Garantie satisfait ou remboursé 30 jours.", EN: "30-day money-back guarantee.", ES: "Garantía de devolución de 30 días." },
+  guioes: {
+    R1: {
+      prazo: false,
+      ecra: { DE: "Euer Lied, mit eurer Geschichte. Hör es dir zuerst gratis an.", IT: "La vostra canzone, con la vostra storia. Ascoltala prima gratis.", FR: "Votre chanson, avec votre histoire. Écoutez-la d'abord gratuitement.", EN: "Your song, your story. Hear it free first.", ES: "Vuestra canción, con vuestra historia. Escúchala gratis primero." },
+      voz: null
+    },
+    R2: {
+      prazo: false,
+      ecra: { DE: "In 2 Minuten erzählt · Gratis-Vorschau vor dem Bezahlen", IT: "Racconti in 2 minuti · Anteprima gratuita prima di pagare", FR: "Racontée en 2 minutes · Aperçu gratuit avant de payer", EN: "Takes 2 minutes · Free preview before you pay", ES: "Lo cuentas en 2 minutos · Adelanto gratis antes de pagar" },
+      voz: { DE: "Erzähl uns eure Geschichte in zwei Minuten und hör dir den Song gratis an, bevor du zahlst. ForYouSong.", IT: "Raccontaci la vostra storia in due minuti e ascolta la canzone gratis prima di pagare. ForYouSong.", FR: "Racontez-nous votre histoire en deux minutes et écoutez la chanson gratuitement avant de payer. ForYouSong.", EN: "Tell us your story in two minutes and hear your song free before you pay. ForYouSong.", ES: "Cuéntanos vuestra historia en dos minutos y escucha la canción gratis antes de pagar. ForYouSong." }
+    },
+    R3: {
+      prazo: true,
+      ecra: { DE: "Gratis-Vorschau · per E-Mail in 48 Std. oder 30 Min.", IT: "Anteprima gratuita · via email in 48 ore o 30 minuti", FR: "Aperçu gratuit · par e-mail en 48 h ou 30 min", EN: "Free preview · by email in 48 hours or 30 minutes", ES: "Adelanto gratis · por email en 48 horas o 30 minutos" },
+      voz: { DE: "Beantworte ein paar Fragen, hör dir die Gratis-Vorschau an, und wenn sie dir gefällt, zahlst du einmal und bekommst den Song per E-Mail: in 48 Stunden oder in 30 Minuten.", IT: "Rispondi a qualche domanda, ascolta l'anteprima gratuita e, se ti piace, paghi una volta sola e ricevi la canzone via email: in 48 ore o in 30 minuti.", FR: "Répondez à quelques questions, écoutez l'aperçu gratuit et, s'il vous plaît, vous payez une seule fois et recevez la chanson par e-mail : en 48 heures ou en 30 minutes.", EN: "Answer a few questions, listen to your free preview, and if you love it, pay once and get the full song by email: in 48 hours or in 30 minutes.", ES: "Responde unas preguntas, escucha el adelanto gratis y, si te gusta, pagas una sola vez y recibes la canción por email: en 48 horas o en 30 minutos." }
+    },
+    R4: {
+      prazo: false,
+      ecra: { DE: "ForYouSong · Gratis-Vorschau", IT: "ForYouSong · Anteprima gratuita", FR: "ForYouSong · Aperçu gratuit", EN: "ForYouSong · Free preview", ES: "ForYouSong · Adelanto gratis" },
+      voz: { DE: "Hör dir deinen Song zuerst gratis an.", IT: "Ascolta la tua canzone prima, gratis.", FR: "Écoutez votre chanson d'abord, gratuitement.", EN: "Hear your song first, for free.", ES: "Escucha tu canción primero, gratis." }
+    }
+  }
+};
+// O fecho substitui o «Pedido» de cada guião.
+(window.REMAKES_FYS || []).forEach((r) => { const f = window.FECHO_FYS.guioes[r.id]; if (f) r.legendas.cta = f.ecra; });
