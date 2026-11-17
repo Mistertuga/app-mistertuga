@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="pt-PT">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Remakes ForYouSong</title>
+<style>
+  :root { --fundo:#f5f1ea; --cartao:#fff; --tinta:#2b2723; --suave:#8a8178; --linha:#e8e1d6; --laranja:#e8612b; --verde:#2e7d4f; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--fundo); color:var(--tinta); font:14px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+  main { max-width:1500px; margin:0 auto; padding:28px 56px 60px; }
+  h1 { font-size:26px; margin:0 0 4px; }
+  .sub { color:var(--suave); margin:0 0 20px; }
+  .linguas { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:22px; }
+  .linguas button { border:1px solid var(--linha); background:#fff; border-radius:10px; padding:7px 14px; font:600 13px inherit; cursor:pointer; color:var(--tinta); }
+  .linguas button.ativo { background:var(--tinta); color:#fff; border-color:var(--tinta); }
+  .grelha { display:grid; grid-template-columns:repeat(auto-fill, minmax(620px, 1fr)); gap:18px; }
+  article { background:var(--cartao); border:1px solid var(--linha); border-radius:16px; padding:20px 22px; }
+  .topo { display:flex; align-items:baseline; gap:10px; }
+  .topo b { font-size:13px; color:var(--laranja); }
+  h2 { font-size:18px; margin:0; }
+  .base { display:flex; gap:6px; flex-wrap:wrap; margin:10px 0 4px; }
+  .base span { font-size:12px; background:#f4efe7; border-radius:7px; padding:3px 8px; color:#5d554d; }
+  .porque { color:#5d554d; margin:8px 0 12px; }
+  details { border-top:1px solid var(--linha); padding:9px 0; }
+  summary { cursor:pointer; font-weight:700; font-size:13px; letter-spacing:.3px; text-transform:uppercase; color:#5d554d; }
+  dl { display:grid; grid-template-columns:110px 1fr; gap:6px 14px; margin:10px 0 2px; }
+  dt { color:var(--suave); font-weight:600; }
+  dd { margin:0; }
+  table { width:100%; border-collapse:collapse; margin-top:10px; font-size:13px; }
+  th, td { text-align:left; vertical-align:top; padding:7px 8px; border-bottom:1px solid var(--linha); }
+  th { color:var(--suave); font-weight:600; font-size:12px; }
+  td.t { white-space:nowrap; font-weight:700; }
+  td.ecra { background:#fff8f2; color:#8a3a12; font-weight:600; }
+  .prompt { background:#f7f4ef; border-radius:10px; padding:10px 12px; margin-top:8px; font:12.5px/1.5 ui-monospace, Menlo, monospace; position:relative; }
+  .prompt small { display:block; font:700 11px -apple-system, sans-serif; color:var(--suave); margin-bottom:4px; text-transform:uppercase; }
+  .copiar { position:absolute; top:8px; right:8px; border:1px solid var(--linha); background:#fff; border-radius:7px; font-size:12px; padding:2px 8px; cursor:pointer; }
+  .leg { margin-top:10px; }
+  .leg div { display:grid; grid-template-columns:90px 1fr; gap:10px; padding:6px 0; border-bottom:1px dashed var(--linha); }
+  .leg div span:first-child { color:var(--suave); font-weight:600; font-size:12.5px; }
+  .aviso { background:#fdf6e7; border:1px solid #f0dfb5; color:#7a5a12; border-radius:12px; padding:10px 14px; margin-bottom:20px; }
+  @media (max-width:700px) { main { padding:18px 16px 40px; } .grelha { grid-template-columns:1fr; } dl { grid-template-columns:1fr; } }
+</style>
+</head>
+<body>
+<main>
+  <h1>🎬 Remakes ForYouSong</h1>
+  <p class="sub">Os 8 maiores vencedores com marca de outra loja, refeitos em 4 guiões novos com a marca ForYouSong. Só se aproveita o formato e o ritmo: imagens, textos e voz são todos novos.</p>
+  <div class="aviso">Antes de gravar: confirma o que a ForYouSong oferece de facto (prévia grátis, tempo de entrega, preço). Os guiões não prometem nada disso para não inventar ofertas.</div>
+  <div class="linguas" id="linguas"></div>
+  <div class="grelha" id="grelha"></div>
+</main>
+<script src="remakes-fys.js"></script>
+<script>
+  const LINGUAS = { DE: "🇩🇪 Alemão", IT: "🇮🇹 Italiano", FR: "🇫🇷 Francês", EN: "🇬🇧 Inglês", ES: "🇪🇸 Espanhol" };
+  const ROTULOS = { contexto: "Contexto", gancho: "Gancho", frase2: "Frase 2", frase3: "Frase 3", passos: "Passos", palavras: "Palavras", cta: "Pedido" };
+  let lingua = "DE";
+  const esc = (s) => String(s ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+
+  function cartao(r) {
+    const L = r.legendas;
+    const ecra = (k) => (L[k] ? L[k][lingua] : k === "letra" ? "Letra da canção, frase a frase" : "");
+    return `<article>
+      <div class="topo"><b>${r.id}</b><h2>${esc(r.nome)}</h2></div>
+      <div class="base">${r.base.map((b) => `<span>${esc(b)}</span>`).join("")}</div>
+      <p class="porque">${esc(r.porque)}</p>
+      <details open><summary>Guião ForYouSong</summary>
+        <table><tr><th>Tempo</th><th>O que se vê</th><th>Texto no ecrã</th><th>Som</th></tr>
+        ${r.cenas.map((c) => `<tr><td class="t">${esc(c.t)}</td><td>${esc(c.ver)}</td><td class="ecra">${esc(ecra(c.ecra))}</td><td>${esc(c.som)}</td></tr>`).join("")}
+        </table>
+      </details>
+      <details open><summary>Legendas em ${LINGUAS[lingua]}</summary>
+        <div class="leg">${Object.keys(L).map((k) => `<div><span>${ROTULOS[k] || k}</span><span>${esc(L[k][lingua])}</span></div>`).join("")}</div>
+      </details>
+      <details><summary>Prompts de vídeo e imagem</summary>
+        <div class="prompt"><small>Vídeo</small>${esc(r.prompts.video)}<button class="copiar">Copiar</button></div>
+        <div class="prompt"><small>Imagem</small>${esc(r.prompts.imagem)}<button class="copiar">Copiar</button></div>
+      </details>
+      <details><summary>O que o original faz</summary>
+        <dl><dt>Gancho</dt><dd>${esc(r.origem.gancho)}</dd><dt>Texto</dt><dd>${esc(r.origem.texto)}</dd>
+        <dt>Cortes</dt><dd>${esc(r.origem.cortes)}</dd><dt>Áudio</dt><dd>${esc(r.origem.audio)}</dd><dt>Pedido</dt><dd>${esc(r.origem.cta)}</dd></dl>
+      </details>
+    </article>`;
+  }
+
+  function desenhar() {
+    document.getElementById("linguas").innerHTML = Object.entries(LINGUAS)
+      .map(([k, n]) => `<button data-l="${k}" class="${k === lingua ? "ativo" : ""}">${n}</button>`).join("");
+    document.getElementById("grelha").innerHTML = (window.REMAKES_FYS || []).map(cartao).join("");
+  }
+  document.addEventListener("click", (e) => {
+    const l = e.target.closest("[data-l]");
+    if (l) { lingua = l.dataset.l; desenhar(); return; }
+    const c = e.target.closest(".copiar");
+    if (c) {
+      const txt = c.parentElement.childNodes[1].textContent;
+      navigator.clipboard.writeText(txt).then(() => { c.textContent = "Copiado"; setTimeout(() => (c.textContent = "Copiar"), 1200); });
+    }
+  });
+  desenhar();
+</script>
+</body>
+</html>
