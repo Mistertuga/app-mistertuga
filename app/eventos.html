@@ -721,6 +721,7 @@
   .fb-link-btn:hover { text-decoration: underline; }
 
   [hidden] { display: none !important; }
+  .aviso-marca-agua { margin: 8px 0 2px; padding: 7px 10px; border-radius: 8px; background: #fdecea; color: #a12a1f; border: 1px solid #f3c2bc; font-size: 12.5px; }
 </style>
 </head>
 <body>
@@ -1054,7 +1055,7 @@
     <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; margin-bottom:14px;">
       <div>
         <h2 style="margin:0;">📬 Caixa de Captura Ao Vivo: E-mails Reais de ForeverSongs.com</h2>
-        <p hidden style="color:var(--suave); margin:4px 0 0;">Atualiza automaticamente a cada 15 segundos via sonda <code>http://localhost:4399/api/emails-capturados</code> (Caixa monitorizada: <code id="inbox-caixa-addr">fsprobe566415@fldubai.com</code>).</p>
+        <p style="color:var(--suave); margin:4px 0 0;">Atualiza automaticamente a cada 15 segundos via sonda <code>http://localhost:4399/api/emails-capturados</code> (Caixa monitorizada: <code id="inbox-caixa-addr">a ligar...</code>).</p>
       </div>
       <button onclick="carregarEmailsCapturados(true)" style="background:var(--verde); color:#fff; border:none; padding:9px 16px; border-radius:8px; font-weight:700; cursor:pointer;">↻ Atualizar Agora</button>
     </div>
@@ -1798,6 +1799,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 <script src="sugestoes-foreversongs.js"></script>
+<script src="marcas-de-agua.js"></script>
 <script>
   let mercadoAtualFB = 'DE';
   let marcaAtualFB = 'TODAS';
@@ -1879,6 +1881,7 @@ document.addEventListener('DOMContentLoaded', function() {
             <span class="fb-marca-tag">${item.marca}</span>
             <span style="margin-left: auto; font-size: 11.5px; color: var(--suave); font-weight: 600;">ID: ${item.id}</span>
           </div>
+          ${(window.MARCAS_AGUA||{})[item.id] ? `<div class="aviso-marca-agua">⚠️ Marca de água: <b>${(window.MARCAS_AGUA||{})[item.id]}</b></div>` : ""}
 
           <p class="fb-papel">${item.titulo || item.papel}</p>
           <div class="fb-origem">
