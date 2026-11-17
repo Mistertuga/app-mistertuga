@@ -95,6 +95,8 @@
     .sg-tela { padding: 12px 12px 0; }
     .sg-tela video { position: static; max-height: 480px; }
   }
+  .so-limpos { margin-left: auto; display: inline-flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 600; color: #a12a1f; cursor: pointer; }
+  .so-limpos input { accent-color: #d93025; width: 16px; height: 16px; }
   .tem-marca { outline: 3px solid #d93025 !important; outline-offset: -3px; }
   .faixa-marca { position: absolute; top: 0; left: 0; right: 0; z-index: 3; background: #d93025; color: #fff; font-weight: 800; font-size: 13px; letter-spacing: .3px; text-align: center; padding: 8px 6px; border-radius: inherit; border-bottom-left-radius: 0; border-bottom-right-radius: 0; pointer-events: none; }
   .aviso-marca-agua { margin: 8px 0 2px; padding: 7px 10px; border-radius: 8px; background: #fdecea; color: #a12a1f; border: 1px solid #f3c2bc; font-size: 12.5px; }
@@ -127,6 +129,7 @@
       <button class="filtro-marca-btn" onclick="filtrarMarca('MySongStory', this)">MySongStory (52)</button>
       <button class="filtro-marca-btn" onclick="filtrarMarca('YourMelody', this)">YourMelody (38)</button>
       <button class="filtro-marca-btn" onclick="filtrarMarca('SonglyGift', this)">SonglyGift (17)</button>
+      <label class="so-limpos"><input type="checkbox" id="so-limpos" onchange="renderFYS()"> Esconder os que têm marca de água</label>
     </div>
 
     <section class="sg-leitura" id="fys-leitura-bloco">
@@ -201,7 +204,8 @@
         (item.texto && item.texto.toLowerCase().includes(q)) ||
         (item.gancho && item.gancho.toLowerCase().includes(q)) ||
         (item.marca && item.marca.toLowerCase().includes(q));
-      return matchMarca && matchQ;
+      const limpo = !(document.getElementById('so-limpos')||{}).checked || !(window.MARCAS_AGUA||{})[item.id];
+      return matchMarca && matchQ && limpo;
     });
 
     if (filtrados.length === 0) {
