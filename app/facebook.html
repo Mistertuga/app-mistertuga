@@ -95,6 +95,8 @@
     .sg-tela { padding: 12px 12px 0; }
     .sg-tela video { position: static; max-height: 480px; }
   }
+  .tem-marca { outline: 3px solid #d93025 !important; outline-offset: -3px; }
+  .faixa-marca { position: absolute; top: 0; left: 0; right: 0; z-index: 3; background: #d93025; color: #fff; font-weight: 800; font-size: 13px; letter-spacing: .3px; text-align: center; padding: 8px 6px; border-radius: inherit; border-bottom-left-radius: 0; border-bottom-right-radius: 0; pointer-events: none; }
   .aviso-marca-agua { margin: 8px 0 2px; padding: 7px 10px; border-radius: 8px; background: #fdecea; color: #a12a1f; border: 1px solid #f3c2bc; font-size: 12.5px; }
 </style>
 </head>
@@ -209,14 +211,15 @@
 
     filtrados.forEach(item => {
       const card = document.createElement('article');
-      card.className = 'sg-c';
+      card.className = 'sg-c' + ((window.MARCAS_AGUA||{})[item.id] ? ' tem-marca' : '');
       card.id = `card-${item.id}`;
 
       const verClasse = (item.veredito === 'Meter já') ? 'ja' : 'vencedor';
       const cleanTextForAttr = (item.texto || '').replace(/"/g, '&quot;');
 
       card.innerHTML = `
-        <div class="sg-tela">
+        <div class="sg-tela" style="position:relative">
+          ${(window.MARCAS_AGUA||{})[item.id] ? `<div class="faixa-marca">⚠️ MARCA DE ÁGUA · ${(window.MARCAS_AGUA||{})[item.id]}</div>` : ""}
           <video controls preload="none" playsinline data-lazy>
             <source src="${encodeURI(item.video)}#t=0.1" type="video/mp4">
             O teu navegador não suporta este vídeo.
@@ -229,7 +232,7 @@
             <span class="sg-marca-tag">${item.marca}</span>
             <span style="margin-left: auto; font-size: 12px; color: var(--suave); font-weight: 600;">ID: ${item.id}</span>
           </div>
-          ${(window.MARCAS_AGUA||{})[item.id] ? `<div class="aviso-marca-agua">⚠️ Marca de água: <b>${(window.MARCAS_AGUA||{})[item.id]}</b></div>` : ""}
+          ${(window.MARCAS_AGUA||{})[item.id] ? `<div class="aviso-marca-agua">⚠️ Tem marca de água de outra loja: <b>${(window.MARCAS_AGUA||{})[item.id]}</b></div>` : ""}
 
           <p class="sg-papel">${item.titulo || item.papel}</p>
           <div class="sg-origem">
