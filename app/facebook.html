@@ -95,6 +95,8 @@
     .sg-tela { padding: 12px 12px 0; }
     .sg-tela video { position: static; max-height: 480px; }
   }
+  #fys-mercados-botoes .aba-limpos { border-color: #2e7d4f; color: #1f5e3a; }
+  #fys-mercados-botoes .aba-limpos.ativo { background: #2e7d4f; color: #fff; }
   .so-limpos { margin-left: auto; display: inline-flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 600; color: #a12a1f; cursor: pointer; }
   .so-limpos input { accent-color: #d93025; width: 16px; height: 16px; }
   .tem-marca { outline: 3px solid #d93025 !important; outline-offset: -3px; }
@@ -165,11 +167,21 @@
     const mercadosContainer = document.getElementById('fys-mercados-botoes');
     mercadosContainer.innerHTML = '';
 
+    if (!FYS.LIMPOS) {
+      const sp = s => { const m = String(s||'').match(/€\s*([\d.,]+)\s*(k)?/i); if (!m) return 0; const v = parseFloat(m[1].replace(/\.(?=\d{3}\b)/g,'').replace(',','.')); return m[2] ? v*1000 : v; };
+      const di = s => { const m = String(s||'').match(/(\d+)\s*(d|dias)\b/); const v = m ? +m[1] : 0; return v > 365 ? 0 : v; };
+      const MA = window.MARCAS_AGUA || {};
+      const todos = Object.values(FYS).flatMap(m => m.itens.map(i => ({ ...i, _flag: m.flag })));
+      const lim = todos.filter(i => !MA[i.id]).map(i => ({ ...i, _score: sp(i.spend) + di(i.dias) * 15 })).sort((a, b) => b._score - a._score);
+      lim.forEach((i, n) => { i.rank = n + 1; });
+      FYS.LIMPOS = { nome: 'Sem marca de água', flag: '✅', itens: lim,
+        leitura: 'Os ' + lim.length + ' vídeos sem marca de outra loja, de todos os mercados, ordenados pelos melhores (gasto e dias ativos). Estão também na pasta ~/tiktok-ads/videos_sem_marca/ com o número da ordem no nome. Antes de subir, confirma que tens direito a usar cada vídeo.' };
+    }
     const chaves = Object.keys(FYS);
     chaves.forEach(c => {
       const m = FYS[c];
       const btn = document.createElement('button');
-      btn.className = (c === mercadoAtualFYS) ? 'ativo' : '';
+      btn.className = ((c === mercadoAtualFYS) ? 'ativo' : '') + (c === 'LIMPOS' ? ' aba-limpos' : '');
       btn.innerHTML = `${m.flag} ${m.nome} <small>(${m.itens.length})</small>`;
       btn.onclick = () => {
         mercadoAtualFYS = c;
