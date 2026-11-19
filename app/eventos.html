@@ -730,18 +730,18 @@
 
 <div class="topo">
   <div>
-    <h1>ForeverSongs® · Dossiê Investigativo de Funil, Criativos & E-mails</h1>
-    <p class="lead">Desmontagem cirúrgica do líder mundial (foreversongs.com): 6 fluxos Klaviyo, anatomia do quiz /create, 4 ângulos de anúncios TikTok/Meta, telemetria e unit economics.</p>
+    <h1>ForeverSongs® · Dossiê Investigativo de Funil &amp; Criativos</h1>
+    <p class="lead">Desmontagem cirúrgica do líder mundial (foreversongs.com): anatomia do quiz /create, 4 ângulos de anúncios TikTok/Meta, telemetria e unit economics.</p>
   </div>
   <div class="topo-acoes">
   </div>
 </div>
 
 <div class="sub-nav">
-  <button class="sub-nav-btn ativo" onclick="mudarAba('cronograma')" id="btn-cronograma">🗺️ Cronograma & Dossiê de E-mails (Canvas)</button>
-  <button class="sub-nav-btn" onclick="mudarAba('inbox')" id="btn-inbox">📬 E-mails Reais Ao Vivo <span id="badge-inbox-live" style="background:var(--verde);color:#fff;padding:1px 7px;border-radius:10px;font-size:11px;margin-left:5px;">1</span></button>
+  <button class="sub-nav-btn" onclick="mudarAba('cronograma')" id="btn-cronograma" hidden>🗺️ Cronograma & Dossiê de E-mails (Canvas)</button>
+  <button class="sub-nav-btn" onclick="mudarAba('inbox')" id="btn-inbox" hidden>📬 E-mails Reais Ao Vivo <span id="badge-inbox-live" style="background:var(--verde);color:#fff;padding:1px 7px;border-radius:10px;font-size:11px;margin-left:5px;">1</span></button>
   <button class="sub-nav-btn" onclick="mudarAba('facebook')" id="btn-facebook" hidden>🔵 Facebook Ads (107 Winners Meta)</button>
-  <button class="sub-nav-btn" onclick="mudarAba('quiz')" id="btn-quiz">🎯 Anatomia do Quiz & Funil (/create)</button>
+  <button class="sub-nav-btn ativo" onclick="mudarAba('quiz')" id="btn-quiz">🎯 Anatomia do Quiz & Funil (/create)</button>
   <button class="sub-nav-btn" onclick="mudarAba('criativos')" id="btn-criativos">🎬 Ângulos de Anúncios & Scripts UGC</button>
   <button class="sub-nav-btn" onclick="mudarAba('metricas')" id="btn-metricas">📊 Unit Economics, Métricas & LTV</button>
   <button class="sub-nav-btn" onclick="mudarAba('radar')" id="btn-radar">🔍 Taxonomia de Eventos & Telemetria</button>
@@ -1794,8 +1794,7 @@ function recarregarDados() {
 }
 
 document.addEventListener('DOMContentLoaded', function() {
-  mudarAba('cronograma');
-  renderizarCanvas();
+  mudarAba('quiz');
 });
 </script>
 
